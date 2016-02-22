@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">点餐小助手</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
+    <string name="dish_detail_activity">详情</string>
+    <string name="order_dish_activity">点菜</string>
+    <string name="action_scan">搜索</string>
+    <string name="action_notifications">通知</string>
+    <string name="ack_order_activity">确认下单</string>
+    <string name="comment">%d评论</string>
+    <string name="sell_num">月售%d份</string>
+    <string name="in_all">总计</string>
+    <string name="rmb">￥%d</string>
+    <string name="dish">菜肴</string>
+    <string name="rmb_sign">￥</string>
+    <string name="add">增加</string>
+    <string name="minus">减少</string>
+    <string name="dish_introduction">菜肴简介</string>
+    <string name="dish_appraise">菜肴评价</string>
+    <string name="signboard">招牌</string>
+    <string name="cart">购物车</string>
+    <string name="compute">去结算</string>
+    <string name="exit">退出</string>
+    <string name="head_image">头像</string>
+</resources>
