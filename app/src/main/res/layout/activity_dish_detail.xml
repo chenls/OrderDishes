@@ -49,9 +49,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_margin="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:adjustViewBounds="true"
                         android:background="@color/colorBackground"
                         android:contentDescription="@string/dish"
+                        android:scaleType="fitXY"
                         android:src="@mipmap/address_icon_reserve" />
 
                     <TextView
@@ -89,6 +92,8 @@
                         android:layout_alignLeft="@id/tv_dish_name"
                         android:layout_alignStart="@id/tv_dish_name"
                         android:layout_below="@id/tv_dish_name"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
                         android:rating="3.5" />
 
                     <TextView

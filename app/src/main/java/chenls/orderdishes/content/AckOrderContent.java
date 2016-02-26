@@ -1,24 +1,14 @@
 package chenls.orderdishes.content;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import chenls.orderdishes.bean.DishBean;
 
 public class AckOrderContent {
 
-    public static final List<AckOrderItem> ITEMS = new ArrayList<>();
-
-    static {
-        for (int i = 1; i <= 20; i++) {
-            addItem(createDummyItem(i));
-        }
-    }
-
-    private static void addItem(AckOrderItem item) {
-        ITEMS.add(item);
-    }
-
-    private static AckOrderItem createDummyItem(int position) {
-        return new AckOrderItem("http://img4.3lian.com/sucai/img6/230/29.jpg", "名字" + position, "数量" + position, "价格" + position);
+    public static List<AckOrderItem> createItem(Map<Integer, DishBean> dishBeanMap) {
+        return null;
     }
 
     public static class AckOrderItem {

@@ -32,15 +32,14 @@ public class DishContent {
     }
 
     private static DishItem createDummyItem(int position, int type) {
-        return new DishItem(type, String.valueOf(position),
-                "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg", "菜名" + position,
-                "菜的概述菜的概述菜的概述菜的概述菜的概述菜的菜的概述菜的概述菜的概述概述菜的概述" + position,
+        return new DishItem(type, position, "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg",
+                "菜名" + position, "菜的概述菜的概述菜的概述菜的概述菜的概述菜的菜的概述菜的概述菜的概述概述菜的概述" + position,
                 position, position > 2 ? View.VISIBLE : View.GONE, position, 2 * position, 3 * position);
     }
 
     public static class DishItem implements Parcelable {
         public final int type;
-        public final String id;
+        public final int position;
         public final String iv_dish;
         public final String tv_dish_name;
         public final String tv_dish_summarize;
@@ -51,7 +50,8 @@ public class DishContent {
         public final int tv_price;
 
         /**
-         * @param id                id
+         * @param type              菜的类别
+         * @param position          位置
          * @param iv_dish           菜的图片
          * @param tv_dish_name      菜名
          * @param tv_dish_summarize 菜的概述
@@ -61,11 +61,11 @@ public class DishContent {
          * @param tv_sell_num       销售数量
          * @param tv_price          价格
          */
-        public DishItem(int type, String id, String iv_dish, String tv_dish_name, String tv_dish_summarize,
+        public DishItem(int type, int position, String iv_dish, String tv_dish_name, String tv_dish_summarize,
                         float ratingBar, int tv_signboard, int tv_comment, int tv_sell_num,
                         int tv_price) {
             this.type = type;
-            this.id = id;
+            this.position = position;
             this.iv_dish = iv_dish;
             this.tv_dish_name = tv_dish_name;
             this.tv_dish_summarize = tv_dish_summarize;
@@ -78,7 +78,7 @@ public class DishContent {
 
         protected DishItem(Parcel in) {
             type = in.readInt();
-            id = in.readString();
+            position = in.readInt();
             iv_dish = in.readString();
             tv_dish_name = in.readString();
             tv_dish_summarize = in.readString();
@@ -109,7 +109,7 @@ public class DishContent {
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeInt(type);
-            dest.writeString(id);
+            dest.writeInt(position);
             dest.writeString(iv_dish);
             dest.writeString(tv_dish_name);
             dest.writeString(tv_dish_summarize);
@@ -118,22 +118,6 @@ public class DishContent {
             dest.writeInt(tv_comment);
             dest.writeInt(tv_sell_num);
             dest.writeInt(tv_price);
-        }
-
-        @Override
-        public String toString() {
-            return "DishItem{" +
-                    "type=" + type +
-                    ", id='" + id + '\'' +
-                    ", iv_dish='" + iv_dish + '\'' +
-                    ", tv_dish_name='" + tv_dish_name + '\'' +
-                    ", tv_dish_summarize='" + tv_dish_summarize + '\'' +
-                    ", ratingBar=" + ratingBar +
-                    ", tv_signboard=" + tv_signboard +
-                    ", tv_comment=" + tv_comment +
-                    ", tv_sell_num=" + tv_sell_num +
-                    ", tv_price=" + tv_price +
-                    '}';
         }
     }
 }

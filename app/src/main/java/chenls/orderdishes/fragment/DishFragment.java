@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Arrays;
 
@@ -31,6 +33,7 @@ public class DishFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private boolean move;
     private int position;
+    private DishRecyclerViewAdapter dishRecyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,7 +76,8 @@ public class DishFragment extends Fragment {
 
             //如果每个item大小固定，设置这个属性可以提高性能
             recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(new DishRecyclerViewAdapter(getActivity(), imageLoader, mListener));
+            dishRecyclerViewAdapter = new DishRecyclerViewAdapter(getActivity(), imageLoader, mListener);
+            recyclerView.setAdapter(dishRecyclerViewAdapter);
             recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -142,6 +146,45 @@ public class DishFragment extends Fragment {
         }
     }
 
+    public void setBookNum(final int position, final String num) {
+        //保存数据 便于恢复界面
+        dishRecyclerViewAdapter.saveData(position, num);
+        ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
+        ImageView iv_minus = (ImageView) findViewInViewGroupById(view, R.id.iv_minus);
+        TextView tv_order_num = (TextView) findViewInViewGroupById(view, R.id.tv_order_num);
+        assert tv_order_num != null;
+        assert iv_minus != null;
+        if ("0".equals(num)) {
+            tv_order_num.setText("0");
+            tv_order_num.setVisibility(View.GONE);
+            iv_minus.setVisibility(View.GONE);
+        } else {
+            tv_order_num.setText(num);
+            tv_order_num.setVisibility(View.VISIBLE);
+            iv_minus.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 在ViewGroup中根据id进行查找
+     *
+     * @param vg ViewGroup
+     * @param id 如：R.id.tv_name
+     * @return View
+     */
+    private View findViewInViewGroupById(ViewGroup vg, int id) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View v = vg.getChildAt(i);
+            if (v.getId() == id) {
+                return v;
+            } else {
+                if (v instanceof ViewGroup) {
+                    return findViewInViewGroupById((ViewGroup) v, id);
+                }
+            }
+        }
+        return null;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -173,7 +216,7 @@ public class DishFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onDishListFragmentClick(DishContent.DishItem item, String num);
 
-        void onDishListButtonClick(int pint, int num);
+        void onDishListButtonClick(int pint, int num, int price, String name, int position, String image);
 
         void onDishListScroll(int index);
     }

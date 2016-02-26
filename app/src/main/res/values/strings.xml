@@ -24,4 +24,6 @@
     <string name="compute">去结算</string>
     <string name="exit">退出</string>
     <string name="head_image">头像</string>
+    <string name="product_sign">×%d</string>
+    <string name="rmb_0">￥0</string>
 </resources>

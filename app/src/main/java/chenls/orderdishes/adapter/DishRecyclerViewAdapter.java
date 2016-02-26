@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.content.DishContent;
@@ -29,12 +31,14 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
     private final static int IS_TITLE = 1;
     private final ImageLoader imageLoader;
     private final Context context;
+    private Map<Integer, String> bookDishMap;
 
     public DishRecyclerViewAdapter(Context context, ImageLoader imageLoader, OnListFragmentInteractionListener listener) {
         this.context = context;
         mValues = DishContent.ITEMS;
         mListener = listener;
         this.imageLoader = imageLoader;
+        bookDishMap = new HashMap<>();
     }
 
 
@@ -51,28 +55,18 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         return new ViewHolder(view, viewType);
     }
 
-//    Handler UIHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            ViewHolder holder = (ViewHolder) msg.obj;
-//            if (holder.mView.getTag() == 1) {
-//
-//            }
-//        }
-//    };
-
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (holder.getItemViewType() == IS_TITLE) {
             for (int i = 0; i < DishContent.title_position.length; i++) {
-                if (DishContent.title_position[i] == position) {
+                if (DishContent.title_position[i] == holder.getAdapterPosition()) {
                     holder.dish_category.setText(DishContent.category_names[i + 1]);
                     return;
                 }
             }
             return;
         }
-        holder.mItem = mValues.get(position);
+        holder.mItem = mValues.get(holder.getAdapterPosition());
         holder.iv_dish.setImageResource(R.mipmap.address_icon_reserve);
         imageLoader.DisplayImage(holder.mItem.iv_dish, holder.iv_dish, false);
         holder.tv_dish_name.setText(holder.mItem.tv_dish_name);
@@ -81,8 +75,20 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         holder.tv_comment.setText(context.getString(R.string.comment, holder.mItem.tv_comment));
         holder.tv_sell_num.setText(context.getString(R.string.sell_num, holder.mItem.tv_sell_num));
         holder.tv_price.setText(String.valueOf(holder.mItem.tv_price));
+        //TODO 重写RatingBar
         holder.ratingBar.setRating(holder.mItem.ratingBar);
-        //TODO  恢复数据有问题
+        String num = bookDishMap.get(position);
+        if (TextUtils.isEmpty(num)) {
+            holder.tv_order_num.setText("0");
+            holder.iv_minus.setVisibility(View.GONE);
+            holder.tv_order_num.setVisibility(View.GONE);
+        } else {
+            holder.tv_order_num.setText(num);
+            holder.iv_minus.setVisibility(View.VISIBLE);
+            holder.tv_order_num.setVisibility(View.VISIBLE);
+        }
+        //设置tag，方便DishFragment通过tag找到View
+        holder.mView.setTag(position);
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,32 +100,51 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         holder.iv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.iv_minus.getVisibility() == View.GONE) {
-                    holder.iv_minus.setVisibility(View.VISIBLE);
-                    holder.tv_order_num.setVisibility(View.VISIBLE);
-                }
-                String s = holder.tv_order_num.getText().toString();
-                if (TextUtils.isEmpty(s))
-                    holder.tv_order_num.setText(String.valueOf(1));
-                else
-                    holder.tv_order_num.setText(String.valueOf(Integer.parseInt(s) + 1));
-                //通知数据
-                mListener.onDishListButtonClick(holder.mItem.type, 1);
+                addClick(holder);
             }
         });
         holder.iv_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.tv_order_num.setText(String.valueOf(Integer.parseInt(
-                        holder.tv_order_num.getText().toString()) - 1));
-                if (Integer.parseInt(holder.tv_order_num.getText().toString()) == 0) {
-                    holder.iv_minus.setVisibility(View.GONE);
-                    holder.tv_order_num.setVisibility(View.GONE);
-                }
-                //通知数据
-                mListener.onDishListButtonClick(holder.mItem.type, -1);
+                minusClick(holder);
             }
         });
+    }
+
+
+    private void addClick(ViewHolder holder) {
+        if (holder.iv_minus.getVisibility() == View.GONE) {
+            holder.iv_minus.setVisibility(View.VISIBLE);
+            holder.tv_order_num.setVisibility(View.VISIBLE);
+        }
+        String s = holder.tv_order_num.getText().toString();
+        if (TextUtils.isEmpty(s))
+            holder.tv_order_num.setText(String.valueOf(1));
+        else
+            holder.tv_order_num.setText(String.valueOf(Integer.parseInt(s) + 1));
+        mListener.onDishListButtonClick(holder.mItem.type, 1, holder.mItem.tv_price,
+                holder.mItem.tv_dish_name, holder.getAdapterPosition(), holder.mItem.iv_dish);
+        saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
+    }
+
+    private void minusClick(ViewHolder holder) {
+        String num = holder.tv_order_num.getText().toString();
+        holder.tv_order_num.setText(String.valueOf(Integer.parseInt(num) - 1));
+        if ("1".equals(num)) {
+            holder.iv_minus.setVisibility(View.GONE);
+            holder.tv_order_num.setVisibility(View.GONE);
+        }
+        mListener.onDishListButtonClick(holder.mItem.type, -1, holder.mItem.tv_price,
+                holder.mItem.tv_dish_name, holder.getAdapterPosition(), holder.mItem.iv_dish);
+        saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
+    }
+
+    //保存数据
+    public void saveData(int position, String num) {
+        if ("0".equals(num))
+            bookDishMap.remove(position);
+        else
+            bookDishMap.put(position, num);
     }
 
     @Override

@@ -111,12 +111,13 @@ public class CategoryFragment extends Fragment {
                     old_num = Integer.parseInt(value);
                 }
                 int new_num = old_num + num;
+                category_num.setText(String.valueOf(new_num));
                 if (new_num == 0) {
                     category_num.setVisibility(View.GONE);
                 } else {
-                    category_num.setText(String.valueOf(new_num));
                     category_num.setVisibility(View.VISIBLE);
                 }
+                myCategoryRecyclerViewAdapter.storeBookNum(position, Integer.toString(new_num));
             }
         }, 100);
     }
