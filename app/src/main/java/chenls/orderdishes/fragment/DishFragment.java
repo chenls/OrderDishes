@@ -17,6 +17,7 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.DishRecyclerViewAdapter;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.image.ImageLoader;
+import chenls.orderdishes.utils.CommonUtil;
 
 /**
  * A fragment representing a list of Items.
@@ -150,8 +151,8 @@ public class DishFragment extends Fragment {
         //保存数据 便于恢复界面
         dishRecyclerViewAdapter.saveData(position, num);
         ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
-        ImageView iv_minus = (ImageView) findViewInViewGroupById(view, R.id.iv_minus);
-        TextView tv_order_num = (TextView) findViewInViewGroupById(view, R.id.tv_order_num);
+        ImageView iv_minus = (ImageView)  CommonUtil.findViewInViewGroupById(view, R.id.iv_minus);
+        TextView tv_order_num = (TextView)  CommonUtil.findViewInViewGroupById(view, R.id.tv_order_num);
         assert tv_order_num != null;
         assert iv_minus != null;
         if ("0".equals(num)) {
@@ -163,27 +164,6 @@ public class DishFragment extends Fragment {
             tv_order_num.setVisibility(View.VISIBLE);
             iv_minus.setVisibility(View.VISIBLE);
         }
-    }
-
-    /**
-     * 在ViewGroup中根据id进行查找
-     *
-     * @param vg ViewGroup
-     * @param id 如：R.id.tv_name
-     * @return View
-     */
-    private View findViewInViewGroupById(ViewGroup vg, int id) {
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            View v = vg.getChildAt(i);
-            if (v.getId() == id) {
-                return v;
-            } else {
-                if (v instanceof ViewGroup) {
-                    return findViewInViewGroupById((ViewGroup) v, id);
-                }
-            }
-        }
-        return null;
     }
 
     @Override

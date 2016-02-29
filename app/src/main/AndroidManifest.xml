@@ -39,10 +39,25 @@
         </activity>
         <activity
             android:name=".activity.AckOrderActivity"
-            android:label="@string/ack_order_activity">
+            android:label="@string/ack_order_activity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.DishDetailActivity" />
+        </activity>
+        <activity
+            android:name=".activity.ConsigneeAddressActivity"
+            android:label="@string/consignee_address">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.AckOrderActivity" />
+        </activity>
+        <activity
+            android:name=".activity.OrderMarkActivity"
+            android:label="@string/order_mark">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.AckOrderActivity" />
         </activity>
     </application>
 

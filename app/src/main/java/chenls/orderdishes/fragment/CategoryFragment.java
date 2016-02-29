@@ -15,6 +15,7 @@ import android.widget.TextView;
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.CategoryRecyclerViewAdapter;
 import chenls.orderdishes.content.CategoryContent;
+import chenls.orderdishes.utils.CommonUtil;
 
 /**
  * A fragment representing a list of Items.
@@ -89,12 +90,10 @@ public class CategoryFragment extends Fragment {
             @Override
             public void run() {
                 ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
-                View background_left = findViewInViewGroupById(view, R.id.background_left);
+                View background_left =  CommonUtil.findViewInViewGroupById(view, R.id.background_left);
                 myCategoryRecyclerViewAdapter.changBackground(view, background_left);
             }
         }, 100);
-
-//        myCategoryRecyclerViewAdapter.notifyItemChanged(position);
     }
 
     public void setDishNum(final int position, final int num) {
@@ -103,7 +102,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void run() {
                 ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
-                TextView category_num = (TextView) findViewInViewGroupById(view, R.id.category_num);
+                TextView category_num = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.category_num);
                 assert category_num != null;
                 int old_num = 0;
                 String value = category_num.getText().toString();
@@ -120,27 +119,6 @@ public class CategoryFragment extends Fragment {
                 myCategoryRecyclerViewAdapter.storeBookNum(position, Integer.toString(new_num));
             }
         }, 100);
-    }
-
-    /**
-     * 在ViewGroup中根据id进行查找
-     *
-     * @param vg ViewGroup
-     * @param id 如：R.id.tv_name
-     * @return View
-     */
-    private View findViewInViewGroupById(ViewGroup vg, int id) {
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            View v = vg.getChildAt(i);
-            if (v.getId() == id) {
-                return v;
-            } else {
-                if (v instanceof ViewGroup) {
-                    return findViewInViewGroupById((ViewGroup) v, id);
-                }
-            }
-        }
-        return null;
     }
 
     @Override

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="chenls.orderdishes.activity.ConsigneeAddressActivity">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingEnd="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingStart="5dp">
+
+            <TextView
+                android:id="@+id/consignee_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="@string/quick_mark"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_no_capsicum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="4"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/no_capsicum"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_little_capsicum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="5"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/little_capsicum"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_much_capsicum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="6"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/much_capsicum"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_no_green_onion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="7"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/no_green_onion"
+                        android:textSize="12sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_no_onion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="4"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/no_onion"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_no_caraway"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="5"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/no_caraway"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_much_vinegar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="6"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/much_vinegar"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_much_green_onion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="7"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/button_not_select_blue_background"
+                        android:padding="7dp"
+                        android:text="@string/much_green_onion"
+                        android:textSize="12sp" />
+
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/view4"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:paddingEnd="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingStart="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:text="@string/other_mark"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_other_mark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:gravity="bottom"
+                android:hint="@string/other_mark_hint"
+                android:minLines="2"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/bt_sure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/view5"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_circle_background"
+        android:text="@string/sure"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp" />
+</RelativeLayout>

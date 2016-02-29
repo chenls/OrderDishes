@@ -9,4 +9,5 @@
     <color name="colorLightGrey">#bcbcbc</color>
     <color name="colorBackground">#dfe4e9</color>
     <color name="colorRelativeLayout">#4e4e4e</color>
+    <color name="colorGreen">#4dbf60</color>
 </resources>

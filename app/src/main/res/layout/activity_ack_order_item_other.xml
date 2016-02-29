@@ -7,10 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_corners_background"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:layout_height="80dp">
 
         <ImageView
             android:id="@+id/iv_dish"
@@ -18,7 +15,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:contentDescription="@string/dish"
             android:src="@mipmap/address_icon_reserve" />
 
@@ -63,5 +60,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
+
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -3,8 +3,31 @@ package chenls.orderdishes.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.view.View;
+import android.view.ViewGroup;
 
-class CommonUtil {
+public class CommonUtil {
+
+    /**
+     * 在ViewGroup中根据id进行查找
+     *
+     * @param vg ViewGroup
+     * @param id 如：R.id.tv_name
+     * @return View
+     */
+    public static View findViewInViewGroupById(ViewGroup vg, int id) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            View v = vg.getChildAt(i);
+            if (v.getId() == id) {
+                return v;
+            } else {
+                if (v instanceof ViewGroup) {
+                    return findViewInViewGroupById((ViewGroup) v, id);
+                }
+            }
+        }
+        return null;
+    }
 
     public static boolean checkNetState(Context context) {
         boolean netState = false;
@@ -12,8 +35,8 @@ class CommonUtil {
         if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+                for (NetworkInfo anInfo : info) {
+                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
                         netState = true;
                         break;
                     }

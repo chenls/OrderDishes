@@ -13,11 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
         app:layoutManager="LinearLayoutManager"
         tools:context=".fragment.CategoryFragment"
-        tools:listitem="@layout/activity_ack_order_item" />
+        tools:listitem="@layout/activity_ack_order_item_other" />
 
     <RelativeLayout
         android:id="@+id/bottom"
