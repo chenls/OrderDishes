@@ -32,8 +32,13 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         setContentView(R.layout.activity_ack_order);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Map<Integer, DishBean> dishBeanMap = (Map<Integer, DishBean>)
-                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
+        Map<Integer, DishBean> dishBeanMap = null;
+        try {
+            dishBeanMap = (Map<Integer, DishBean>) bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         TextView tv_total_price = (TextView) findViewById(R.id.tv_total_price);
         String total_price = bundle.getString(OrderDishActivity.TOTAL_PRICE);
         tv_total_price.setText(total_price);
