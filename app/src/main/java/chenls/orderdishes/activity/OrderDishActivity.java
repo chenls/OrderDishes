@@ -23,7 +23,7 @@ import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DishFragment;
-import chenls.orderdishes.utils.SerializableMap;
+import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class OrderDishActivity extends AppCompatActivity implements
         DishFragment.OnListFragmentInteractionListener,

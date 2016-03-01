@@ -30,7 +30,7 @@
                 android:src="@mipmap/icon_position" />
 
             <TextView
-                android:id="@+id/consignee_name"
+                android:id="@+id/order_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/imageView2"
@@ -43,14 +43,14 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/consignee_tel"
+                android:id="@+id/pay_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/consignee_name"
+                android:layout_alignTop="@+id/order_name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
-                android:layout_toEndOf="@+id/consignee_name"
-                android:layout_toRightOf="@+id/consignee_name"
+                android:layout_toEndOf="@+id/order_name"
+                android:layout_toRightOf="@+id/order_name"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16sp" />
 
@@ -58,8 +58,8 @@
                 android:id="@+id/consignee_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/consignee_name"
-                android:layout_alignStart="@+id/consignee_name"
+                android:layout_alignLeft="@+id/order_name"
+                android:layout_alignStart="@+id/order_name"
                 android:layout_below="@+id/imageView2"
                 android:layout_marginTop="-5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -91,6 +91,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_play_online"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
@@ -126,6 +127,7 @@
                 android:background="@color/colorLightGrey" />
 
             <RelativeLayout
+                android:id="@+id/rl_play_cash"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 

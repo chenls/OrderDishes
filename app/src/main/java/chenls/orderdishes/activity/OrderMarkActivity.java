@@ -32,7 +32,7 @@ public class OrderMarkActivity extends AppCompatActivity implements View.OnClick
                 else
                     mark = mark + other_mark;
                 Intent intent = new Intent(OrderMarkActivity.this, AckOrderActivity.class);
-                intent.putExtra(AckOrderActivity.MARK, mark);
+                intent.putExtra(AckOrderActivity.CONSIGNEE_MARK, mark);
                 setResult(RESULT_OK, intent);
                 finish();
             }

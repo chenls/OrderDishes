@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import chenls.orderdishes.R;
@@ -18,13 +21,19 @@ import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.image.ImageLoader;
 import chenls.orderdishes.utils.CommonUtil;
+import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
+import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
     public static final String CONSIGNEE_NAME = "consignee_name";
     public static final String CONSIGNEE_TEL = "consignee_tel";
     public static final String CONSIGNEE_ADDRESS = "consignee_address";
-    public static final String MARK = "mark";
+    public static final String CONSIGNEE_MARK = "consigneeMark";
+    public static final String CONSIGNEE_MESSAGE = "consignee_message";
     private RecyclerView recyclerView;
+    private String consigneeMark;
+    private String consigneeMessage;
+    private Boolean isOnlinePay = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +41,10 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         setContentView(R.layout.activity_ack_order);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Map<Integer, DishBean> dishBeanMap = null;
-        try {
-            dishBeanMap = (Map<Integer, DishBean>) bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        TextView tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-        String total_price = bundle.getString(OrderDishActivity.TOTAL_PRICE);
+        final Map<Integer, DishBean> dishBeanMap = (Map<Integer, DishBean>)
+                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
+        final TextView tv_total_price = (TextView) findViewById(R.id.tv_total_price);
+        final String total_price = bundle.getString(OrderDishActivity.TOTAL_PRICE);
         tv_total_price.setText(total_price);
         recyclerView = (RecyclerView) findViewById(R.id.list);
         //如果每个item大小固定，设置这个属性可以提高性能
@@ -48,6 +52,25 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         recyclerView.setLayoutManager(new LinearLayoutManager(AckOrderActivity.this));
         ImageLoader imageLoader = new ImageLoader(AckOrderActivity.this);
         recyclerView.setAdapter(new AckOrderRecyclerViewAdapter(AckOrderActivity.this, imageLoader, dishBeanMap));
+        Button ack_button = (Button) findViewById(R.id.ack_button);
+        ack_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isOnlinePay) {
+                    Intent intent = new Intent(AckOrderActivity.this, PlayCashActivity.class);
+                    Bundle bundle = new Bundle();
+                    SerializableMap map = new SerializableMap(dishBeanMap);
+                    bundle.putSerializable(OrderDishActivity.DISH_BEAN_MAP, (Serializable) map.getMap());
+                    bundle.putString(OrderDishActivity.TOTAL_PRICE, total_price);
+                    bundle.putString(CONSIGNEE_MESSAGE, consigneeMessage);
+                    bundle.putString(CONSIGNEE_MARK, consigneeMark);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+
+                }
+            }
+        });
     }
 
     @Override
@@ -66,7 +89,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
             case AckOrderRecyclerViewAdapter.BUTTON_NATIVE:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle(getString(R.string.table));
-                builder.setIcon(R.mipmap.ic_launcher);
+                builder.setIcon(R.mipmap.select);
                 int total = 25;
                 final String s[] = new String[total];
                 for (int i = 0; i < total; i++) {
@@ -86,8 +109,10 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 startActivityForResult(intent2, AckOrderRecyclerViewAdapter.BUTTON_OUTER);
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_ONLINE:
+                isOnlinePay = true;
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_CASH:
+                isOnlinePay = false;
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_MARK:
                 Intent intent3 = new Intent(AckOrderActivity.this, OrderMarkActivity.class);
@@ -106,27 +131,29 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 String tel = data.getStringExtra(CONSIGNEE_TEL);
                 String address = data.getStringExtra(CONSIGNEE_ADDRESS);
                 changeConsigneeMessage(name, tel, address);
+                ConsigneeMessageUtil.SaveMessage(AckOrderActivity.this, name, tel, address);
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_MARK:
-                String mark = data.getStringExtra(MARK);
+                consigneeMark = data.getStringExtra(CONSIGNEE_MARK);
                 ViewGroup view = (ViewGroup) recyclerView.getChildAt(0);
                 TextView tv_mark = (TextView) CommonUtil.findViewInViewGroupById((ViewGroup) view.getChildAt(2), R.id.tv_mark);
                 assert tv_mark != null;
-                tv_mark.setText(mark);
+                tv_mark.setText(consigneeMark);
                 break;
         }
     }
 
     private void changeConsigneeMessage(String name, String tel, String address) {
         ViewGroup view = (ViewGroup) recyclerView.getChildAt(0);
-        TextView consignee_name = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.consignee_name);
+        TextView consignee_name = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.order_name);
         assert consignee_name != null;
         consignee_name.setText(name);
-        TextView consignee_tel = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.consignee_tel);
+        TextView consignee_tel = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.pay_num);
         assert consignee_tel != null;
         consignee_tel.setText(tel);
         TextView consignee_address = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.consignee_address);
         assert consignee_address != null;
         consignee_address.setText(address);
+        consigneeMessage = name + "," + tel + "," + address;
     }
 }

@@ -17,6 +17,7 @@ import java.util.Map;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.image.ImageLoader;
+import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
 public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRecyclerViewAdapter.ViewHolder> {
 
@@ -68,11 +69,15 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (holder.getItemViewType() == 1) {
+            Map<String, String> map = ConsigneeMessageUtil.GetMessage(context);
+            holder.consignee_name.setText(map.get("name"));
+            holder.consignee_tel.setText(map.get("tel"));
+            holder.consignee_address.setText(map.get("address"));
             holder.consignee_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setIcon(R.mipmap.address_icon_reserve);
+                    builder.setIcon(R.mipmap.select);
                     builder.setTitle(context.getString(R.string.choose));
                     final String s[] = new String[]{context.getString(R.string._native), context.getString(R.string.outer)};
                     builder.setSingleChoiceItems(s, -1, new DialogInterface.OnClickListener() {
@@ -92,7 +97,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                     builder.create().show();
                 }
             });
-            holder.iv_play_online.setOnClickListener(new View.OnClickListener() {
+            holder.rl_play_online.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     holder.iv_play_online.setBackgroundResource(R.mipmap.check_on);
@@ -100,7 +105,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                     mListener.OnClickListener(BUTTON_ONLINE);
                 }
             });
-            holder.iv_play_cash.setOnClickListener(new View.OnClickListener() {
+            holder.rl_play_cash.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     holder.iv_play_online.setBackgroundResource(R.mipmap.check_off);
@@ -117,7 +122,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
             return;
         }
         holder.mItem = dishBeanMap.get(getKey(dishBeanMap)[position - 1]);
-        holder.iv_dish.setImageResource(R.mipmap.address_icon_reserve);
+        holder.iv_dish.setImageResource(R.mipmap.loading);
         imageLoader.DisplayImage(holder.mItem.getImage(), holder.iv_dish, false);
         holder.tv_dish_name.setText(holder.mItem.getName());
         int num = holder.mItem.getNum();
@@ -136,7 +141,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         public TextView tv_dish_num;
         public TextView tv_dish_price;
         public DishBean mItem;
-        public RelativeLayout consignee_message, mark;
+        public RelativeLayout consignee_message, rl_play_online, rl_play_cash, mark;
         public TextView consignee_name, consignee_tel, consignee_address;
         public ImageView iv_play_online, iv_play_cash;
 
@@ -144,9 +149,11 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
             super(view);
             if (viewType == 1) {
                 consignee_message = (RelativeLayout) view.findViewById(R.id.consignee_message);
-                consignee_name = (TextView) view.findViewById(R.id.consignee_name);
-                consignee_tel = (TextView) view.findViewById(R.id.consignee_tel);
+                consignee_name = (TextView) view.findViewById(R.id.order_name);
+                consignee_tel = (TextView) view.findViewById(R.id.pay_num);
                 consignee_address = (TextView) view.findViewById(R.id.consignee_address);
+                rl_play_online = (RelativeLayout) view.findViewById(R.id.rl_play_online);
+                rl_play_cash = (RelativeLayout) view.findViewById(R.id.rl_play_cash);
                 iv_play_online = (ImageView) view.findViewById(R.id.iv_play_online);
                 iv_play_cash = (ImageView) view.findViewById(R.id.iv_play_cash);
                 mark = (RelativeLayout) view.findViewById(R.id.mark);

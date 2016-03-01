@@ -55,7 +55,7 @@
                         android:background="@color/colorBackground"
                         android:contentDescription="@string/dish"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/address_icon_reserve" />
+                        android:src="@mipmap/loading" />
 
                     <TextView
                         android:id="@+id/tv_dish_name"

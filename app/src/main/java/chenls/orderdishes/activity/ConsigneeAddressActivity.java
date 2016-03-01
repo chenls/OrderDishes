@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Map;
+
 import chenls.orderdishes.R;
+import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
 public class ConsigneeAddressActivity extends AppCompatActivity {
     private EditText et_consignee_name, et_consignee_tel, et_consignee_address;
@@ -21,6 +24,10 @@ public class ConsigneeAddressActivity extends AppCompatActivity {
         et_consignee_name = (EditText) findViewById(R.id.et_consignee_name);
         et_consignee_tel = (EditText) findViewById(R.id.et_consignee_tel);
         et_consignee_address = (EditText) findViewById(R.id.et_consignee_address);
+        Map<String, String> map = ConsigneeMessageUtil.GetMessage(ConsigneeAddressActivity.this);
+        et_consignee_name.setText(map.get("name"));
+        et_consignee_tel.setText(map.get("tel"));
+        et_consignee_address.setText(map.get("address"));
         bt_sure = (Button) findViewById(R.id.bt_sure);
         bt_sure.setOnClickListener(new View.OnClickListener() {
             @Override

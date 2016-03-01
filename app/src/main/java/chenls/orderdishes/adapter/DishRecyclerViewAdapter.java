@@ -67,7 +67,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             return;
         }
         holder.mItem = mValues.get(holder.getAdapterPosition());
-        holder.iv_dish.setImageResource(R.mipmap.address_icon_reserve);
+        holder.iv_dish.setImageResource(R.mipmap.loading);
         imageLoader.DisplayImage(holder.mItem.iv_dish, holder.iv_dish, false);
         holder.tv_dish_name.setText(holder.mItem.tv_dish_name);
         holder.tv_signboard.setVisibility(holder.mItem.tv_signboard);

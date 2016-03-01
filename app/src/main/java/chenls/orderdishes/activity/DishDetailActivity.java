@@ -19,7 +19,7 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.image.ImageLoader;
-import chenls.orderdishes.utils.SerializableMap;
+import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
