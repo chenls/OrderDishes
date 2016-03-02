@@ -17,27 +17,30 @@ import chenls.orderdishes.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //设置ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Intent intent = new Intent(this, OrderDishActivity.class);
+        //设置FloatingActionButton
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final Intent intent = new Intent(this, OrderDishActivity.class);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
             }
         });
-
+        //设置抽屉DrawerLayout
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        drawer.openDrawer(GravityCompat.START); //打开抽屉
         toggle.syncState();
-
+        //设置导航栏NavigationView的点击事件
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
