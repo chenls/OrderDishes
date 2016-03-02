@@ -66,6 +66,15 @@
     <string name="play_sum">支付金额</string>
     <string name="pay_way">支付方式</string>
     <string name="online_pay">在线支付</string>
-    <string name="Login">登录</string>
+    <string name="login">登录</string>
     <string name="order_num">订单号：%s</string>
+    <string name="register">注册</string>
+    <string name="address">地址信息</string>
+    <string name="consignee">联系人</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="phone_num">手机号</string>
+    <string name="password">密码</string>
+    <string name="name">姓名</string>
 </resources>

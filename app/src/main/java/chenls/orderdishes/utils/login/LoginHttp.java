@@ -7,7 +7,7 @@ import java.net.URLEncoder;
 
 import chenls.orderdishes.utils.CommonUtil;
 
-public class LoginService {
+public class LoginHttp {
     public static String loginPost(String userName, String userPwd) {
         String path = "http://192.168.191.1:8080/Login/LoginServlet";
         try {
@@ -27,11 +27,9 @@ public class LoginService {
             os.write(data.getBytes());
             int code = connection.getResponseCode();
             if (code == 200) {
-                String re = CommonUtil.inputStreamToString(connection.getInputStream());
-                return re;
+                return CommonUtil.inputStreamToString(connection.getInputStream());
             } else {
-                String re = CommonUtil.inputStreamToString(connection.getInputStream());
-                return re;
+                return CommonUtil.inputStreamToString(connection.getInputStream());
 //                return "登录失败";
             }
         } catch (Exception e) {

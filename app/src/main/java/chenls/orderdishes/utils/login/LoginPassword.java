@@ -16,11 +16,6 @@ public class LoginPassword {
         editor.commit();
     }
 
-    public static void ClearPwd(Context context) {
-        SharedPreferences sp = context.getSharedPreferences("login_config", Context.MODE_PRIVATE);
-        sp.edit().clear().commit();
-    }
-
     public static Map<String, String> GetPwd(Context context) {
         SharedPreferences sp = context.getSharedPreferences("login_config", Context.MODE_PRIVATE);
         Map<String, String> map = new HashMap<>();

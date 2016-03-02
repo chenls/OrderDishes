@@ -30,7 +30,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- alipay sdk end -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.WelcomeActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -39,6 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.OrderDishActivity"
             android:label="@string/order_dish_activity"
@@ -84,9 +88,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.AckOrderActivity" />
         </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:label="@string/Login"></activity>
     </application>
 
 </manifest>
