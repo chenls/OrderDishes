@@ -16,11 +16,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/et_username"
+        android:id="@+id/et_user_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:hint="@string/phone_num" />
+        android:hint="@string/phoneNumOrUserName" />
 
     <EditText
         android:id="@+id/et_userpwd"

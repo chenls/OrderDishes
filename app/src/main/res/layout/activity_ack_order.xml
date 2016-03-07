@@ -30,7 +30,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_phone_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -47,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/textView"
-            android:layout_toRightOf="@+id/textView"
+            android:layout_toEndOf="@+id/tv_phone_num"
+            android:layout_toRightOf="@+id/tv_phone_num"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorWhite" />
 

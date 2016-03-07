@@ -77,4 +77,7 @@
     <string name="phone_num">手机号</string>
     <string name="password">密码</string>
     <string name="name">姓名</string>
+    <string name="verify_sms_code">请输入短信验证码</string>
+    <string name="re_send">重发验证码</string>
+    <string name="phoneNumOrUserName">手机号/用户名</string>
 </resources>

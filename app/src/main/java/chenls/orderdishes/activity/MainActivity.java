@@ -12,8 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import chenls.orderdishes.R;
+import cn.bmob.v3.BmobUser;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,11 +41,30 @@ public class MainActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
-        drawer.openDrawer(GravityCompat.START); //打开抽屉
+        Intent intent1 = getIntent();
+        if (intent1.getBooleanExtra(WelcomeActivity.IS_FIRST_OPEN, false)) {
+            drawer.openDrawer(GravityCompat.START); //如果第一次打开，则打开抽屉
+        }
         toggle.syncState();
         //设置导航栏NavigationView的点击事件
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        final ImageView iv_pic = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv_pic);
+        final ImageView iv_logout = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.iv_logout);
+        iv_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //退出登录
+                BmobUser.logOut(MainActivity.this);
+                Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        final TextView tv_name = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_name);
+        tv_name.setText((String) BmobUser.getObjectByKey(this, "username"));
+        final TextView tv_phone_num = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_phone_num);
+        tv_phone_num.setText((String) BmobUser.getObjectByKey(this, "mobilePhoneNumber"));
     }
 
     @Override

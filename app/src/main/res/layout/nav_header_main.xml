@@ -21,11 +21,12 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dp"
+        android:clickable="true"
         android:contentDescription="@string/exit"
         android:src="@mipmap/ic_drawer_logout" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_pic"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
@@ -35,20 +36,21 @@
         android:src="@android:drawable/sym_def_app_icon" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_below="@+id/imageView"
+        android:layout_alignLeft="@+id/iv_pic"
+        android:layout_alignStart="@+id/iv_pic"
+        android:layout_below="@+id/iv_pic"
         android:paddingTop="20dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_phone_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView4" />
+        android:layout_below="@+id/tv_name" />
 </RelativeLayout>

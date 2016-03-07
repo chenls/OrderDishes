@@ -1,15 +1,14 @@
 package chenls.orderdishes.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,19 +21,21 @@ import java.util.ArrayList;
 import chenls.orderdishes.R;
 import chenls.orderdishes.fragment.LoginDialogFragment;
 import chenls.orderdishes.fragment.RegisterDialogFragment;
+import chenls.orderdishes.fragment.VerifySmsCodeDialogFragment;
+import cn.bmob.v3.BmobUser;
 
 
 public class WelcomeActivity extends AppCompatActivity implements
         LoginDialogFragment.OnLoginFragmentInteractionListener,
-        RegisterDialogFragment.OnRegisterFragmentInteractionListener {
-    Intent intent;
+        RegisterDialogFragment.OnRegisterFragmentInteractionListener,
+        VerifySmsCodeDialogFragment.OnVerifySmsCodeFragmentInteractionListener {
     //圆点图标数组
     private ImageView[] img;
     //视图列表
     ArrayList<View> viewList;
-    private SharedPreferences sharedPreferences;
-    public static final String IS_NOT_FIRST_OPEN = "is_not_first_open";
     private LoginDialogFragment loginDialogFragment;
+    public static final String IS_FIRST_OPEN = "is_first_open";
+    private RegisterDialogFragment registerDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,9 @@ public class WelcomeActivity extends AppCompatActivity implements
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
-        sharedPreferences = this.getSharedPreferences(IS_NOT_FIRST_OPEN, Context.MODE_PRIVATE);
-        //是否进入滑动欢迎页
-        if (sharedPreferences.getBoolean(IS_NOT_FIRST_OPEN, false)) {
+        //判断用户名，是否进入滑动欢迎页
+        String username = (String) BmobUser.getObjectByKey(this, "username");
+        if (!TextUtils.isEmpty(username)) {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
@@ -138,24 +139,32 @@ public class WelcomeActivity extends AppCompatActivity implements
 
     @Override
     public void onRegisterButtonPressed() {
-        loginDialogFragment.dismiss();
-        RegisterDialogFragment registerDialogFragment = new RegisterDialogFragment();
+        if (loginDialogFragment != null)
+            loginDialogFragment.dismiss();
+        registerDialogFragment = new RegisterDialogFragment();
         registerDialogFragment.show(getSupportFragmentManager(), "registerDialogFragment");
 
     }
 
     @Override
     public void onLoginSuccess() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(IS_NOT_FIRST_OPEN, true);
-        editor.commit();
-        intent = new Intent(WelcomeActivity.this, MainActivity.class);
+        Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+        intent.putExtra(IS_FIRST_OPEN, true);
         startActivity(intent);
         finish();
     }
 
     @Override
-    public void onRegisterSuccess() {
+    public void onRegisterSuccess(String userName, String userPwd, String phoneNum) {
+        if (registerDialogFragment != null)
+            registerDialogFragment.dismiss();
+        VerifySmsCodeDialogFragment verifySmsCodeDialogFragment = VerifySmsCodeDialogFragment
+                .newInstance(userName, userPwd, phoneNum);
+        verifySmsCodeDialogFragment.show(getSupportFragmentManager(), "registerDialogFragment");
+    }
+
+    @Override
+    public void onVerifySmsCodeSuccess() {
         onLoginSuccess();
     }
 }

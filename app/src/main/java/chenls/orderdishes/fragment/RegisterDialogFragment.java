@@ -15,18 +15,16 @@ import android.widget.Toast;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.login.LoginHttp;
-import chenls.orderdishes.utils.login.LoginPassword;
 
 
 public class RegisterDialogFragment extends DialogFragment implements View.OnClickListener {
 
     private OnRegisterFragmentInteractionListener mListener;
     private EditText et_userpwd;
+    private EditText et_phone_number;
     private EditText et_username;
     private ProgressBar progressBar;
     private TextView register;
-    private EditText et_truth_name;
 
     public RegisterDialogFragment() {
     }
@@ -38,7 +36,7 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
         View view = inflater.inflate(R.layout.fragment_register_dialog, container, false);
         et_username = (EditText) view.findViewById(R.id.et_username);
         et_userpwd = (EditText) view.findViewById(R.id.et_userpwd);
-        et_truth_name = (EditText) view.findViewById(R.id.et_truth_name);
+        et_phone_number = (EditText) view.findViewById(R.id.et_phone_number);
         register = (TextView) view.findViewById(R.id.register);
         register.setOnClickListener(this);
         TextView register = (TextView) view.findViewById(R.id.register);
@@ -51,10 +49,10 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                final String userName = et_username.getText().toString().trim();
-                final String userPwd = et_userpwd.getText().toString().trim();
-                final String truthName = et_truth_name.getText().toString().trim();
-                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(userPwd) || TextUtils.isEmpty(truthName)) {
+                String userName = et_username.getText().toString().trim();
+                String userPwd = et_userpwd.getText().toString().trim();
+                String phoneNum = et_phone_number.getText().toString().trim();
+                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(userPwd) || TextUtils.isEmpty(phoneNum)) {
                     Toast.makeText(getActivity(), "输入信息不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -64,27 +62,7 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
                 }
                 register.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                //Login
-                new Thread() {
-                    @Override
-                    public void run() {
-                        //TODO 修改注册功能
-                        final String re = LoginHttp.loginPost(userName, userPwd);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if ("success".equals(re)) {
-                                    LoginPassword.SavePwd(getActivity(), userName, userPwd);
-                                    mListener.onRegisterSuccess();
-                                } else {
-                                    Toast.makeText(getActivity(), re, Toast.LENGTH_SHORT).show();
-                                    register.setVisibility(View.VISIBLE);
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                }.start();
+                mListener.onRegisterSuccess(userName, userPwd, phoneNum);
                 break;
         }
     }
@@ -108,6 +86,6 @@ public class RegisterDialogFragment extends DialogFragment implements View.OnCli
     }
 
     public interface OnRegisterFragmentInteractionListener {
-        void onRegisterSuccess();
+        void onRegisterSuccess(String userName, String userPwd, String phoneNum);
     }
 }

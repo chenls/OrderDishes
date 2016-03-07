@@ -15,20 +15,21 @@ import android.widget.Toast;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.login.LoginHttp;
-import chenls.orderdishes.utils.login.LoginPassword;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.SaveListener;
 
 
 public class LoginDialogFragment extends DialogFragment implements View.OnClickListener {
 
     private OnLoginFragmentInteractionListener mListener;
     private EditText et_userpwd;
-    private EditText et_username;
+    private EditText et_user_data;
     private ProgressBar progressBar;
     private TextView login;
 
     public LoginDialogFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -36,7 +37,7 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
                              Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View view = inflater.inflate(R.layout.fragment_login_dialog, container, false);
-        et_username = (EditText) view.findViewById(R.id.et_username);
+        et_user_data = (EditText) view.findViewById(R.id.et_user_data);
         et_userpwd = (EditText) view.findViewById(R.id.et_userpwd);
         login = (TextView) view.findViewById(R.id.login);
         login.setOnClickListener(this);
@@ -50,9 +51,9 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                final String userName = et_username.getText().toString().trim();
+                final String userData = et_user_data.getText().toString().trim();
                 final String userPwd = et_userpwd.getText().toString().trim();
-                if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(userPwd)) {
+                if (TextUtils.isEmpty(userData) || TextUtils.isEmpty(userPwd)) {
                     Toast.makeText(getActivity(), "用户名或密码为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -62,27 +63,10 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
                 }
                 login.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                //Login
-                new Thread() {
-                    @Override
-                    public void run() {
-                        final String re = LoginHttp.loginPost(userName, userPwd);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO 修改登录功能
-                                if ("网络超时".equals(re)) {
-                                    LoginPassword.SavePwd(getActivity(), userName, userPwd);
-                                    mListener.onLoginSuccess();
-                                } else {
-                                    Toast.makeText(getActivity(), re, Toast.LENGTH_SHORT).show();
-                                    login.setVisibility(View.VISIBLE);
-                                    progressBar.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    }
-                }.start();
+                if (userData.matches("^1\\d{10}$"))
+                    loginByPhonePwd(userData, userPwd);
+                else
+                    loginByUserName(userData, userPwd);
                 break;
             case R.id.register:
                 mListener.onRegisterButtonPressed();
@@ -111,5 +95,52 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
         void onLoginSuccess();
 
         void onRegisterButtonPressed();
+    }
+
+    /**
+     * 通过手机号登录
+     *
+     * @param phoneNum 手机号
+     * @param userPwd  密码
+     */
+    private void loginByPhonePwd(String phoneNum, String userPwd) {
+        BmobUser.loginByAccount(getContext(), phoneNum, userPwd, new LogInListener<BmobUser>() {
+            @Override
+            public void done(BmobUser user, BmobException e) {
+                if (user != null) {
+                    mListener.onLoginSuccess();
+                } else {
+//                    toast("错误码："+e.getErrorCode()+",错误原因："+e.getLocalizedMessage());
+                    Toast.makeText(getContext(), "登陆失败:", Toast.LENGTH_SHORT).show();
+                    login.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    /**
+     * 登陆用户
+     *
+     * @param userName 用户名
+     * @param userPwd  密码
+     */
+    private void loginByUserName(String userName, String userPwd) {
+        final BmobUser bu2 = new BmobUser();
+        bu2.setUsername(userName);
+        bu2.setPassword(userPwd);
+        bu2.login(getContext(), new SaveListener() {
+            @Override
+            public void onSuccess() {
+                mListener.onLoginSuccess();
+            }
+
+            @Override
+            public void onFailure(int code, String msg) {
+                Toast.makeText(getContext(), "登陆失败:" + msg, Toast.LENGTH_SHORT).show();
+                login.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 }

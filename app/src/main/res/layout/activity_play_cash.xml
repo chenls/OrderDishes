@@ -136,7 +136,7 @@
                 android:layout_below="@+id/view6">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/iv_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -151,8 +151,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_marginStart="15dp"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:layout_toRightOf="@+id/imageView"
+                    android:layout_toEndOf="@+id/iv_pic"
+                    android:layout_toRightOf="@+id/iv_pic"
                     android:text="@string/aliplay"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp"
