@@ -11,12 +11,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Arrays;
 import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
-import chenls.orderdishes.image.ImageLoader;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
 public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRecyclerViewAdapter.ViewHolder> {
@@ -26,14 +27,12 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
     public static final int BUTTON_ONLINE = 2;
     public static final int BUTTON_CASH = 3;
     public static final int BUTTON_MARK = 4;
-    private final ImageLoader imageLoader;
     private final Map<Integer, DishBean> dishBeanMap;
     private Context context;
     private OnClickListenerInterface mListener;
 
-    public AckOrderRecyclerViewAdapter(Context context, ImageLoader imageLoader, Map<Integer, DishBean> dishBeanMap) {
+    public AckOrderRecyclerViewAdapter(Context context, Map<Integer, DishBean> dishBeanMap) {
         this.context = context;
-        this.imageLoader = imageLoader;
         this.dishBeanMap = dishBeanMap;
 
         if (context instanceof OnClickListenerInterface) {
@@ -123,7 +122,11 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         }
         holder.mItem = dishBeanMap.get(getKey(dishBeanMap)[position - 1]);
         holder.iv_dish.setImageResource(R.mipmap.loading);
-        imageLoader.DisplayImage(holder.mItem.getImage(), holder.iv_dish, false);
+        Glide.with(context)
+                .load(holder.mItem.getImage())
+                .crossFade()
+                .placeholder(R.mipmap.loading)
+                .into(holder.iv_dish);
         holder.tv_dish_name.setText(holder.mItem.getName());
         int num = holder.mItem.getNum();
         holder.tv_dish_num.setText(context.getString(R.string.product_sign, num));

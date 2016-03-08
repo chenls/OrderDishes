@@ -19,7 +19,6 @@ import java.util.Map;
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.DishBean;
-import chenls.orderdishes.image.ImageLoader;
 import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
@@ -50,8 +49,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         //如果每个item大小固定，设置这个属性可以提高性能
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(AckOrderActivity.this));
-        ImageLoader imageLoader = new ImageLoader(AckOrderActivity.this);
-        recyclerView.setAdapter(new AckOrderRecyclerViewAdapter(AckOrderActivity.this, imageLoader, dishBeanMap));
+        recyclerView.setAdapter(new AckOrderRecyclerViewAdapter(AckOrderActivity.this, dishBeanMap));
         Button ack_button = (Button) findViewById(R.id.ack_button);
         ack_button.setOnClickListener(new View.OnClickListener() {
             @Override

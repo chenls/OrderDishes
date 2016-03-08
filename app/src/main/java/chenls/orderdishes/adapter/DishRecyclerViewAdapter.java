@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +20,6 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.content.DishContent.DishItem;
 import chenls.orderdishes.fragment.DishFragment.OnListFragmentInteractionListener;
-import chenls.orderdishes.image.ImageLoader;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DishItem} and makes a call to the
@@ -29,15 +30,13 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
     private final List<DishItem> mValues;
     private final OnListFragmentInteractionListener mListener;
     private final static int IS_TITLE = 1;
-    private final ImageLoader imageLoader;
     private final Context context;
     private Map<Integer, String> bookDishMap;
 
-    public DishRecyclerViewAdapter(Context context, ImageLoader imageLoader, OnListFragmentInteractionListener listener) {
+    public DishRecyclerViewAdapter(Context context,  OnListFragmentInteractionListener listener) {
         this.context = context;
         mValues = DishContent.ITEMS;
         mListener = listener;
-        this.imageLoader = imageLoader;
         bookDishMap = new HashMap<>();
     }
 
@@ -68,7 +67,11 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         }
         holder.mItem = mValues.get(holder.getAdapterPosition());
         holder.iv_dish.setImageResource(R.mipmap.loading);
-        imageLoader.DisplayImage(holder.mItem.iv_dish, holder.iv_dish, false);
+        Glide.with(context)
+                .load(holder.mItem.iv_dish)
+                .crossFade()
+                .placeholder(R.mipmap.loading)
+                .into(holder.iv_dish);
         holder.tv_dish_name.setText(holder.mItem.tv_dish_name);
         holder.tv_signboard.setVisibility(holder.mItem.tv_signboard);
         holder.tv_dish_summarize.setText(holder.mItem.tv_dish_summarize);

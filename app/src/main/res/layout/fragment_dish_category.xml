@@ -10,7 +10,6 @@
         android:id="@+id/dish_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_corners_background"
         android:padding="5dp"
         android:text="@string/signboard"
         android:textAppearance="?android:attr/textAppearanceLarge"

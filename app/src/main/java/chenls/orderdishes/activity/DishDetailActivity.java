@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.io.Serializable;
 import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
-import chenls.orderdishes.image.ImageLoader;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -93,7 +94,11 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         tv_sell_num.setText(getString(R.string.sell_num, item.tv_sell_num));
         tv_price.setText(String.valueOf(item.tv_price));
         ratingBar.setRating(item.ratingBar);
-        new ImageLoader(DishDetailActivity.this).DisplayImage(item.iv_dish, iv_dish, false, 2000);
+        Glide.with(DishDetailActivity.this)
+                .load(item.iv_dish)
+                .crossFade()
+                .placeholder(R.mipmap.loading)
+                .into(iv_dish);
         iv_add.setOnClickListener(this);
         iv_minus.setOnClickListener(this);
     }

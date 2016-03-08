@@ -16,7 +16,6 @@ import java.util.Arrays;
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.DishRecyclerViewAdapter;
 import chenls.orderdishes.content.DishContent;
-import chenls.orderdishes.image.ImageLoader;
 import chenls.orderdishes.utils.CommonUtil;
 
 /**
@@ -73,11 +72,10 @@ public class DishFragment extends Fragment {
                 linearLayoutManager = new LinearLayoutManager(context);
                 recyclerView.setLayoutManager(linearLayoutManager);
             }
-            ImageLoader imageLoader = new ImageLoader(getActivity());
 
             //如果每个item大小固定，设置这个属性可以提高性能
             recyclerView.setHasFixedSize(true);
-            dishRecyclerViewAdapter = new DishRecyclerViewAdapter(getActivity(), imageLoader, mListener);
+            dishRecyclerViewAdapter = new DishRecyclerViewAdapter(getActivity(), mListener);
             recyclerView.setAdapter(dishRecyclerViewAdapter);
             recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
@@ -151,8 +149,8 @@ public class DishFragment extends Fragment {
         //保存数据 便于恢复界面
         dishRecyclerViewAdapter.saveData(position, num);
         ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
-        ImageView iv_minus = (ImageView)  CommonUtil.findViewInViewGroupById(view, R.id.iv_minus);
-        TextView tv_order_num = (TextView)  CommonUtil.findViewInViewGroupById(view, R.id.tv_order_num);
+        ImageView iv_minus = (ImageView) CommonUtil.findViewInViewGroupById(view, R.id.iv_minus);
+        TextView tv_order_num = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.tv_order_num);
         assert tv_order_num != null;
         assert iv_minus != null;
         if ("0".equals(num)) {

@@ -32,7 +32,7 @@ public class DishContent {
     }
 
     private static DishItem createDummyItem(int position, int type) {
-        return new DishItem(type, position, "http://pic.nipic.com/2007-11-09/200711912230489_2.jpg",
+        return new DishItem(type, position, "http://img2.imgtn.bdimg.com/it/u=3370017031,684790873&fm=21&gp=0.jpg",
                 "菜名" + position, "菜的概述菜的概述菜的概述菜的概述菜的概述菜的菜的概述菜的概述菜的概述概述菜的概述" + position,
                 position, position > 2 ? View.VISIBLE : View.GONE, position, 2 * position, 3 * position);
     }
