@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -16,14 +17,13 @@ import java.io.Serializable;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
-public class AckOrderActivity extends SwipeBackActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
+public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
     public static final String CONSIGNEE_NAME = "consignee_name";
     public static final String CONSIGNEE_TEL = "consignee_tel";
     public static final String CONSIGNEE_ADDRESS = "consignee_address";

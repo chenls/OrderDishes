@@ -2,6 +2,7 @@ package chenls.orderdishes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -10,10 +11,9 @@ import android.widget.EditText;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
-public class ConsigneeAddressActivity extends SwipeBackActivity {
+public class ConsigneeAddressActivity extends AppCompatActivity {
     private EditText et_consignee_name, et_consignee_tel, et_consignee_address;
 
     @Override

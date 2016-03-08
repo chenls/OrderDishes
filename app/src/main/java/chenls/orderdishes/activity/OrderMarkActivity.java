@@ -3,6 +3,7 @@ package chenls.orderdishes.activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -10,9 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 
-public class OrderMarkActivity extends SwipeBackActivity implements View.OnClickListener {
+public class OrderMarkActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tv_no_capsicum, tv_little_capsicum, tv_much_capsicum, tv_no_green_onion,
             tv_no_onion, tv_no_caraway, tv_much_vinegar, tv_much_green_onion;
     private EditText et_other_mark;

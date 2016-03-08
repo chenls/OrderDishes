@@ -61,7 +61,6 @@
     <string name="check_off">未选中</string>
     <string name="pay">支付</string>
     <string name="alipay">支付宝</string>
-    <string name="aliplay">支付宝</string>
     <string name="order_name">订单名称</string>
     <string name="play_sum">支付金额</string>
     <string name="pay_way">支付方式</string>
@@ -72,8 +71,6 @@
     <string name="address">地址信息</string>
     <string name="consignee">联系人</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="phone_num">手机号</string>
     <string name="password">密码</string>
     <string name="name">姓名</string>

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,14 +19,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DishFragment;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
-public class OrderDishActivity extends SwipeBackActivity implements
+public class OrderDishActivity extends AppCompatActivity implements
         DishFragment.OnListFragmentInteractionListener,
         CategoryFragment.OnListFragmentInteractionListener,
         SwipeRefreshLayout.OnRefreshListener {

@@ -142,7 +142,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
-                    android:contentDescription="@string/aliplay"
+                    android:contentDescription="@string/alipay"
                     android:src="@mipmap/pay_icon_alipay" />
 
                 <TextView
@@ -153,7 +153,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_toEndOf="@+id/iv_pic"
                     android:layout_toRightOf="@+id/iv_pic"
-                    android:text="@string/aliplay"
+                    android:text="@string/alipay"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp"
                     tools:ignore="RelativeOverlap" />
