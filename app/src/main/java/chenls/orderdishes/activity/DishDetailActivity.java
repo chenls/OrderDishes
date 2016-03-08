@@ -2,7 +2,6 @@ package chenls.orderdishes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -18,11 +17,12 @@ import java.io.Serializable;
 import java.util.Map;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
-public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class DishDetailActivity extends SwipeBackActivity implements View.OnClickListener {
 
     private TextView tv_order_num, tv_total_num;
     private ImageView iv_minus;

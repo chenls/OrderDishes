@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -17,11 +16,12 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.SwipeBackLayout.SwipeBackActivity;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.utils.aliplay.PayResult;
 import chenls.orderdishes.utils.aliplay.SignUtils;
 
-public class PlayCashActivity extends AppCompatActivity {
+public class PlayCashActivity extends SwipeBackActivity {
     // 商户PID
     public static final String PARTNER = "2016030101173294";
     // 商户收款账号
