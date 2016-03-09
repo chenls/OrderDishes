@@ -25,11 +25,15 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.MyUser;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int SET_INFORMATION = 1;
+    private TextView tv_name;
+    private TextView tv_phone_num;
+    private ImageView iv_pic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         //设置抽屉DrawerLayout
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -61,31 +65,18 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        final ImageView iv_pic = (ImageView) headerView.findViewById(R.id.iv_pic);
-
-        MyUser myUser = BmobUser.getCurrentUser(MainActivity.this, MyUser.class);
-        BmobFile pic = myUser.getPic();
-        if (pic != null) {
-            Glide.with(MainActivity.this)
-                    .load(pic.getFileUrl(MainActivity.this))
-                    .asBitmap()
-                    .placeholder(R.mipmap.loading)
-                    .centerCrop()
-                    .into(new BitmapImageViewTarget(iv_pic) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            iv_pic.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
-
-        }
-        final TextView tv_name = (TextView) headerView.findViewById(R.id.tv_name);
-        tv_name.setText((String) BmobUser.getObjectByKey(this, "username"));
-        final TextView tv_phone_num = (TextView) headerView.findViewById(R.id.tv_phone_num);
-        tv_phone_num.setText((String) BmobUser.getObjectByKey(this, "mobilePhoneNumber"));
+        iv_pic = (ImageView) headerView.findViewById(R.id.iv_pic);
+        iv_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(MainActivity.this, SetInformationActivity.class);
+                startActivityForResult(intent2, SET_INFORMATION);
+                drawer.closeDrawer(GravityCompat.START);//关闭抽屉
+            }
+        });
+        tv_name = (TextView) headerView.findViewById(R.id.tv_name);
+        tv_phone_num = (TextView) headerView.findViewById(R.id.tv_phone_num);
+        changeInformation();
         final ImageView iv_logout = (ImageView) headerView.findViewById(R.id.iv_logout);
         iv_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +88,7 @@ public class MainActivity extends AppCompatActivity
                 builder.setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        BmobUser.logOut(MainActivity.this);
+                        MyUser.logOut(MainActivity.this);
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                         startActivity(intent);
                         finish();
@@ -111,6 +102,44 @@ public class MainActivity extends AppCompatActivity
                 builder.create().show();
             }
         });
+    }
+
+    private void changeInformation() {
+        MyUser myUser = MyUser.getCurrentUser(MainActivity.this, MyUser.class);
+        BmobFile pic = myUser.getPic();
+        if (pic != null) {
+            String url = pic.getFileUrl(MainActivity.this);
+            setFaceImage(url);
+
+        }
+        tv_name.setText((String) MyUser.getObjectByKey(this, "username"));
+        tv_phone_num.setText((String) MyUser.getObjectByKey(this, "mobilePhoneNumber"));
+    }
+
+    private void setFaceImage(String url) {
+        Glide.with(MainActivity.this)
+                .load(url)
+                .asBitmap()
+                .placeholder(R.mipmap.loading)
+                .centerCrop()
+                .into(new BitmapImageViewTarget(iv_pic) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        iv_pic.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SET_INFORMATION) {
+                changeInformation();
+            }
+        }
     }
 
     @Override

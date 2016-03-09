@@ -3,6 +3,7 @@ package chenls.orderdishes.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -48,8 +49,9 @@ public class CommonUtil {
         byte[] re = byteArrayOutputStream.toByteArray();
         inputStream.close();
         byteArrayOutputStream.close();
-        return new String(re,"utf-8");
+        return new String(re, "utf-8");
     }
+
     public static boolean checkNetState(Context context) {
         boolean netState = false;
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -66,4 +68,13 @@ public class CommonUtil {
         }
         return netState;
     }
+
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
 }

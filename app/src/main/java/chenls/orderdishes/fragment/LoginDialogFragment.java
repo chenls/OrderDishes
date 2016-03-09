@@ -14,8 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.utils.CommonUtil;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import cn.bmob.v3.listener.SaveListener;
@@ -104,9 +104,9 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
      * @param userPwd  密码
      */
     private void loginByPhonePwd(String phoneNum, String userPwd) {
-        BmobUser.loginByAccount(getContext(), phoneNum, userPwd, new LogInListener<BmobUser>() {
+        MyUser.loginByAccount(getContext(), phoneNum, userPwd, new LogInListener<MyUser>() {
             @Override
-            public void done(BmobUser user, BmobException e) {
+            public void done(MyUser user, BmobException e) {
                 if (user != null) {
                     mListener.onLoginSuccess();
                 } else {
@@ -126,7 +126,7 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
      * @param userPwd  密码
      */
     private void loginByUserName(String userName, String userPwd) {
-        final BmobUser bu2 = new BmobUser();
+        final MyUser bu2 = new MyUser();
         bu2.setUsername(userName);
         bu2.setPassword(userPwd);
         bu2.login(getContext(), new SaveListener() {

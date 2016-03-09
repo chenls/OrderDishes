@@ -70,7 +70,6 @@
     <string name="register">注册</string>
     <string name="address">地址信息</string>
     <string name="consignee">联系人</string>
-
     <string name="phone_num">手机号</string>
     <string name="password">密码</string>
     <string name="name">姓名</string>
@@ -80,4 +79,10 @@
     <string name="logout">退出登录</string>
     <string name="sure_logout">是否确认退出登录</string>
     <string name="cancel">取消</string>
+    <string name="location">外卖地址</string>
+    <string name="phone">电话</string>
+    <string name="change_face">修改头像</string>
+    <string name="set_information">编辑个人信息</string>
+    <string name="picture">拍照</string>
+    <string name="gallery">相册</string>
 </resources>

@@ -17,10 +17,10 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.fragment.LoginDialogFragment;
 import chenls.orderdishes.fragment.RegisterDialogFragment;
 import chenls.orderdishes.fragment.VerifySmsCodeDialogFragment;
-import cn.bmob.v3.BmobUser;
 
 
 public class WelcomeActivity extends AppCompatActivity implements
@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //判断用户名，是否进入滑动欢迎页
-        String username = (String) BmobUser.getObjectByKey(this, "username");
+        String username = (String) MyUser.getObjectByKey(this, "username");
         if (!TextUtils.isEmpty(username)) {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);

@@ -8,6 +8,15 @@ public class MyUser extends BmobUser {
     private static final long serialVersionUID = 1L;
 
     private BmobFile pic;
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public BmobFile getPic() {
         return pic;
