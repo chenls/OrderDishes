@@ -48,20 +48,12 @@
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.OrderDishActivity"
-            android:label="@string/order_dish_activity"
-            android:launchMode="singleTop">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
-        </activity>
-        <activity
             android:name=".activity.DishDetailActivity"
             android:label="@string/dish_detail_activity"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.OrderDishActivity" />
+                android:value=".activity.MainActivity" />
         </activity>
         <activity
             android:name=".activity.AckOrderActivity"

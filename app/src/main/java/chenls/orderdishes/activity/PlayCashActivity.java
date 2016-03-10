@@ -18,6 +18,7 @@ import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
+import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.aliplay.PayResult;
 import chenls.orderdishes.utils.aliplay.SignUtils;
 
@@ -100,11 +101,11 @@ public class PlayCashActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         final Map<Integer, DishBean> dishBeanMap = (Map<Integer, DishBean>)
-                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
+                bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
         final String consigneeMessage = bundle.getString(AckOrderActivity.CONSIGNEE_MESSAGE);
         final String consigneeMark = bundle.getString(AckOrderActivity.CONSIGNEE_MARK);
         TextView product_price = (TextView) findViewById(R.id.product_price);
-        price = bundle.getString(OrderDishActivity.TOTAL_PRICE);
+        price = bundle.getString(OrderDishFragment.TOTAL_PRICE);
         product_price.setText(price);
         TextView order_num = (TextView) findViewById(R.id.order_num);
         order_message = getString(R.string.order_num, getOutTradeNo());

@@ -20,6 +20,7 @@ import java.util.Map;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
+import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,8 +48,8 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(DishDetailActivity.this, AckOrderActivity.class);
                 Bundle bundle = new Bundle();
                 SerializableMap map = new SerializableMap(dishBeanMap);
-                bundle.putSerializable(OrderDishActivity.DISH_BEAN_MAP, (Serializable) map.getMap());
-                bundle.putString(OrderDishActivity.TOTAL_PRICE, tv_total_price.getText().toString());
+                bundle.putSerializable(OrderDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
+                bundle.putString(OrderDishFragment.TOTAL_PRICE, tv_total_price.getText().toString());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -67,22 +68,22 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         dishBeanMap = (Map<Integer, DishBean>)
-                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
-        tv_total_price.setText(bundle.getString(OrderDishActivity.TOTAL_PRICE));
-        String total_num = bundle.getString(OrderDishActivity.TOTAL_NUM);
+                bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
+        tv_total_price.setText(bundle.getString(OrderDishFragment.TOTAL_PRICE));
+        String total_num = bundle.getString(OrderDishFragment.TOTAL_NUM);
         if (!TextUtils.isEmpty(total_num) && !"0".equals(total_num)) {
             tv_total_num.setText(total_num);
             tv_total_num.setVisibility(View.VISIBLE);
             bt_compute.setVisibility(View.VISIBLE);
         }
-        String order_num = bundle.getString(OrderDishActivity.ORDER_NUM);
+        String order_num = bundle.getString(OrderDishFragment.ORDER_NUM);
         if (!(TextUtils.isEmpty(order_num) || "0".equals(order_num))) {
             iv_minus.setVisibility(View.VISIBLE);
             tv_order_num.setVisibility(View.VISIBLE);
             tv_order_num.setText(order_num);
         }
 
-        item = bundle.getParcelable(OrderDishActivity.DISH_ITEM);
+        item = bundle.getParcelable(OrderDishFragment.DISH_ITEM);
         assert item != null;
         tv_dish_name.setText(item.tv_dish_name);
         tv_signboard.setVisibility(item.tv_signboard);
@@ -176,9 +177,9 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void returnData() {
-        Intent intent = new Intent(this, OrderDishActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         String order_num = tv_order_num.getText().toString();
-        intent.putExtra(OrderDishActivity.ORDER_NUM, order_num);
+        intent.putExtra(OrderDishFragment.ORDER_NUM, order_num);
         setResult(RESULT_OK, intent);
         finish();
     }

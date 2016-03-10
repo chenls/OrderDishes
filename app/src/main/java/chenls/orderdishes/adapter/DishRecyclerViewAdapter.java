@@ -78,7 +78,6 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         holder.tv_comment.setText(context.getString(R.string.comment, holder.mItem.tv_comment));
         holder.tv_sell_num.setText(context.getString(R.string.sell_num, holder.mItem.tv_sell_num));
         holder.tv_price.setText(String.valueOf(holder.mItem.tv_price));
-        //TODO 重写RatingBar
         holder.ratingBar.setRating(holder.mItem.ratingBar);
         String num = bookDishMap.get(position);
         if (TextUtils.isEmpty(num)) {
