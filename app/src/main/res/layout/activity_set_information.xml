@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@color/colorBackground"
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
@@ -30,23 +31,27 @@
                 android:padding="15dp"
                 android:src="@mipmap/ic_face" />
 
-            <ImageView
+            <chenls.orderdishes.utils.RoundImageView xmlns:myxmlns="http://schemas.android.com/apk/"
                 android:id="@+id/iv_face"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:src="@mipmap/face"
                 android:contentDescription="@string/change_face"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:src="@mipmap/face"
+                myxmlns:border_color="@color/colorWhite"
+                myxmlns:border_width="2dp" />
 
             <Button
                 android:id="@+id/bt_change_face"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/iv_face"
                 android:layout_toRightOf="@+id/iv_face"
                 android:text="@string/change_face" />

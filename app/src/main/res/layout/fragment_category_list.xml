@@ -6,7 +6,6 @@
     android:name="chenls.orderdishes.fragment.CategoryFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     app:layoutManager="LinearLayoutManager"
     tools:context=".fragment.CategoryFragment"
     tools:listitem="@layout/fragment_category" />

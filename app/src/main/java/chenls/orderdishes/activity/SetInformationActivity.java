@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 import com.bmob.BmobProFile;
 import com.bmob.btp.callback.UploadListener;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -51,6 +48,7 @@ public class SetInformationActivity extends AppCompatActivity {
     private File picture_file;
     private boolean IS_CHANGE_FACE;
     private ProgressDialog progressDialog;
+    private Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,18 +66,9 @@ public class SetInformationActivity extends AppCompatActivity {
             Glide.with(SetInformationActivity.this)
                     .load(pic.getFileUrl(SetInformationActivity.this))
                     .asBitmap()
-                    .placeholder(R.mipmap.loading)
+                    .placeholder(R.mipmap.face)
                     .centerCrop()
-                    .into(new BitmapImageViewTarget(iv_face) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(getResources(), resource);
-                            circularBitmapDrawable.setCircular(true);
-                            iv_face.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
-
+                    .into(iv_face);
         }
         Button bt_change_face = (Button) findViewById(R.id.bt_change_face);
         bt_change_face.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +127,10 @@ public class SetInformationActivity extends AppCompatActivity {
                     if (data != null) {
                         Bundle extras = data.getExtras();
                         if (extras != null) {
-                            Bitmap photo = extras.getParcelable("data");
-                            iv_face.setImageBitmap(photo);
+                            photo = extras.getParcelable("data");
                             IS_CHANGE_FACE = true;
                             saveMyBitmap(photo);
+                            iv_face.setImageBitmap(photo);
                         }
                     }
                     break;
@@ -275,6 +264,7 @@ public class SetInformationActivity extends AppCompatActivity {
 
     private void returnData() {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.PIC, photo);
         setResult(RESULT_OK, intent);
         finish();
     }

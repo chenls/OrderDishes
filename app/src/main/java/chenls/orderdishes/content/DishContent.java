@@ -11,8 +11,8 @@ public class DishContent {
     private static final int COUNT = 60;
     public static final int[] title_position = new int[]{1, 4, 6, 9, 12, 14, 19, 20,
             23, 25, 29, 32, 39, 40, 43, 47, 58};
-    public static final String[] category_names = new String[]{"招牌菜", "推荐", "新品", "热菜", "凉菜", "饮料", "米饭", "山珍", "海味",
-            "招牌菜", "推荐", "新品", "热菜", "凉菜", "饮料", "米饭", "山珍", "海味"};
+    public static final String[] category_names = new String[]{"招牌", "推荐", "新品", "热菜", "凉菜", "饮料", "米饭", "山珍", "海味",
+            "招牌", "推荐", "新品", "热菜", "凉菜", "饮料", "米饭", "山珍", "海味"};
     public static final List<DishItem> ITEMS = new ArrayList<>();
 
     static {

@@ -90,7 +90,7 @@ public class CategoryFragment extends Fragment {
             @Override
             public void run() {
                 ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
-                View background_left =  CommonUtil.findViewInViewGroupById(view, R.id.background_left);
+                View background_left = CommonUtil.findViewInViewGroupById(view, R.id.background_left);
                 myCategoryRecyclerViewAdapter.changBackground(view, background_left);
             }
         }, 100);
