@@ -28,4 +28,10 @@
         <item name="android:maxHeight">22dip</item>
         <item name="android:maxWidth">22dip</item>
     </style>
+
+    <style name="myRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar</item>
+        <item name="android:minWidth">20dip</item>
+        <item name="android:maxWidth">20dip</item>
+    </style>
 </resources>

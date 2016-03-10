@@ -34,6 +34,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
     private String consigneeMessage;
     private Boolean isOnlinePay = true;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

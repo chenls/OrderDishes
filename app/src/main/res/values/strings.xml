@@ -85,4 +85,9 @@
     <string name="set_information">编辑个人信息</string>
     <string name="picture">拍照</string>
     <string name="gallery">相册</string>
+    <string name="setting">设置</string>
+    <string name="about">关于</string>
+    <string name="other">其它</string>
+    <string name="order">订单</string>
+    <string name="discover">发现</string>
 </resources>

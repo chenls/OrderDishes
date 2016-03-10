@@ -92,6 +92,7 @@ public class PlayCashActivity extends AppCompatActivity {
     private String price;
     private String order_message;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -86,25 +86,26 @@
 
                     <RatingBar
                         android:id="@+id/ratingBar"
-                        style="?android:attr/ratingBarStyleSmall"
+                        style="@style/myRatingBar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="15dp"
                         android:layout_alignLeft="@id/tv_dish_name"
                         android:layout_alignStart="@id/tv_dish_name"
                         android:layout_below="@id/tv_dish_name"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
+                        android:isIndicator="true"
                         android:rating="3.5" />
 
                     <TextView
                         android:id="@+id/tv_comment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/ratingBar"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginStart="3dp"
-                        android:layout_toEndOf="@id/ratingBar"
-                        android:layout_toRightOf="@id/ratingBar"
+                        android:layout_alignTop="@+id/ratingBar"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/ratingBar"
+                        android:layout_toRightOf="@+id/ratingBar"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="10sp"
                         tools:ignore="SmallSp" />

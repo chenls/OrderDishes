@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -110,6 +111,10 @@ public class MainActivity extends AppCompatActivity
                 builder.create().show();
             }
         });
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.discover));
+        }
         dishFragment = DishFragment.newInstance();
         from = dishFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -185,17 +190,27 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        ActionBar actionBar = getSupportActionBar();
         switch (item.getItemId()) {
             case R.id.nav_discover:
+                if (actionBar != null) {
+                    actionBar.setTitle(getString(R.string.discover));
+                }
                 switchContent(dishFragment);
                 break;
             case R.id.nav_dish:
+                if (actionBar != null) {
+                    actionBar.setTitle(getString(R.string.order_dish_activity));
+                }
                 if (categoryFragment == null) {
                     categoryFragment = CategoryFragment.newInstance();
                 }
                 switchContent(categoryFragment);
                 break;
             case R.id.nav_order:
+                if (actionBar != null) {
+                    actionBar.setTitle(getString(R.string.order));
+                }
                 break;
             case R.id.nav_setting:
                 break;

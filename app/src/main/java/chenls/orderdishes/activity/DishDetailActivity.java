@@ -31,6 +31,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
     private DishContent.DishItem item;
     private Button bt_compute;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,16 +63,12 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         TextView tv_comment = (TextView) findViewById(R.id.tv_comment);
         TextView tv_sell_num = (TextView) findViewById(R.id.tv_sell_num);
         TextView tv_price = (TextView) findViewById(R.id.tv_price);
-        //TODO 重写RatingBar
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
         dishBeanMap = (Map<Integer, DishBean>)
                 bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
-
         tv_total_price.setText(bundle.getString(OrderDishActivity.TOTAL_PRICE));
-
         String total_num = bundle.getString(OrderDishActivity.TOTAL_NUM);
         if (!TextUtils.isEmpty(total_num) && !"0".equals(total_num)) {
             tv_total_num.setText(total_num);

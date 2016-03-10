@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/phone"
                 android:padding="15dp"
-                android:src="@mipmap/ic_grade" />
+                android:src="@mipmap/ic_start" />
 
             <EditText
                 android:id="@+id/et_phone_num"
