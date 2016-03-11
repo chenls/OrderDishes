@@ -47,8 +47,8 @@ public class SetInformationActivity extends AppCompatActivity {
     private ImageView iv_face;
     private File picture_file;
     private boolean IS_CHANGE_FACE;
-    private ProgressDialog progressDialog;
     private Bitmap photo;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +186,6 @@ public class SetInformationActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.done) {
             if (!CommonUtil.checkNetState(SetInformationActivity.this)) {
-                Toast.makeText(SetInformationActivity.this, "网络不可用！", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (IS_CHANGE_FACE) {
@@ -194,9 +193,7 @@ public class SetInformationActivity extends AppCompatActivity {
             } else {
                 updateUser(null);
             }
-            progressDialog = new ProgressDialog(SetInformationActivity.this);
-            progressDialog.setMessage("上传中...");
-            progressDialog.show();
+            progressDialog = CommonUtil.showProgressDialog(SetInformationActivity.this);
             return true;
         } else if (id == android.R.id.home) {
             finish();
@@ -209,6 +206,7 @@ public class SetInformationActivity extends AppCompatActivity {
      * 更新用户
      */
     private void updateUser(BmobFile file) {
+
         MyUser myUser = BmobUser.getCurrentUser(this, MyUser.class);
         if (myUser != null) {
             MyUser newUser = new MyUser();

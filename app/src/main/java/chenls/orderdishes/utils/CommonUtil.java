@@ -1,11 +1,13 @@
 package chenls.orderdishes.utils;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -66,6 +68,8 @@ public class CommonUtil {
                 }
             }
         }
+        if (!netState)
+            Toast.makeText(context, "网络不可用!", Toast.LENGTH_SHORT).show();
         return netState;
     }
 
@@ -77,4 +81,10 @@ public class CommonUtil {
         return false;
     }
 
+    public static ProgressDialog showProgressDialog(Context context) {
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("请稍等...");
+        progressDialog.show();
+        return progressDialog;
+    }
 }

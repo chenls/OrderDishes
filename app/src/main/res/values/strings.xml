@@ -90,4 +90,7 @@
     <string name="other">其它</string>
     <string name="order">订单</string>
     <string name="discover">发现</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

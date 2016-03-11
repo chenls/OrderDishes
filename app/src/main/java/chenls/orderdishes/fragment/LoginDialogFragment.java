@@ -58,7 +58,6 @@ public class LoginDialogFragment extends DialogFragment implements View.OnClickL
                     return;
                 }
                 if (!CommonUtil.checkNetState(getActivity())) {
-                    Toast.makeText(getActivity(), "网络不可用！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 login.setVisibility(View.GONE);
