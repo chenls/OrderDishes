@@ -24,8 +24,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.MyUser;
-import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.fragment.DishFragment;
@@ -237,8 +237,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDishListFragmentClick(DishContent.DishItem item, String num) {
-        orderDishFragment.onDishListFragmentClick(item, num);
+    public void onDishListFragmentClick(int position, Dish item, String num) {
+        orderDishFragment.onDishListFragmentClick(position,item, num);
 
     }
 
@@ -250,6 +250,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDishListScroll(int index) {
         orderDishFragment.onDishListScroll(index);
+    }
+
+    @Override
+    public void mySwipeRefreshLayout(boolean b) {
+        orderDishFragment.mySwipeRefreshLayout(b);
     }
 
     @Override

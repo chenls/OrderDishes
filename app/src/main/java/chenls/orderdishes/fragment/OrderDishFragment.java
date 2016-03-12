@@ -4,7 +4,6 @@ package chenls.orderdishes.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,17 +15,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.activity.AckOrderActivity;
 import chenls.orderdishes.activity.DishDetailActivity;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.DishBean;
 import chenls.orderdishes.content.DishContent;
+import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
 public class OrderDishFragment extends Fragment implements
         SwipeRefreshLayout.OnRefreshListener {
@@ -36,14 +41,16 @@ public class OrderDishFragment extends Fragment implements
     public static final String DISH_BEAN_MAP = "dish_bean_map";
     public static final String TOTAL_PRICE = "total_price";
     public static final String TOTAL_NUM = "total_num";
-    private SwipeRefreshLayout swipeRefreshLayout;
     private DishFragment dishFragment;
     private CategoryFragment categoryFragment;
     private TextView dish_category, tv_total_num, tv_total_price;
     private Map<Integer, DishBean> dishBeanMap;
-    private DishContent.DishItem item;
+    private Dish item;
     private String last_num;
     private Button bt_compute;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View view;
+    private int position;
 
     public OrderDishFragment() {
     }
@@ -55,13 +62,77 @@ public class OrderDishFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_order_dish, container, false);
+        view = inflater.inflate(R.layout.fragment_order_dish, container, false);
+        view.findViewById(R.id.fragment_dish_category).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.include_bottom).setVisibility(View.INVISIBLE);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
+        swipeRefreshLayout.setRefreshing(true);
+        queryDish(false);
+        return view;
+    }
+
+    @Override
+    public void onRefresh() {
+        queryDish(true);
+    }
+
+    private void queryDish(boolean refresh) {
+        if (!CommonUtil.checkNetState(getContext())) {
+            swipeRefreshLayout.setRefreshing(false);
+            return;
+        }
+        final BmobQuery<Dish> bmobQuery = new BmobQuery<>();
+        bmobQuery.setLimit(100);
+        bmobQuery.order("category,-updatedAt");
+        //先判断是否强制刷新
+        if (refresh) {
+            Toast.makeText(getContext(), "强制在从网络中获取", Toast.LENGTH_SHORT).show();
+            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
+        } else {
+            //先判断是否有缓存
+            boolean isCache = bmobQuery.hasCachedResult(getActivity(), Dish.class);
+            if (isCache) {
+                bmobQuery.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 先从缓存取数据，如果没有的话，再从网络取。
+            } else {
+                bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则先从网络中取
+            }
+        }
+        bmobQuery.findObjects(getContext(), new FindListener<Dish>() {
+
+            @Override
+            public void onSuccess(List<Dish> object) {
+                swipeRefreshLayout.setRefreshing(false);
+                String oldCategory = null;
+                for (int i = 0; i < object.size(); i++) {
+                    Dish dish = object.get(i);
+                    String newCategory = dish.getCategory();
+                    if (oldCategory != null) {
+                        if (!newCategory.equals(oldCategory)) {
+                            object.add(i, new Dish("0", dish.getCategoryName()));
+                        }
+                    }
+                    oldCategory = newCategory;
+                }
+                initiateView(object);
+                Toast.makeText(getContext(), "刷新" + object.size() + object.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void initiateView(List<Dish> dish) {
         if (dishBeanMap == null) {
             dishBeanMap = new HashMap<>();
         }
         bt_compute = (Button) view.findViewById(R.id.bt_compute);
         bt_compute.setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View v) {
@@ -77,31 +148,19 @@ public class OrderDishFragment extends Fragment implements
         dish_category = (TextView) view.findViewById(R.id.dish_category);
         tv_total_num = (TextView) view.findViewById(R.id.tv_total_num);
         tv_total_price = (TextView) view.findViewById(R.id.tv_total_price);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        dishFragment = DishFragment.newInstance();
+        dishFragment = DishFragment.newInstance(dish);
         categoryFragment = CategoryFragment.newInstance();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.linear2, dishFragment);
-        fragmentTransaction.add(R.id.linear1, categoryFragment);
+        fragmentTransaction.replace(R.id.linear2, dishFragment);
+        fragmentTransaction.replace(R.id.linear1, categoryFragment);
         fragmentTransaction.commit();
-        return view;
+        view.findViewById(R.id.fragment_dish_category).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.include_bottom).setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //取消刷新
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 3000);
-    }
-
-    public void onDishListFragmentClick(DishContent.DishItem item, String num) {
+    public void onDishListFragmentClick(int position, Dish item, String num) {
+        this.position = position;
         this.item = item;
         last_num = num;
         Intent intent = new Intent(getActivity(), DishDetailActivity.class);
@@ -166,7 +225,7 @@ public class OrderDishFragment extends Fragment implements
             if (TextUtils.isEmpty(num))
                 return;
             //修改dishFragment的UI
-            dishFragment.setBookNum(item.position, num);
+            dishFragment.setBookNum(position, num);
             //模拟点击
             int int_last_num;
             if (TextUtils.isEmpty(last_num))
@@ -181,9 +240,14 @@ public class OrderDishFragment extends Fragment implements
             else
                 t = -1;
             for (int k = 0; k < Math.abs(i); k++) {
-                onDishListButtonClick(item.type, t, item.tv_price, item.tv_dish_name, item.position,
-                        item.iv_dish);
+                onDishListButtonClick(Integer.parseInt(item.getCategory()), t,
+                        Integer.parseInt(item.getPrice()), item.getName(), position,
+                        item.getPic().getFileUrl(getContext()));
             }
         }
+    }
+
+    public void mySwipeRefreshLayout(boolean b) {
+        swipeRefreshLayout.setEnabled(b);
     }
 }

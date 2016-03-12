@@ -73,9 +73,9 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
             return;
         }
         final BmobQuery<Dish> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("category", "招牌");
+        bmobQuery.addWhereEqualTo("category", "1");
         bmobQuery.setLimit(10);
-        bmobQuery.order("createdAt");
+        bmobQuery.order("-createdAt");
         //先判断是否强制刷新
         if (refresh) {
             bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
@@ -95,7 +95,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
                 swipeRefreshLayout.setRefreshing(false);
                 RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(view.getContext());
-                recyclerView.setHasFixedSize(true);
+//                recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(linearLayoutManager);
                 recyclerView.setAdapter(new DiscoverRecyclerViewAdapter(getContext(), object, mListener));
             }

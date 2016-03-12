@@ -1,95 +1,116 @@
 package chenls.orderdishes.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
-public class Dish extends BmobObject {
+public class Dish extends BmobObject implements Parcelable {
     private BmobFile pic;
-    private String name, star, commentNumber, sellNumber, price, summarize, allComment, category;
+    private String name, star, commentNumber, sellNumber, price,
+            summarize, allComment, category, categoryName;
 
-    public Dish(String name, String star
-            , String commentNumber, String sellNumber, String price
-            , String summarize, String allComment, String category) {
-        super("Dish");
+    public Dish(String category, String name) {
+        this.category = category;
         this.name = name;
+    }
+
+    public Dish(String star, String commentNumber, String price, String allComment, String category, String name, String sellNumber, String summarize, String categoryName) {
         this.star = star;
         this.commentNumber = commentNumber;
-        this.sellNumber = sellNumber;
         this.price = price;
-        this.summarize = summarize;
         this.allComment = allComment;
         this.category = category;
+        this.name = name;
+        this.sellNumber = sellNumber;
+        this.summarize = summarize;
+        this.categoryName = categoryName;
     }
 
     public BmobFile getPic() {
         return pic;
     }
 
-    public void setPic(BmobFile pic) {
-        this.pic = pic;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getStar() {
         return star;
     }
 
-    public void setStar(String star) {
-        this.star = star;
-    }
-
     public String getCommentNumber() {
         return commentNumber;
-    }
-
-    public void setCommentNumber(String commentNumber) {
-        this.commentNumber = commentNumber;
     }
 
     public String getSellNumber() {
         return sellNumber;
     }
 
-    public void setSellNumber(String sellNumber) {
-        this.sellNumber = sellNumber;
-    }
-
     public String getPrice() {
         return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
     }
 
     public String getSummarize() {
         return summarize;
     }
 
-    public void setSummarize(String summarize) {
-        this.summarize = summarize;
-    }
-
     public String getAllComment() {
         return allComment;
-    }
-
-    public void setAllComment(String allComment) {
-        this.allComment = allComment;
     }
 
     public String getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public static Creator<Dish> getCREATOR() {
+        return CREATOR;
+    }
+
+    protected Dish(Parcel in) {
+        name = in.readString();
+        star = in.readString();
+        commentNumber = in.readString();
+        sellNumber = in.readString();
+        price = in.readString();
+        summarize = in.readString();
+        allComment = in.readString();
+        category = in.readString();
+        categoryName = in.readString();
+    }
+
+    public static final Creator<Dish> CREATOR = new Creator<Dish>() {
+        @Override
+        public Dish createFromParcel(Parcel in) {
+            return new Dish(in);
+        }
+
+        @Override
+        public Dish[] newArray(int size) {
+            return new Dish[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(star);
+        dest.writeString(commentNumber);
+        dest.writeString(sellNumber);
+        dest.writeString(price);
+        dest.writeString(summarize);
+        dest.writeString(allComment);
+        dest.writeString(category);
+        dest.writeString(categoryName);
     }
 }
