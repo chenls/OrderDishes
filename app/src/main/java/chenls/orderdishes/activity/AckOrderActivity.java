@@ -21,7 +21,6 @@ import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
@@ -84,7 +83,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
     }
 
     @Override
-    public void OnClickListener(int id) {
+    public void OnClickListener(int id, String name, String tel, String address) {
         switch (id) {
             case AckOrderRecyclerViewAdapter.BUTTON_NATIVE:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -106,6 +105,9 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_OUTER:
                 Intent intent2 = new Intent(AckOrderActivity.this, ConsigneeAddressActivity.class);
+                intent2.putExtra(CONSIGNEE_NAME, name);
+                intent2.putExtra(CONSIGNEE_TEL, tel);
+                intent2.putExtra(CONSIGNEE_ADDRESS, address);
                 startActivityForResult(intent2, AckOrderRecyclerViewAdapter.BUTTON_OUTER);
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_ONLINE:
@@ -131,7 +133,6 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 String tel = data.getStringExtra(CONSIGNEE_TEL);
                 String address = data.getStringExtra(CONSIGNEE_ADDRESS);
                 changeConsigneeMessage(name, tel, address);
-                ConsigneeMessageUtil.SaveMessage(AckOrderActivity.this, name, tel, address);
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_MARK:
                 consigneeMark = data.getStringExtra(CONSIGNEE_MARK);

@@ -32,7 +32,6 @@ public class CategoryFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String CATEGORY_LIST = "category_list";
-    private static final String POSITION_ARRAY = "position_ARRAY";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;

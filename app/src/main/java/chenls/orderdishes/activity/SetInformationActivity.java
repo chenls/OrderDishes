@@ -54,11 +54,6 @@ public class SetInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_information);
-        ActionBar action = getSupportActionBar();
-        if (action != null) {
-            action.setDisplayHomeAsUpEnabled(true);
-            action.setHomeAsUpIndicator(R.mipmap.ic_clear);
-        }
         iv_face = (ImageView) findViewById(R.id.iv_face);
         MyUser myUser = MyUser.getCurrentUser(SetInformationActivity.this, MyUser.class);
         BmobFile pic = myUser.getPic();
@@ -177,7 +172,12 @@ public class SetInformationActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.set_information, menu);
+        ActionBar action = getSupportActionBar();
+        if (action != null) {
+            action.setDisplayHomeAsUpEnabled(true);
+            action.setHomeAsUpIndicator(R.mipmap.ic_clear);
+        }
+        getMenuInflater().inflate(R.menu.done, menu);
         return true;
     }
 

@@ -2,16 +2,13 @@ package chenls.orderdishes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.Map;
-
 import chenls.orderdishes.R;
-import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
 public class ConsigneeAddressActivity extends AppCompatActivity {
     private EditText et_consignee_name, et_consignee_tel, et_consignee_address;
@@ -23,32 +20,37 @@ public class ConsigneeAddressActivity extends AppCompatActivity {
         et_consignee_name = (EditText) findViewById(R.id.et_consignee_name);
         et_consignee_tel = (EditText) findViewById(R.id.et_consignee_tel);
         et_consignee_address = (EditText) findViewById(R.id.et_consignee_address);
-        Map<String, String> map = ConsigneeMessageUtil.GetMessage(ConsigneeAddressActivity.this);
-        et_consignee_name.setText(map.get("name"));
-        et_consignee_tel.setText(map.get("tel"));
-        et_consignee_address.setText(map.get("address"));
-        Button bt_sure = (Button) findViewById(R.id.bt_sure);
-        bt_sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConsigneeAddressActivity.this, AckOrderActivity.class);
-                String consignee_name = et_consignee_name.getText().toString();
-                intent.putExtra(AckOrderActivity.CONSIGNEE_NAME, consignee_name);
-                String consignee_tel = et_consignee_tel.getText().toString();
-                intent.putExtra(AckOrderActivity.CONSIGNEE_TEL, consignee_tel);
-                String consignee_address = et_consignee_address.getText().toString();
-                intent.putExtra(AckOrderActivity.CONSIGNEE_ADDRESS, consignee_address);
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
+        Intent intent = getIntent();
+        et_consignee_name.setText(intent.getStringExtra(AckOrderActivity.CONSIGNEE_NAME));
+        et_consignee_tel.setText(intent.getStringExtra(AckOrderActivity.CONSIGNEE_TEL));
+        et_consignee_address.setText(intent.getStringExtra(AckOrderActivity.CONSIGNEE_ADDRESS));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        ActionBar action = getSupportActionBar();
+        if (action != null) {
+            action.setDisplayHomeAsUpEnabled(true);
+            action.setHomeAsUpIndicator(R.mipmap.ic_clear);
+        }
+        getMenuInflater().inflate(R.menu.done, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
+        if (id == R.id.done) {
+            Intent intent = new Intent(ConsigneeAddressActivity.this, AckOrderActivity.class);
+            String consignee_name = et_consignee_name.getText().toString();
+            intent.putExtra(AckOrderActivity.CONSIGNEE_NAME, consignee_name);
+            String consignee_tel = et_consignee_tel.getText().toString();
+            intent.putExtra(AckOrderActivity.CONSIGNEE_TEL, consignee_tel);
+            String consignee_address = et_consignee_address.getText().toString();
+            intent.putExtra(AckOrderActivity.CONSIGNEE_ADDRESS, consignee_address);
+            setResult(RESULT_OK, intent);
+            finish();
+        } else if (id == android.R.id.home) {
             finish();
             return true;
         }

@@ -18,7 +18,7 @@ import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
-import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
+import chenls.orderdishes.bean.MyUser;
 
 public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRecyclerViewAdapter.ViewHolder> {
 
@@ -68,10 +68,10 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (holder.getItemViewType() == 1) {
-            Map<String, String> map = ConsigneeMessageUtil.GetMessage(context);
-            holder.consignee_name.setText(map.get("name"));
-            holder.consignee_tel.setText(map.get("tel"));
-            holder.consignee_address.setText(map.get("address"));
+
+            holder.consignee_name.setText((String) MyUser.getObjectByKey(context, "username"));
+            holder.consignee_address.setText((String) MyUser.getObjectByKey(context, "address"));
+            holder.consignee_tel.setText((String) MyUser.getObjectByKey(context, "mobilePhoneNumber"));
             holder.consignee_message.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,10 +84,15 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                         public void onClick(DialogInterface dialog, int which) {
                             switch (which) {
                                 case 0:
-                                    mListener.OnClickListener(BUTTON_NATIVE);
+                                    mListener.OnClickListener(BUTTON_NATIVE, null, null, null);
                                     break;
                                 case 1:
-                                    mListener.OnClickListener(BUTTON_OUTER);
+                                    mListener.OnClickListener(BUTTON_OUTER
+                                            , holder.consignee_name.getText().toString()
+                                            , holder.consignee_tel.getText().toString()
+                                            , holder.consignee_address.getText().toString());
+
+
                                     break;
                             }
                             dialog.dismiss();
@@ -101,7 +106,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                 public void onClick(View v) {
                     holder.iv_play_online.setBackgroundResource(R.mipmap.check_on);
                     holder.iv_play_cash.setBackgroundResource(R.mipmap.check_off);
-                    mListener.OnClickListener(BUTTON_ONLINE);
+                    mListener.OnClickListener(BUTTON_ONLINE, null, null, null);
                 }
             });
             holder.rl_play_cash.setOnClickListener(new View.OnClickListener() {
@@ -109,13 +114,13 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                 public void onClick(View v) {
                     holder.iv_play_online.setBackgroundResource(R.mipmap.check_off);
                     holder.iv_play_cash.setBackgroundResource(R.mipmap.check_on);
-                    mListener.OnClickListener(BUTTON_CASH);
+                    mListener.OnClickListener(BUTTON_CASH, null, null, null);
                 }
             });
             holder.mark.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.OnClickListener(BUTTON_MARK);
+                    mListener.OnClickListener(BUTTON_MARK, null, null, null);
                 }
             });
             return;
@@ -176,6 +181,6 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
     }
 
     public interface OnClickListenerInterface {
-        void OnClickListener(int id);
+        void OnClickListener(int id, String name, String tel, String address);
     }
 }

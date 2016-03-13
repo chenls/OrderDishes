@@ -32,6 +32,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
     private Dish dish;
     private int position;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
