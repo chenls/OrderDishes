@@ -139,6 +139,7 @@ public class OrderDishFragment extends Fragment implements
             dishMap = new HashMap<>();
         }
         bt_compute = (Button) view.findViewById(R.id.bt_compute);
+        bt_compute.setVisibility(View.INVISIBLE);
         bt_compute.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -154,7 +155,10 @@ public class OrderDishFragment extends Fragment implements
         });
         dish_category = (TextView) view.findViewById(R.id.dish_category);
         tv_total_num = (TextView) view.findViewById(R.id.tv_total_num);
+        tv_total_num.setText("");
+        tv_total_num.setVisibility(View.INVISIBLE);
         tv_total_price = (TextView) view.findViewById(R.id.tv_total_price);
+        tv_total_price.setText(getString(R.string.rmb, 0));
         dishFragment = DishFragment.newInstance(dishList, positionArray);
         categoryFragment = CategoryFragment.newInstance(categoryList);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
