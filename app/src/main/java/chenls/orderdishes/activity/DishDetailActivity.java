@@ -123,7 +123,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                     tv_total_num.setText(String.valueOf(Integer.valueOf(total_num) + 1));
                 }
                 //总价
-                int p1 = Integer.parseInt(total_price) + Integer.parseInt(dish.getPrice());
+                Double p1 = Double.parseDouble(total_price) + Double.parseDouble(dish.getPrice());
                 tv_total_price.setText(getString(R.string.rmb, p1));
                 break;
             case R.id.iv_minus:
@@ -142,7 +142,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                     tv_total_num.setText(String.valueOf(Integer.valueOf(total_num) - 1));
                 }
                 //总价
-                int p2 = Integer.parseInt(total_price) - Integer.parseInt(dish.getPrice());
+                Double p2 = Double.parseDouble(total_price) - Double.parseDouble(dish.getPrice());
                 tv_total_price.setText(getString(R.string.rmb, p2));
                 break;
         }

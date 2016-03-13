@@ -188,14 +188,14 @@ public class OrderDishFragment extends Fragment implements
     }
 
     public void onDishListButtonClick(int type, Dish dish, int position) {
-        int price = Integer.parseInt(dish.getPrice());
+        Double price = Double.parseDouble(dish.getPrice());
         categoryFragment.setDishNum(Integer.parseInt(dish.getCategory()) - 1, type);
         String n = tv_total_num.getText().toString();
         if (TextUtils.isEmpty(n) || "0".equals(n)) {
             tv_total_num.setText("1");
             bt_compute.setVisibility(View.VISIBLE);
             tv_total_num.setVisibility(View.VISIBLE);
-            tv_total_price.setText(getString(R.string.rmb, price));
+            tv_total_price.setText(getString(R.string.rmb, price.toString()));
         } else {
             int m = Integer.parseInt(n) + type;
             tv_total_num.setText(String.valueOf(m));
@@ -203,7 +203,7 @@ public class OrderDishFragment extends Fragment implements
             if (type < 0) {
                 price = -price;
             }
-            int p = Integer.parseInt(str) + price;
+            Double p = Double.parseDouble(str) + price;
             tv_total_price.setText(getString(R.string.rmb, p));
             if (m == 0) {
                 tv_total_num.setVisibility(View.GONE);

@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.Map;
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
@@ -61,6 +63,11 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                     SerializableMap map = new SerializableMap(dishMap);
                     bundle.putSerializable(OrderDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
                     bundle.putString(OrderDishFragment.TOTAL_PRICE, total_price);
+                    if (TextUtils.isEmpty(consigneeMessage)) {
+                        consigneeMessage = MyUser.getObjectByKey(AckOrderActivity.this, "username")
+                                + "," + MyUser.getObjectByKey(AckOrderActivity.this, "address") + ","
+                                + MyUser.getObjectByKey(AckOrderActivity.this, "mobilePhoneNumber");
+                    }
                     bundle.putString(CONSIGNEE_MESSAGE, consigneeMessage);
                     bundle.putString(CONSIGNEE_MARK, consigneeMark);
                     intent.putExtras(bundle);
@@ -97,7 +104,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 builder.setSingleChoiceItems(s, -1, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        changeConsigneeMessage(getString(R.string._native), "", getString(R.string.table_num, s[which]));
+                        changeConsigneeMessage(true, getString(R.string._native), "", getString(R.string.table_num, s[which]));
                         dialog.dismiss();
                     }
                 });
@@ -132,7 +139,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 String name = data.getStringExtra(CONSIGNEE_NAME);
                 String tel = data.getStringExtra(CONSIGNEE_TEL);
                 String address = data.getStringExtra(CONSIGNEE_ADDRESS);
-                changeConsigneeMessage(name, tel, address);
+                changeConsigneeMessage(false, name, tel, address);
                 break;
             case AckOrderRecyclerViewAdapter.BUTTON_MARK:
                 consigneeMark = data.getStringExtra(CONSIGNEE_MARK);
@@ -144,7 +151,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         }
     }
 
-    private void changeConsigneeMessage(String name, String tel, String address) {
+    private void changeConsigneeMessage(boolean isNative, String name, String tel, String address) {
         ViewGroup view = (ViewGroup) recyclerView.getChildAt(0);
         TextView consignee_name = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.order_name);
         assert consignee_name != null;
@@ -155,6 +162,9 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         TextView consignee_address = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.consignee_address);
         assert consignee_address != null;
         consignee_address.setText(address);
-        consigneeMessage = name + "," + tel + "," + address;
+        if (isNative)
+            consigneeMessage = address;
+        else
+            consigneeMessage = name + "," + tel + "," + address;
     }
 }

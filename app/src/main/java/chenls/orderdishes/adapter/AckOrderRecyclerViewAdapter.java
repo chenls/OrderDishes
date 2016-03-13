@@ -135,7 +135,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         holder.tv_dish_name.setText(holder.dish.getName());
         int num = holder.dish.getNumber();
         holder.tv_dish_num.setText(context.getString(R.string.product_sign, num));
-        holder.tv_dish_price.setText(context.getString(R.string.rmb, Integer.parseInt(holder.dish.getPrice()) * num));
+        holder.tv_dish_price.setText(context.getString(R.string.rmb, Double.parseDouble(holder.dish.getPrice()) * num));
     }
 
     @Override
