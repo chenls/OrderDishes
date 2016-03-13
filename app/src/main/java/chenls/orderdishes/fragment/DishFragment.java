@@ -11,22 +11,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.DishRecyclerViewAdapter;
-import chenls.orderdishes.content.DishContent;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.utils.CommonUtil;
+import chenls.orderdishes.utils.serializable.SerializableDishList;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class DishFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String DISH_LIST = "dishList";
+    private static final String POSITION_ARRAY = "position_array";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
@@ -34,6 +33,8 @@ public class DishFragment extends Fragment {
     private boolean move;
     private int position;
     private DishRecyclerViewAdapter dishRecyclerViewAdapter;
+    private List<Dish> dishList;
+    private String[] positionArray;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -42,20 +43,26 @@ public class DishFragment extends Fragment {
     public DishFragment() {
     }
 
-    public static DishFragment newInstance() {
+    public static DishFragment newInstance(List<Dish> dishList, String[] positionArray) {
         DishFragment fragment = new DishFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
+        SerializableDishList list = new SerializableDishList(dishList);
+        args.putSerializable(DISH_LIST, (Serializable) list.getDish());
+        args.putStringArray(POSITION_ARRAY, positionArray);
         fragment.setArguments(args);
         return fragment;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            dishList = (List<Dish>) getArguments().getSerializable(DISH_LIST);
+            positionArray = getArguments().getStringArray(POSITION_ARRAY);
         }
     }
 
@@ -75,11 +82,14 @@ public class DishFragment extends Fragment {
 
             //如果每个item大小固定，设置这个属性可以提高性能
             recyclerView.setHasFixedSize(true);
-            dishRecyclerViewAdapter = new DishRecyclerViewAdapter(getActivity(), mListener);
+            dishRecyclerViewAdapter = new DishRecyclerViewAdapter(getActivity(), dishList, mListener);
             recyclerView.setAdapter(dishRecyclerViewAdapter);
             recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    //解决RecyclerView和SwipeRefreshLayout共用存在的bug
+                    mListener.mySwipeRefreshLayout(linearLayoutManager
+                            .findFirstCompletelyVisibleItemPosition() == 0);
                     secondScroll();
                     scrollEvent(dy);
                 }
@@ -94,14 +104,15 @@ public class DishFragment extends Fragment {
         int firstItem = linearLayoutManager.findFirstVisibleItemPosition();
         //上拉
         if (dy > 0) {
-            int index = Arrays.binarySearch(DishContent.title_position, firstItem);
+            int index = Arrays.binarySearch(positionArray, firstItem + "");
             if (index >= 0) {
                 mListener.onDishListScroll(index + 1);
             }
         }
         //下拉
         else {
-            int index = Arrays.binarySearch(DishContent.title_position, firstItem + 1);
+            String[] a = new String[]{};
+            int index = Arrays.binarySearch(a, firstItem + 1 + "");
             if (index >= 0) {
                 mListener.onDishListScroll(index);
             }
@@ -181,21 +192,13 @@ public class DishFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        void onDishListFragmentClick(DishContent.DishItem item, String num);
-
-        void onDishListButtonClick(int pint, int num, int price, String name, int position, String image);
+        void onDishListFragmentClick(int adapterPosition, Dish dish, String num);
 
         void onDishListScroll(int index);
+
+        void mySwipeRefreshLayout(boolean b);
+
+        void onDishListButtonClick(int i, int position, Dish dish);
     }
 }

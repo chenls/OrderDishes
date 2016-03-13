@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.bean.DishBean;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 
 public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRecyclerViewAdapter.ViewHolder> {
@@ -27,13 +27,13 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
     public static final int BUTTON_ONLINE = 2;
     public static final int BUTTON_CASH = 3;
     public static final int BUTTON_MARK = 4;
-    private final Map<Integer, DishBean> dishBeanMap;
+    private final Map<Integer, Dish> dishMap;
     private Context context;
     private OnClickListenerInterface mListener;
 
-    public AckOrderRecyclerViewAdapter(Context context, Map<Integer, DishBean> dishBeanMap) {
+    public AckOrderRecyclerViewAdapter(Context context, Map<Integer, Dish> dishMap) {
         this.context = context;
-        this.dishBeanMap = dishBeanMap;
+        this.dishMap = dishMap;
 
         if (context instanceof OnClickListenerInterface) {
             mListener = (OnClickListenerInterface) context;
@@ -43,7 +43,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         }
     }
 
-    private int[] getKey(Map<Integer, DishBean> map) {
+    private int[] getKey(Map<Integer, Dish> map) {
         int[] re = new int[map.size()];
         int index = 0;
         for (Integer i : map.keySet()) {
@@ -120,22 +120,22 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
             });
             return;
         }
-        holder.mItem = dishBeanMap.get(getKey(dishBeanMap)[position - 1]);
+        holder.dish = dishMap.get(getKey(dishMap)[position - 1]);
         holder.iv_dish.setImageResource(R.mipmap.loading);
         Glide.with(context)
-                .load(holder.mItem.getImage())
+                .load(holder.dish.getPic().getFileUrl(context))
                 .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
-        holder.tv_dish_name.setText(holder.mItem.getName());
-        int num = holder.mItem.getNum();
+        holder.tv_dish_name.setText(holder.dish.getName());
+        int num = holder.dish.getNumber();
         holder.tv_dish_num.setText(context.getString(R.string.product_sign, num));
-        holder.tv_dish_price.setText(context.getString(R.string.rmb, holder.mItem.getPrice() * num));
+        holder.tv_dish_price.setText(context.getString(R.string.rmb, Integer.parseInt(holder.dish.getPrice()) * num));
     }
 
     @Override
     public int getItemCount() {
-        return dishBeanMap.size() + 1;
+        return dishMap.size() + 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -143,7 +143,7 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         public TextView tv_dish_name;
         public TextView tv_dish_num;
         public TextView tv_dish_price;
-        public DishBean mItem;
+        public Dish dish;
         public RelativeLayout consignee_message, rl_play_online, rl_play_cash, mark;
         public TextView consignee_name, consignee_tel, consignee_address;
         public ImageView iv_play_online, iv_play_cash;

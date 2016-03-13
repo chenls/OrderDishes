@@ -18,20 +18,20 @@ import java.io.Serializable;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.bean.DishBean;
-import chenls.orderdishes.content.DishContent;
+import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.serializable.SerializableMap;
 
 public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView tv_order_num, tv_total_num;
     private ImageView iv_minus;
-    private Map<Integer, DishBean> dishBeanMap;
+    private Map<Integer, Dish> dishBeanMap;
     private TextView tv_total_price;
-    private DishContent.DishItem item;
     private Button bt_compute;
+    private Dish dish;
+    private int position;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +47,8 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                 Intent intent = new Intent(DishDetailActivity.this, AckOrderActivity.class);
                 Bundle bundle = new Bundle();
                 SerializableMap map = new SerializableMap(dishBeanMap);
-                bundle.putSerializable(OrderDishActivity.DISH_BEAN_MAP, (Serializable) map.getMap());
-                bundle.putString(OrderDishActivity.TOTAL_PRICE, tv_total_price.getText().toString());
+                bundle.putSerializable(OrderDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
+                bundle.putString(OrderDishFragment.TOTAL_PRICE, tv_total_price.getText().toString());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -58,7 +58,6 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         tv_order_num = (TextView) findViewById(R.id.tv_order_num);
         ImageView iv_dish = (ImageView) findViewById(R.id.iv_dish);
         TextView tv_dish_name = (TextView) findViewById(R.id.tv_dish_name);
-        TextView tv_signboard = (TextView) findViewById(R.id.tv_signboard);
         TextView tv_dish_summarize = (TextView) findViewById(R.id.tv_dish_summarize);
         TextView tv_comment = (TextView) findViewById(R.id.tv_comment);
         TextView tv_sell_num = (TextView) findViewById(R.id.tv_sell_num);
@@ -66,38 +65,38 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        dishBeanMap = (Map<Integer, DishBean>)
-                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
-        tv_total_price.setText(bundle.getString(OrderDishActivity.TOTAL_PRICE));
-        String total_num = bundle.getString(OrderDishActivity.TOTAL_NUM);
+        tv_total_price.setText(bundle.getString(OrderDishFragment.TOTAL_PRICE));
+        String total_num = bundle.getString(OrderDishFragment.TOTAL_NUM);
         if (!TextUtils.isEmpty(total_num) && !"0".equals(total_num)) {
             tv_total_num.setText(total_num);
             tv_total_num.setVisibility(View.VISIBLE);
             bt_compute.setVisibility(View.VISIBLE);
         }
-        String order_num = bundle.getString(OrderDishActivity.ORDER_NUM);
+        String order_num = bundle.getString(OrderDishFragment.ORDER_NUM);
         if (!(TextUtils.isEmpty(order_num) || "0".equals(order_num))) {
             iv_minus.setVisibility(View.VISIBLE);
             tv_order_num.setVisibility(View.VISIBLE);
             tv_order_num.setText(order_num);
         }
-
-        item = bundle.getParcelable(OrderDishActivity.DISH_ITEM);
-        assert item != null;
-        tv_dish_name.setText(item.tv_dish_name);
-        tv_signboard.setVisibility(item.tv_signboard);
-        tv_dish_summarize.setText(item.tv_dish_summarize);
-        tv_comment.setText(getString(R.string.comment, item.tv_comment));
-        tv_sell_num.setText(getString(R.string.sell_num, item.tv_sell_num));
-        tv_price.setText(String.valueOf(item.tv_price));
-        ratingBar.setRating(item.ratingBar);
+        position = bundle.getInt(OrderDishFragment.POSITION);
+        dish = bundle.getParcelable(OrderDishFragment.DISH_ITEM);
+        assert tv_dish_name != null;
+        assert dish != null;
+        tv_dish_name.setText(dish.getName());
+        tv_dish_summarize.setText(dish.getSummarize());
+        tv_comment.setText(getString(R.string.comment, Integer.parseInt(dish.getCommentNumber())));
+        tv_sell_num.setText(getString(R.string.sell_num, Integer.parseInt(dish.getSellNumber())));
+        tv_price.setText(String.valueOf(dish.getPrice()));
+        ratingBar.setRating(Integer.valueOf(dish.getStar()));
         Glide.with(DishDetailActivity.this)
-                .load(item.iv_dish)
+                .load(dish.getPic().getFileUrl(DishDetailActivity.this))
                 .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(iv_dish);
         iv_add.setOnClickListener(this);
         iv_minus.setOnClickListener(this);
+        dishBeanMap = (Map<Integer, Dish>)
+                bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                     tv_total_num.setText(String.valueOf(Integer.valueOf(total_num) + 1));
                 }
                 //总价
-                int p1 = Integer.parseInt(total_price) + item.tv_price;
+                int p1 = Integer.parseInt(total_price) + Integer.parseInt(dish.getPrice());
                 tv_total_price.setText(getString(R.string.rmb, p1));
                 break;
             case R.id.iv_minus:
@@ -142,17 +141,17 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                     tv_total_num.setText(String.valueOf(Integer.valueOf(total_num) - 1));
                 }
                 //总价
-                int p2 = Integer.parseInt(total_price) - item.tv_price;
+                int p2 = Integer.parseInt(total_price) - Integer.parseInt(dish.getPrice());
                 tv_total_price.setText(getString(R.string.rmb, p2));
                 break;
         }
         //修改map中点菜的数量
         String tv_order_num_value = tv_order_num.getText().toString();
         if ("0".equals(tv_order_num_value))
-            dishBeanMap.remove(item.position);
+            dishBeanMap.remove(position);
         else
-            dishBeanMap.put(item.position, new DishBean(Integer.parseInt(tv_order_num_value),
-                    item.tv_price, item.tv_dish_name, item.iv_dish));
+            dishBeanMap.put(position, new Dish(Integer.parseInt(tv_order_num_value),
+                    dish.getPrice(), dish.getName(), dish.getPic()));
     }
 
     @Override
@@ -176,9 +175,9 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void returnData() {
-        Intent intent = new Intent(this, OrderDishActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         String order_num = tv_order_num.getText().toString();
-        intent.putExtra(OrderDishActivity.ORDER_NUM, order_num);
+        intent.putExtra(OrderDishFragment.ORDER_NUM, order_num);
         setResult(RESULT_OK, intent);
         finish();
     }

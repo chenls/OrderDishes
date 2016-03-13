@@ -12,10 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.Serializable;
+import java.util.List;
+
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.CategoryRecyclerViewAdapter;
-import chenls.orderdishes.content.CategoryContent;
+import chenls.orderdishes.bean.Category;
 import chenls.orderdishes.utils.CommonUtil;
+import chenls.orderdishes.utils.serializable.SerializableCategoryList;
 
 /**
  * A fragment representing a list of Items.
@@ -27,10 +31,13 @@ public class CategoryFragment extends Fragment {
 
 
     private static final String ARG_COLUMN_COUNT = "column-count";
+    private static final String CATEGORY_LIST = "category_list";
+    private static final String POSITION_ARRAY = "position_ARRAY";
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView recyclerView;
     private CategoryRecyclerViewAdapter myCategoryRecyclerViewAdapter;
+    private List<Category> categoryList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,20 +46,25 @@ public class CategoryFragment extends Fragment {
     public CategoryFragment() {
     }
 
-    public static CategoryFragment newInstance() {
+    public static CategoryFragment newInstance(List<Category> categoryList) {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
+        SerializableCategoryList serializableCategoryList =
+                new SerializableCategoryList(categoryList);
+        args.putSerializable(CATEGORY_LIST, (Serializable) serializableCategoryList.getCategoryList());
         fragment.setArguments(args);
         return fragment;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            categoryList = (List<Category>) getArguments().getSerializable(CATEGORY_LIST);
         }
     }
 
@@ -70,7 +82,7 @@ public class CategoryFragment extends Fragment {
             }
             //如果每个item大小固定，设置这个属性可以提高性能
             recyclerView.setHasFixedSize(true);
-            myCategoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(CategoryContent.ITEMS, mListener);
+            myCategoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryList, mListener);
             recyclerView.setAdapter(myCategoryRecyclerViewAdapter);
         }
         return view;

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,15 +24,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.MyUser;
-import chenls.orderdishes.content.DishContent;
 import chenls.orderdishes.fragment.CategoryFragment;
+import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.fragment.DishFragment;
+import chenls.orderdishes.fragment.OrderDishFragment;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
-        , DishFragment.OnListFragmentInteractionListener, CategoryFragment.OnListFragmentInteractionListener {
+        , DishFragment.OnListFragmentInteractionListener
+        , CategoryFragment.OnListFragmentInteractionListener
+        , DiscoverFragment.OnListFragmentInteractionListener {
 
     private static final int SET_INFORMATION = 1;
     public static final String PIC = "pic";
@@ -41,8 +44,8 @@ public class MainActivity extends AppCompatActivity
     private TextView tv_phone_num;
     private ImageView iv_pic;
     private Fragment from;
-    private DishFragment dishFragment;
-    private CategoryFragment categoryFragment;
+    private DiscoverFragment discoverFragment;
+    private OrderDishFragment orderDishFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +54,6 @@ public class MainActivity extends AppCompatActivity
         //设置ToolBar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //设置FloatingActionButton
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        final Intent intent = new Intent(this, OrderDishActivity.class);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });
         //设置抽屉DrawerLayout
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -115,11 +109,11 @@ public class MainActivity extends AppCompatActivity
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.discover));
         }
-        dishFragment = DishFragment.newInstance();
-        from = dishFragment;
+        discoverFragment = new DiscoverFragment();
+        from = discoverFragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.linear_layout, dishFragment);
+        fragmentTransaction.add(R.id.linear_layout, discoverFragment);
         fragmentTransaction.commit();
     }
 
@@ -140,7 +134,6 @@ public class MainActivity extends AppCompatActivity
     private void setFaceImage(String url) {
         Glide.with(MainActivity.this)
                 .load(url)
-                .asBitmap()
                 .centerCrop()
                 .into(iv_pic);
     }
@@ -152,6 +145,9 @@ public class MainActivity extends AppCompatActivity
                 Bitmap photo = data.getParcelableExtra(PIC);
                 changeInformation(photo);
             }
+        }
+        if (orderDishFragment != null) {
+            orderDishFragment.myActivityResult(resultCode, data);
         }
     }
 
@@ -196,16 +192,16 @@ public class MainActivity extends AppCompatActivity
                 if (actionBar != null) {
                     actionBar.setTitle(getString(R.string.discover));
                 }
-                switchContent(dishFragment);
+                switchContent(discoverFragment);
                 break;
             case R.id.nav_dish:
                 if (actionBar != null) {
                     actionBar.setTitle(getString(R.string.order_dish_activity));
                 }
-                if (categoryFragment == null) {
-                    categoryFragment = CategoryFragment.newInstance();
+                if (orderDishFragment == null) {
+                    orderDishFragment = OrderDishFragment.newInstance();
                 }
-                switchContent(categoryFragment);
+                switchContent(orderDishFragment);
                 break;
             case R.id.nav_order:
                 if (actionBar != null) {
@@ -241,22 +237,33 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDishListFragmentClick(DishContent.DishItem item, String num) {
+    public void onDishListFragmentClick(int position, Dish item, String num) {
+        orderDishFragment.onDishListFragmentClick(position,item, num);
 
     }
 
     @Override
-    public void onDishListButtonClick(int pint, int num, int price, String name, int position, String image) {
-
+    public void onDishListButtonClick(int pint, int num, Dish dish) {
+        orderDishFragment.onDishListButtonClick(pint, num, dish);
     }
 
     @Override
     public void onDishListScroll(int index) {
+        orderDishFragment.onDishListScroll(index);
+    }
 
+    @Override
+    public void mySwipeRefreshLayout(boolean b) {
+        orderDishFragment.mySwipeRefreshLayout(b);
     }
 
     @Override
     public void onCategoryListFragmentClick(int category_position, int dish_position) {
+        orderDishFragment.onCategoryListFragmentClick(category_position, dish_position);
+    }
+
+    @Override
+    public void onDiscoverListFragmentInteraction() {
 
     }
 }

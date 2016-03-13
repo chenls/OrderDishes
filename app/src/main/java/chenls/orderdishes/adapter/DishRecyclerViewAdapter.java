@@ -17,25 +17,21 @@ import java.util.List;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.content.DishContent;
-import chenls.orderdishes.content.DishContent.DishItem;
+import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.fragment.DishFragment.OnListFragmentInteractionListener;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DishItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- */
+
 public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DishItem> mValues;
+    private final List<Dish> dishList;
     private final OnListFragmentInteractionListener mListener;
     private final static int IS_TITLE = 1;
     private final Context context;
     private Map<Integer, String> bookDishMap;
 
-    public DishRecyclerViewAdapter(Context context,  OnListFragmentInteractionListener listener) {
+    public DishRecyclerViewAdapter(Context context, List<Dish> dishList, OnListFragmentInteractionListener listener) {
         this.context = context;
-        mValues = DishContent.ITEMS;
+        this.dishList = dishList;
         mListener = listener;
         bookDishMap = new HashMap<>();
     }
@@ -57,29 +53,24 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (holder.getItemViewType() == IS_TITLE) {
-            for (int i = 0; i < DishContent.title_position.length; i++) {
-                if (DishContent.title_position[i] == holder.getAdapterPosition()) {
-                    holder.dish_category.setText(DishContent.category_names[i + 1]);
-                    return;
-                }
-            }
+            holder.dish_category.setText(dishList.get(position).getName());
             return;
         }
-        holder.mItem = mValues.get(holder.getAdapterPosition());
-        holder.iv_dish.setImageResource(R.mipmap.loading);
+        final Dish dish = dishList.get(position);
         Glide.with(context)
-                .load(holder.mItem.iv_dish)
+                .load(dish.getPic().getFileUrl(context))
                 .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
-        holder.tv_dish_name.setText(holder.mItem.tv_dish_name);
-        holder.tv_signboard.setVisibility(holder.mItem.tv_signboard);
-        holder.tv_dish_summarize.setText(holder.mItem.tv_dish_summarize);
-        holder.tv_comment.setText(context.getString(R.string.comment, holder.mItem.tv_comment));
-        holder.tv_sell_num.setText(context.getString(R.string.sell_num, holder.mItem.tv_sell_num));
-        holder.tv_price.setText(String.valueOf(holder.mItem.tv_price));
-        //TODO 重写RatingBar
-        holder.ratingBar.setRating(holder.mItem.ratingBar);
+        holder.tv_dish_name.setText(dish.getName());
+//        holder.tv_signboard.setVisibility(dish.);
+        holder.tv_dish_summarize.setText(dish.getSummarize());
+        holder.tv_comment.setText(context.getString(R.string.comment
+                , Integer.parseInt(dish.getCommentNumber())));
+        holder.tv_sell_num.setText(context.getString(R.string.sell_num
+                , Integer.parseInt(dish.getSellNumber())));
+        holder.tv_price.setText(String.valueOf(dish.getPrice()));
+        holder.ratingBar.setRating(Integer.parseInt(dish.getStar()));
         String num = bookDishMap.get(position);
         if (TextUtils.isEmpty(num)) {
             holder.tv_order_num.setText("0");
@@ -96,7 +87,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onDishListFragmentClick(holder.mItem, holder.tv_order_num.getText().toString());
+                    mListener.onDishListFragmentClick(holder.getAdapterPosition(), dish, holder.tv_order_num.getText().toString());
                 }
             }
         });
@@ -125,8 +116,8 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             holder.tv_order_num.setText(String.valueOf(1));
         else
             holder.tv_order_num.setText(String.valueOf(Integer.parseInt(s) + 1));
-        mListener.onDishListButtonClick(holder.mItem.type, 1, holder.mItem.tv_price,
-                holder.mItem.tv_dish_name, holder.getAdapterPosition(), holder.mItem.iv_dish);
+        Dish dish = dishList.get(holder.getAdapterPosition());
+        mListener.onDishListButtonClick(1, holder.getAdapterPosition(), dish);
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 
@@ -137,8 +128,8 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             holder.iv_minus.setVisibility(View.GONE);
             holder.tv_order_num.setVisibility(View.GONE);
         }
-        mListener.onDishListButtonClick(holder.mItem.type, -1, holder.mItem.tv_price,
-                holder.mItem.tv_dish_name, holder.getAdapterPosition(), holder.mItem.iv_dish);
+        Dish dish = dishList.get(holder.getAdapterPosition());
+        mListener.onDishListButtonClick(-1, holder.getAdapterPosition(), dish);
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 
@@ -152,15 +143,14 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return dishList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        for (int m : DishContent.title_position) {
-            if (position == m) {
-                return IS_TITLE;
-            }
+        String category = dishList.get(position).getCategory();
+        if ("0".equals(category)) {
+            return IS_TITLE;
         }
         return 0;
     }
@@ -168,9 +158,8 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public View mView;
         public ImageView iv_dish, iv_minus, iv_add;
-        public TextView tv_dish_name, tv_signboard, tv_dish_summarize, tv_comment, tv_sell_num, tv_price, tv_order_num;
+        public TextView tv_dish_name, tv_dish_summarize, tv_comment, tv_sell_num, tv_price, tv_order_num;
         public RatingBar ratingBar;
-        public DishItem mItem;
         public TextView dish_category;
 
         public ViewHolder(View view, int viewType) {
@@ -184,7 +173,6 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             iv_minus = (ImageView) view.findViewById(R.id.iv_minus);
             iv_add = (ImageView) view.findViewById(R.id.iv_add);
             tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
-            tv_signboard = (TextView) view.findViewById(R.id.tv_signboard);
             tv_dish_summarize = (TextView) view.findViewById(R.id.tv_dish_summarize);
             tv_comment = (TextView) view.findViewById(R.id.tv_comment);
             tv_sell_num = (TextView) view.findViewById(R.id.tv_sell_num);

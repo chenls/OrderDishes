@@ -12,23 +12,18 @@ import java.util.List;
 import java.util.Map;
 
 import chenls.orderdishes.R;
-import chenls.orderdishes.content.CategoryContent.CategoryItem;
-import chenls.orderdishes.content.DishContent;
+import chenls.orderdishes.bean.Category;
 import chenls.orderdishes.fragment.CategoryFragment;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link CategoryItem} and makes a call to the
- * specified {@link CategoryFragment.OnListFragmentInteractionListener}.
- */
 public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRecyclerViewAdapter.ViewHolder> {
 
-    private final List<CategoryItem> mValues;
+    private final List<Category> categoryList;
     private final CategoryFragment.OnListFragmentInteractionListener mListener;
     private int current_position = 0; //被选中的条目 默认为第0个
     private Map<Integer, String> bookNumMap;
 
-    public CategoryRecyclerViewAdapter(List<CategoryItem> items, CategoryFragment.OnListFragmentInteractionListener listener) {
-        mValues = items;
+    public CategoryRecyclerViewAdapter(List<Category> categoryList, CategoryFragment.OnListFragmentInteractionListener listener) {
+        this.categoryList = categoryList;
         mListener = listener;
         bookNumMap = new HashMap<>();
     }
@@ -68,8 +63,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             holder.category_num.setVisibility(View.VISIBLE);
         }
 
-        holder.mItem = mValues.get(position);
-        holder.category_name.setText(holder.mItem.category_name);
+        holder.category_name.setText(categoryList.get(position).getCategoryName());
         //设置tag，方便CategoryFragment通过tag找到View
         holder.mView.setTag(position);
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +82,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                         mListener.onCategoryListFragmentClick(current_position, 0);
                     } else {
                         mListener.onCategoryListFragmentClick(current_position,
-                                DishContent.title_position[current_position - 1] + 1);
+                                categoryList.get(current_position).getPosition() + 1);
                     }
                 }
             }
@@ -113,7 +107,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return categoryList.size();
     }
 
 
@@ -122,7 +116,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         public final TextView category_name;
         public final TextView category_num;
         public final View background_left;
-        public CategoryItem mItem;
 
         public ViewHolder(View view) {
             super(view);

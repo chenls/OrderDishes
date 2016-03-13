@@ -18,7 +18,8 @@ import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
-import chenls.orderdishes.bean.DishBean;
+import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.fragment.OrderDishFragment;
 import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.ConsigneeMessage.ConsigneeMessageUtil;
 import chenls.orderdishes.utils.serializable.SerializableMap;
@@ -41,16 +42,16 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         setContentView(R.layout.activity_ack_order);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        final Map<Integer, DishBean> dishBeanMap = (Map<Integer, DishBean>)
-                bundle.getSerializable(OrderDishActivity.DISH_BEAN_MAP);
+        final Map<Integer, Dish> dishMap = (Map<Integer, Dish>)
+                bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
         final TextView tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-        final String total_price = bundle.getString(OrderDishActivity.TOTAL_PRICE);
+        final String total_price = bundle.getString(OrderDishFragment.TOTAL_PRICE);
         tv_total_price.setText(total_price);
         recyclerView = (RecyclerView) findViewById(R.id.list);
         //如果每个item大小固定，设置这个属性可以提高性能
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(AckOrderActivity.this));
-        recyclerView.setAdapter(new AckOrderRecyclerViewAdapter(AckOrderActivity.this, dishBeanMap));
+        recyclerView.setAdapter(new AckOrderRecyclerViewAdapter(AckOrderActivity.this, dishMap));
         Button ack_button = (Button) findViewById(R.id.ack_button);
         ack_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,9 +59,9 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                 if (isOnlinePay) {
                     Intent intent = new Intent(AckOrderActivity.this, PlayCashActivity.class);
                     Bundle bundle = new Bundle();
-                    SerializableMap map = new SerializableMap(dishBeanMap);
-                    bundle.putSerializable(OrderDishActivity.DISH_BEAN_MAP, (Serializable) map.getMap());
-                    bundle.putString(OrderDishActivity.TOTAL_PRICE, total_price);
+                    SerializableMap map = new SerializableMap(dishMap);
+                    bundle.putSerializable(OrderDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
+                    bundle.putString(OrderDishFragment.TOTAL_PRICE, total_price);
                     bundle.putString(CONSIGNEE_MESSAGE, consigneeMessage);
                     bundle.putString(CONSIGNEE_MARK, consigneeMark);
                     intent.putExtras(bundle);
