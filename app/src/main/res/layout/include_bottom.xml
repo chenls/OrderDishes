@@ -14,7 +14,7 @@
         tools:ignore="UselessParent">
 
         <ImageView
-            android:id="@+id/iv_pic"
+            android:id="@+id/iv_ali"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
@@ -31,9 +31,9 @@
             android:id="@+id/tv_total_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/iv_pic"
+            android:layout_alignLeft="@+id/iv_ali"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/iv_pic"
+            android:layout_alignStart="@+id/iv_ali"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="3dp"
@@ -49,8 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/iv_pic"
-            android:layout_toRightOf="@+id/iv_pic"
+            android:layout_toEndOf="@+id/iv_ali"
+            android:layout_toRightOf="@+id/iv_ali"
             android:text="@string/rmb_0"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorWhite"

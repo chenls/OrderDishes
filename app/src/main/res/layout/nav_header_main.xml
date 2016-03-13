@@ -26,7 +26,7 @@
         android:src="@mipmap/ic_drawer_logout" />
 
     <chenls.orderdishes.utils.RoundImageView xmlns:myxmlns="http://schemas.android.com/apk/"
-        android:id="@+id/iv_pic"
+        android:id="@+id/iv_ali"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignParentLeft="true"
@@ -41,9 +41,9 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/iv_pic"
-        android:layout_alignStart="@+id/iv_pic"
-        android:layout_below="@+id/iv_pic"
+        android:layout_alignLeft="@+id/iv_ali"
+        android:layout_alignStart="@+id/iv_ali"
+        android:layout_below="@+id/iv_ali"
         android:paddingTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="16sp" />

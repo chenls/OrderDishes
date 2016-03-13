@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        iv_pic = (ImageView) headerView.findViewById(R.id.iv_pic);
+        iv_pic = (ImageView) headerView.findViewById(R.id.iv_ali);
         iv_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

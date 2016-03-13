@@ -7,45 +7,23 @@ The following files were *not* copied into the new Gradle project; you
 should evaluate whether these are still needed in your project and if
 so manually move them:
 
-* proguard-project.txt
-
-Replaced Jars with Dependencies:
---------------------------------
-The importer recognized the following .jar files as third party
-libraries and replaced them with Gradle dependencies instead. This has
-the advantage that more explicit version information is known, and the
-libraries can be updated automatically. However, it is possible that
-the .jar file in your project was of an older version than the
-dependency we picked, which could render the project not compileable.
-You can disable the jar replacement in the import wizard and try again:
-
-android-support-v4.jar => com.android.support:support-v4:19.+
+* .DS_Store
 
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => bmob_Sample_lost_found/src/main/AndroidManifest.xml
-* assets/ => bmob_Sample_lost_found/src/main/assets
-* libs/bmob_v3.1.1beta.jar => bmob_Sample_lost_found/libs/bmob_v3.1.1beta.jar
-* libs/picasso-2.2.0.jar => bmob_Sample_lost_found/libs/picasso-2.2.0.jar
-* res/ => bmob_Sample_lost_found/src/main/res/
-* src/ => bmob_Sample_lost_found/src/main/java/
-
-Missing Android Support Repository:
------------------------------------
-Some useful libraries, such as the Android Support Library, are
-installed from a special Maven repository, which should be installed
-via the SDK manager.
-
-It looks like this library is missing from your SDK installation at:
-null
-
-To install it, open the SDK manager, and in the Extras category,
-select "Android Support Repository". You may also want to install the
-"Google Repository" if you want to use libraries like Google Play
-Services.
+* AndroidManifest.xml => bmobPay_demo_hide/src/main/AndroidManifest.xml
+* assets/ => bmobPay_demo_hide/src/main/assets/
+* libs/BmobPay_v2.4_160125.jar => bmobPay_demo_hide/libs/BmobPay_v2.4_160125.jar
+* proguard-project.txt => bmobPay_demo_hide/proguard-project.txt
+* res/ => bmobPay_demo_hide/src/main/res/
+* src/ => bmobPay_demo_hide/src/main/java/
+* src/.DS_Store => bmobPay_demo_hide/src/main/resources/.DS_Store
+* src/cn/.DS_Store => bmobPay_demo_hide/src/main/resources/cn/.DS_Store
+* src/cn/bmob/.DS_Store => bmobPay_demo_hide/src/main/resources/cn/bmob/.DS_Store
+* src/cn/bmob/paytest/.DS_Store => bmobPay_demo_hide/src/main/resources/cn/bmob/paytest/.DS_Store
 
 Next Steps:
 -----------
