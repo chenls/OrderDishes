@@ -66,6 +66,7 @@ public class DishFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,8 +112,7 @@ public class DishFragment extends Fragment {
         }
         //下拉
         else {
-            String[] a = new String[]{};
-            int index = Arrays.binarySearch(a, firstItem + 1 + "");
+            int index = Arrays.binarySearch(positionArray, firstItem + 1 + "");
             if (index >= 0) {
                 mListener.onDishListScroll(index);
             }
@@ -193,12 +193,12 @@ public class DishFragment extends Fragment {
     }
 
     public interface OnListFragmentInteractionListener {
-        void onDishListFragmentClick(int adapterPosition, Dish dish, String num);
+        void onDishListFragmentClick(int itemPosition, Dish dish, String num);
 
         void onDishListScroll(int index);
 
         void mySwipeRefreshLayout(boolean b);
 
-        void onDishListButtonClick(int i, int position, Dish dish);
+        void onDishListButtonClick(int type, Dish dish, int position);
     }
 }

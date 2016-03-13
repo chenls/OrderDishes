@@ -107,7 +107,7 @@ public class CategoryFragment extends Fragment {
         }, 100);
     }
 
-    public void setDishNum(final int position, final int num) {
+    public void setDishNum(final int position, final int type) {
         setPosition(position);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -120,7 +120,7 @@ public class CategoryFragment extends Fragment {
                 if (!TextUtils.isEmpty(value)) {
                     old_num = Integer.parseInt(value);
                 }
-                int new_num = old_num + num;
+                int new_num = old_num + type;
                 category_num.setText(String.valueOf(new_num));
                 if (new_num == 0) {
                     category_num.setVisibility(View.GONE);

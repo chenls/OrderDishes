@@ -117,7 +117,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         else
             holder.tv_order_num.setText(String.valueOf(Integer.parseInt(s) + 1));
         Dish dish = dishList.get(holder.getAdapterPosition());
-        mListener.onDishListButtonClick(1, holder.getAdapterPosition(), dish);
+        mListener.onDishListButtonClick(1, dish,holder.getAdapterPosition());
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 
@@ -129,7 +129,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             holder.tv_order_num.setVisibility(View.GONE);
         }
         Dish dish = dishList.get(holder.getAdapterPosition());
-        mListener.onDishListButtonClick(-1, holder.getAdapterPosition(), dish);
+        mListener.onDishListButtonClick(-1, dish,holder.getAdapterPosition());
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 

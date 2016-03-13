@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OrderDishes.iml" filepath="$PROJECT_DIR$/OrderDishes.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bmobPay_demo_hide/bmobPay_demo_hide.iml" filepath="$PROJECT_DIR$/bmobPay_demo_hide/bmobPay_demo_hide.iml" />
     </modules>
   </component>
 </project>

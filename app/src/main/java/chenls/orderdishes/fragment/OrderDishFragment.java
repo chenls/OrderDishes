@@ -50,8 +50,8 @@ public class OrderDishFragment extends Fragment implements
     private Button bt_compute;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View view;
-    private int position;
     private List<Category> categoryList;
+    private int itemPosition;
 
     public OrderDishFragment() {
     }
@@ -166,13 +166,13 @@ public class OrderDishFragment extends Fragment implements
         view.findViewById(R.id.include_bottom).setVisibility(View.VISIBLE);
     }
 
-    public void onDishListFragmentClick(int position, Dish dish, String num) {
-        this.position = position;
+    public void onDishListFragmentClick(int itemPosition, Dish dish, String num) {
+        this.itemPosition = itemPosition;
         this.dish = dish;
         last_num = num;
         Intent intent = new Intent(getActivity(), DishDetailActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(POSITION, position);
+        bundle.putInt(POSITION, itemPosition);
         bundle.putParcelable(DISH_ITEM, dish);
         bundle.putString(ORDER_NUM, num);
         SerializableMap map = new SerializableMap(dishMap);
@@ -183,10 +183,9 @@ public class OrderDishFragment extends Fragment implements
         getActivity().startActivityForResult(intent, 1);
     }
 
-    public void onDishListButtonClick(int type, int position, Dish dish) {
-        int num = dish.getNumber();
+    public void onDishListButtonClick(int type, Dish dish, int position) {
         int price = Integer.parseInt(dish.getPrice());
-        categoryFragment.setDishNum(type, num);
+        categoryFragment.setDishNum(Integer.parseInt(dish.getCategory()) - 1, type);
         String n = tv_total_num.getText().toString();
         if (TextUtils.isEmpty(n) || "0".equals(n)) {
             tv_total_num.setText("1");
@@ -194,10 +193,10 @@ public class OrderDishFragment extends Fragment implements
             tv_total_num.setVisibility(View.VISIBLE);
             tv_total_price.setText(getString(R.string.rmb, price));
         } else {
-            int m = Integer.parseInt(n) + num;
+            int m = Integer.parseInt(n) + type;
             tv_total_num.setText(String.valueOf(m));
             String str = tv_total_price.getText().toString().substring(1);
-            if (num < 0) {
+            if (type < 0) {
                 price = -price;
             }
             int p = Integer.parseInt(str) + price;
@@ -208,13 +207,13 @@ public class OrderDishFragment extends Fragment implements
             }
         }
         if (dishMap.get(position) == null)
-            dishMap.put(position, new Dish(num, price + "", dish.getName(), dish.getPic()));
+            dishMap.put(position, new Dish(1, price + "", dish.getName(), dish.getPic()));
         else {
-            int k = dishMap.get(position).getNumber() + num;
-            if (k == 0)
+            int number = dishMap.get(position).getNumber() + type;
+            if (number == 0)
                 dishMap.remove(position);
             else
-                dishMap.put(position, new Dish(k, price + "", dish.getName(), dish.getPic()));
+                dishMap.put(position, new Dish(number, price + "", dish.getName(), dish.getPic()));
         }
     }
 
@@ -234,7 +233,7 @@ public class OrderDishFragment extends Fragment implements
             if (TextUtils.isEmpty(num))
                 return;
             //修改dishFragment的UI
-            dishFragment.setBookNum(position, num);
+            dishFragment.setBookNum(itemPosition, num);
             //模拟点击
             int int_last_num;
             if (TextUtils.isEmpty(last_num))
@@ -249,7 +248,7 @@ public class OrderDishFragment extends Fragment implements
             else
                 t = -1;
             for (int k = 0; k < Math.abs(i); k++) {
-                onDishListButtonClick(t, position, dish);
+                onDishListButtonClick(t, dish, itemPosition);
             }
         }
     }

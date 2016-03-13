@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private DiscoverFragment discoverFragment;
     private OrderDishFragment orderDishFragment;
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,11 +171,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -231,14 +229,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDishListFragmentClick(int position, Dish item, String num) {
-        orderDishFragment.onDishListFragmentClick(position,item, num);
+    public void onDishListFragmentClick(int itemPosition, Dish item, String num) {
+        orderDishFragment.onDishListFragmentClick(itemPosition, item, num);
 
     }
 
     @Override
-    public void onDishListButtonClick(int pint, int num, Dish dish) {
-        orderDishFragment.onDishListButtonClick(pint, num, dish);
+    public void onDishListButtonClick(int type, Dish dish, int position) {
+        orderDishFragment.onDishListButtonClick(type, dish, position);
     }
 
     @Override
