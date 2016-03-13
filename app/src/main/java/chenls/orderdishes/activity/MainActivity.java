@@ -29,7 +29,7 @@ import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.fragment.DishFragment;
-import chenls.orderdishes.fragment.OrderDishFragment;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MainActivity extends AppCompatActivity
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private ImageView iv_pic;
     private Fragment from;
     private DiscoverFragment discoverFragment;
-    private OrderDishFragment orderDishFragment;
+    private CategoryAndDishFragment categoryAndDishFragment;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -147,8 +147,8 @@ public class MainActivity extends AppCompatActivity
                 changeInformation(photo);
             }
         }
-        if (orderDishFragment != null) {
-            orderDishFragment.myActivityResult(resultCode, data);
+        if (categoryAndDishFragment != null) {
+            categoryAndDishFragment.myActivityResult(resultCode, data);
         }
     }
 
@@ -190,10 +190,10 @@ public class MainActivity extends AppCompatActivity
                 if (actionBar != null) {
                     actionBar.setTitle(getString(R.string.order_dish_activity));
                 }
-                if (orderDishFragment == null) {
-                    orderDishFragment = OrderDishFragment.newInstance();
+                if (categoryAndDishFragment == null) {
+                    categoryAndDishFragment = CategoryAndDishFragment.newInstance();
                 }
-                switchContent(orderDishFragment);
+                switchContent(categoryAndDishFragment);
                 break;
             case R.id.nav_order:
                 if (actionBar != null) {
@@ -230,28 +230,28 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDishListFragmentClick(int itemPosition, Dish item, String num) {
-        orderDishFragment.onDishListFragmentClick(itemPosition, item, num);
+        categoryAndDishFragment.onDishListFragmentClick(itemPosition, item, num);
 
     }
 
     @Override
     public void onDishListButtonClick(int type, Dish dish, int position) {
-        orderDishFragment.onDishListButtonClick(type, dish, position);
+        categoryAndDishFragment.onDishListButtonClick(type, dish, position);
     }
 
     @Override
     public void onDishListScroll(int index) {
-        orderDishFragment.onDishListScroll(index);
+        categoryAndDishFragment.onDishListScroll(index);
     }
 
     @Override
     public void mySwipeRefreshLayout(boolean b) {
-        orderDishFragment.mySwipeRefreshLayout(b);
+        categoryAndDishFragment.mySwipeRefreshLayout(b);
     }
 
     @Override
     public void onCategoryListFragmentClick(int category_position, int dish_position) {
-        orderDishFragment.onCategoryListFragmentClick(category_position, dish_position);
+        categoryAndDishFragment.onCategoryListFragmentClick(category_position, dish_position);
     }
 
     @Override

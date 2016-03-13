@@ -5,10 +5,10 @@ import java.util.Map;
 
 import chenls.orderdishes.bean.Dish;
 
-public class SerializableMap implements Serializable {
+public class MapSerializable implements Serializable {
     private Map<Integer, Dish> map;
 
-    public SerializableMap(Map map) {
+    public MapSerializable(Map<Integer, Dish> map) {
         this.map = map;
     }
 

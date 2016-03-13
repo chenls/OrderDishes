@@ -19,7 +19,7 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.DishRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.serializable.SerializableDishList;
+import chenls.orderdishes.utils.serializable.DishListSerializable;
 
 public class DishFragment extends Fragment {
 
@@ -47,7 +47,7 @@ public class DishFragment extends Fragment {
         DishFragment fragment = new DishFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
-        SerializableDishList list = new SerializableDishList(dishList);
+        DishListSerializable list = new DishListSerializable(dishList);
         args.putSerializable(DISH_LIST, (Serializable) list.getDish());
         args.putStringArray(POSITION_ARRAY, positionArray);
         fragment.setArguments(args);

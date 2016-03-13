@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -21,9 +22,11 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.AckOrderRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.MyUser;
-import chenls.orderdishes.fragment.OrderDishFragment;
+import chenls.orderdishes.bean.Order;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.serializable.SerializableMap;
+import chenls.orderdishes.utils.serializable.MapSerializable;
+import cn.bmob.v3.listener.SaveListener;
 
 public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
     public static final String CONSIGNEE_NAME = "consignee_name";
@@ -44,9 +47,9 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         final Map<Integer, Dish> dishMap = (Map<Integer, Dish>)
-                bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
+                bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
         final TextView tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-        final String total_price = bundle.getString(OrderDishFragment.TOTAL_PRICE);
+        final String total_price = bundle.getString(CategoryAndDishFragment.TOTAL_PRICE);
         tv_total_price.setText(total_price);
         recyclerView = (RecyclerView) findViewById(R.id.list);
         //如果每个item大小固定，设置这个属性可以提高性能
@@ -57,22 +60,36 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         ack_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(consigneeMessage)) {
+                    consigneeMessage = MyUser.getObjectByKey(AckOrderActivity.this, "username")
+                            + "," + MyUser.getObjectByKey(AckOrderActivity.this, "address") + ","
+                            + MyUser.getObjectByKey(AckOrderActivity.this, "mobilePhoneNumber");
+                }
                 if (isOnlinePay) {
                     Intent intent = new Intent(AckOrderActivity.this, PlayCashActivity.class);
                     Bundle bundle = new Bundle();
-                    SerializableMap map = new SerializableMap(dishMap);
-                    bundle.putSerializable(OrderDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
-                    bundle.putString(OrderDishFragment.TOTAL_PRICE, total_price);
-                    if (TextUtils.isEmpty(consigneeMessage)) {
-                        consigneeMessage = MyUser.getObjectByKey(AckOrderActivity.this, "username")
-                                + "," + MyUser.getObjectByKey(AckOrderActivity.this, "address") + ","
-                                + MyUser.getObjectByKey(AckOrderActivity.this, "mobilePhoneNumber");
-                    }
+                    MapSerializable map = new MapSerializable(dishMap);
+                    bundle.putSerializable(CategoryAndDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
+                    bundle.putString(CategoryAndDishFragment.TOTAL_PRICE, total_price);
                     bundle.putString(CONSIGNEE_MESSAGE, consigneeMessage);
                     bundle.putString(CONSIGNEE_MARK, consigneeMark);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
+                    assert total_price != null;
+                    final Order order = new Order(false, consigneeMessage, consigneeMark
+                            , Double.parseDouble(total_price.substring(1, total_price.length())), dishMap);
+                    order.save(AckOrderActivity.this, new SaveListener() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(AckOrderActivity.this, "提交订单成功", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+                            Toast.makeText(AckOrderActivity.this, "提交订单失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
             }

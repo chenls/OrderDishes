@@ -104,7 +104,6 @@ public class VerifySmsCodeDialogFragment extends DialogFragment implements View.
                     return;
                 }
                 if (!CommonUtil.checkNetState(getContext())) {
-                    Toast.makeText(getContext(), "网络不可用！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 register.setVisibility(View.GONE);

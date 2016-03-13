@@ -19,7 +19,7 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.CategoryRecyclerViewAdapter;
 import chenls.orderdishes.bean.Category;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.serializable.SerializableCategoryList;
+import chenls.orderdishes.utils.serializable.CategoryListSerializable;
 
 /**
  * A fragment representing a list of Items.
@@ -49,9 +49,9 @@ public class CategoryFragment extends Fragment {
         CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, 1);
-        SerializableCategoryList serializableCategoryList =
-                new SerializableCategoryList(categoryList);
-        args.putSerializable(CATEGORY_LIST, (Serializable) serializableCategoryList.getCategoryList());
+        CategoryListSerializable categoryListSerializable =
+                new CategoryListSerializable(categoryList);
+        args.putSerializable(CATEGORY_LIST, (Serializable) categoryListSerializable.getCategoryList());
         fragment.setArguments(args);
         return fragment;
     }

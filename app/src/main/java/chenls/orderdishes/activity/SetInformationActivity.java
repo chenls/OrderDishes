@@ -186,7 +186,6 @@ public class SetInformationActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.done) {
             if (!CommonUtil.checkNetState(SetInformationActivity.this)) {
-                Toast.makeText(SetInformationActivity.this, "网络不可用！", Toast.LENGTH_SHORT).show();
                 return true;
             }
             if (IS_CHANGE_FACE) {

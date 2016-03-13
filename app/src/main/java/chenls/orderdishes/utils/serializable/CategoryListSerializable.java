@@ -5,10 +5,10 @@ import java.util.List;
 
 import chenls.orderdishes.bean.Category;
 
-public class SerializableCategoryList implements Serializable {
+public class CategoryListSerializable implements Serializable {
     private List<Category> categoryList;
 
-    public SerializableCategoryList(List<Category> categoryList) {
+    public CategoryListSerializable(List<Category> categoryList) {
         this.categoryList = categoryList;
     }
 

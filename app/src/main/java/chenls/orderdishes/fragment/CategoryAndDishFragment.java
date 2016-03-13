@@ -28,11 +28,11 @@ import chenls.orderdishes.activity.DishDetailActivity;
 import chenls.orderdishes.bean.Category;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.utils.CommonUtil;
-import chenls.orderdishes.utils.serializable.SerializableMap;
+import chenls.orderdishes.utils.serializable.MapSerializable;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-public class OrderDishFragment extends Fragment implements
+public class CategoryAndDishFragment extends Fragment implements
         SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ORDER_NUM = "order_num";
@@ -53,11 +53,11 @@ public class OrderDishFragment extends Fragment implements
     private List<Category> categoryList;
     private int itemPosition;
 
-    public OrderDishFragment() {
+    public CategoryAndDishFragment() {
     }
 
-    public static OrderDishFragment newInstance() {
-        return new OrderDishFragment();
+    public static CategoryAndDishFragment newInstance() {
+        return new CategoryAndDishFragment();
     }
 
     @Nullable
@@ -146,7 +146,7 @@ public class OrderDishFragment extends Fragment implements
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AckOrderActivity.class);
                 Bundle bundle = new Bundle();
-                SerializableMap map = new SerializableMap(dishMap);
+                MapSerializable map = new MapSerializable(dishMap);
                 bundle.putSerializable(DISH_BEAN_MAP, (Serializable) map.getMap());
                 bundle.putString(TOTAL_PRICE, tv_total_price.getText().toString());
                 intent.putExtras(bundle);
@@ -179,7 +179,7 @@ public class OrderDishFragment extends Fragment implements
         bundle.putInt(POSITION, itemPosition);
         bundle.putParcelable(DISH_ITEM, dish);
         bundle.putString(ORDER_NUM, num);
-        SerializableMap map = new SerializableMap(dishMap);
+        MapSerializable map = new MapSerializable(dishMap);
         bundle.putSerializable(DISH_BEAN_MAP, (Serializable) map.getMap());
         bundle.putString(TOTAL_PRICE, tv_total_price.getText().toString());
         bundle.putString(TOTAL_NUM, tv_total_num.getText().toString());

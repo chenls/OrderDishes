@@ -6,10 +6,7 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import android.widget.Toast;
 
 public class CommonUtil {
 
@@ -34,28 +31,12 @@ public class CommonUtil {
         return null;
     }
 
-    public static String inputStreamToString(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        try {
-            while ((len = inputStream.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, len);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        byte[] re = byteArrayOutputStream.toByteArray();
-        inputStream.close();
-        byteArrayOutputStream.close();
-        return new String(re, "utf-8");
-    }
 
     public static boolean checkNetState(Context context) {
         boolean netState = false;
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
+            @SuppressWarnings("deprecation")
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
                 for (NetworkInfo anInfo : info) {
@@ -66,15 +47,14 @@ public class CommonUtil {
                 }
             }
         }
+        if (!netState)
+            Toast.makeText(context, "网络不可用！", Toast.LENGTH_SHORT).show();
         return netState;
     }
 
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
 }

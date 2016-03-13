@@ -22,7 +22,7 @@ public class BmobApplication extends Application {
     /**
      * 初始化文件配置
      *
-     * @param context
+     * @param context context
      */
     public static void initConfig(Context context) {
         BmobConfiguration config = new BmobConfiguration.Builder(context).customExternalCacheDir("dish").build();

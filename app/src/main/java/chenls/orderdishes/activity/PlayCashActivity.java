@@ -26,7 +26,7 @@ import chenls.orderdishes.BmobApplication;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.Order;
-import chenls.orderdishes.fragment.OrderDishFragment;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
@@ -46,7 +46,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
         BP.init(this, BmobApplication.APP_ID);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        price = bundle.getString(OrderDishFragment.TOTAL_PRICE);
+        price = bundle.getString(CategoryAndDishFragment.TOTAL_PRICE);
         TextView product_price = (TextView) findViewById(R.id.product_price);
         product_price.setText(price);
         price = price.substring(1, price.length());
@@ -80,7 +80,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = getIntent();
                 Bundle bundle = intent.getExtras();
                 final Map<Integer, Dish> dishMap = (Map<Integer, Dish>)
-                        bundle.getSerializable(OrderDishFragment.DISH_BEAN_MAP);
+                        bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
                 final String consigneeMessage = bundle.getString(AckOrderActivity.CONSIGNEE_MESSAGE);
                 final String consigneeMark = bundle.getString(AckOrderActivity.CONSIGNEE_MARK);
                 final Order order = new Order(false, consigneeMessage, consigneeMark, Double.parseDouble(price), dishMap);
@@ -257,8 +257,10 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
             File file = new File(Environment.getExternalStorageDirectory()
                     + File.separator + fileName + ".apk");
             if (file.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 file.delete();
             }
+            //noinspection ResultOfMethodCallIgnored
             file.createNewFile();
             FileOutputStream fos = new FileOutputStream(file);
             byte[] temp = new byte[1024];
