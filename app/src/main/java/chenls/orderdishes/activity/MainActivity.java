@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity
         Glide.with(MainActivity.this)
                 .load(url)
                 .centerCrop()
+                .placeholder(R.mipmap.loading)
                 .into(iv_pic);
     }
 

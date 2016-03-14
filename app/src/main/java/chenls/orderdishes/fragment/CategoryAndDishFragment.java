@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class CategoryAndDishFragment extends Fragment implements
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_order_dish, container, false);
+        view = inflater.inflate(R.layout.fragment_categery_and_dish, container, false);
         view.findViewById(R.id.fragment_dish_category).setVisibility(View.INVISIBLE);
         view.findViewById(R.id.include_bottom).setVisibility(View.INVISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
@@ -191,11 +192,12 @@ public class CategoryAndDishFragment extends Fragment implements
         Double price = Double.parseDouble(dish.getPrice());
         categoryFragment.setDishNum(Integer.parseInt(dish.getCategory()) - 1, type);
         String n = tv_total_num.getText().toString();
+        DecimalFormat df = new DecimalFormat("######0.00");
         if (TextUtils.isEmpty(n) || "0".equals(n)) {
             tv_total_num.setText("1");
             bt_compute.setVisibility(View.VISIBLE);
             tv_total_num.setVisibility(View.VISIBLE);
-            tv_total_price.setText(getString(R.string.rmb, price.toString()));
+            tv_total_price.setText(getString(R.string.rmb, df.format(price)));
         } else {
             int m = Integer.parseInt(n) + type;
             tv_total_num.setText(String.valueOf(m));
@@ -204,20 +206,20 @@ public class CategoryAndDishFragment extends Fragment implements
                 price = -price;
             }
             Double p = Double.parseDouble(str) + price;
-            tv_total_price.setText(getString(R.string.rmb, p));
+            tv_total_price.setText(getString(R.string.rmb, df.format(p)));
             if (m == 0) {
                 tv_total_num.setVisibility(View.GONE);
                 bt_compute.setVisibility(View.GONE);
             }
         }
         if (dishMap.get(position) == null)
-            dishMap.put(position, new Dish(1, price + "", dish.getName(), dish.getPic()));
+            dishMap.put(position, new Dish(1, df.format(price), dish.getName(), dish.getPic()));
         else {
             int number = dishMap.get(position).getNumber() + type;
             if (number == 0)
                 dishMap.remove(position);
             else
-                dishMap.put(position, new Dish(number, price + "", dish.getName(), dish.getPic()));
+                dishMap.put(position, new Dish(number, df.format(price), dish.getName(), dish.getPic()));
         }
     }
 

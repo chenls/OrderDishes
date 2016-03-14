@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import chenls.orderdishes.R;
@@ -105,6 +106,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         String order_num = tv_order_num.getText().toString();
         String total_num = tv_total_num.getText().toString();
         String total_price = tv_total_price.getText().toString().substring(1);
+        DecimalFormat df = new DecimalFormat("######0.00");
         switch (v.getId()) {
             case R.id.iv_add:
                 //预定数量
@@ -124,7 +126,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                 }
                 //总价
                 Double p1 = Double.parseDouble(total_price) + Double.parseDouble(dish.getPrice());
-                tv_total_price.setText(getString(R.string.rmb, p1));
+                tv_total_price.setText(getString(R.string.rmb, df.format(p1)));
                 break;
             case R.id.iv_minus:
                 //预定数量
@@ -143,7 +145,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
                 }
                 //总价
                 Double p2 = Double.parseDouble(total_price) - Double.parseDouble(dish.getPrice());
-                tv_total_price.setText(getString(R.string.rmb, p2));
+                tv_total_price.setText(getString(R.string.rmb, df.format(p2)));
                 break;
         }
         //修改map中点菜的数量

@@ -5,7 +5,8 @@ import java.util.Map;
 import cn.bmob.v3.BmobObject;
 
 public class Order extends BmobObject {
-    private boolean isPay;
+    private String username;
+    private int state;
     private String consigneeMessage;
     private String mark;
     private Double price;
@@ -14,20 +15,25 @@ public class Order extends BmobObject {
     public Order() {
     }
 
-    public Order(boolean isPay, String consigneeMessage, String mark, Double price, Map<Integer, Dish> dishMap) {
-        this.isPay = isPay;
+    public Order(String username, int state, String consigneeMessage, String mark, Double price, Map<Integer, Dish> dishMap) {
+        this.username = username;
+        this.state = state;
         this.consigneeMessage = consigneeMessage;
         this.mark = mark;
         this.price = price;
         this.dishMap = dishMap;
     }
 
-    public void setPay(boolean pay) {
-        isPay = pay;
+    public int getState() {
+        return state;
     }
 
-    public boolean isPay() {
-        return isPay;
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int isState() {
+        return state;
     }
 
     public String getConsigneeMessage() {

@@ -77,7 +77,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                     startActivity(intent);
                 } else {
                     assert total_price != null;
-                    final Order order = new Order(false, consigneeMessage, consigneeMark
+                    final Order order = new Order((String) MyUser.getObjectByKey(AckOrderActivity.this, "username"), 1, consigneeMessage, consigneeMark
                             , Double.parseDouble(total_price.substring(1, total_price.length())), dishMap);
                     order.save(AckOrderActivity.this, new SaveListener() {
                         @Override

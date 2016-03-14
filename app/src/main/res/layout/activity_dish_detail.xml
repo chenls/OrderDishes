@@ -51,9 +51,9 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp"
-                        android:adjustViewBounds="true"
                         android:background="@color/colorBackground"
                         android:contentDescription="@string/dish"
+                        android:adjustViewBounds="true"
                         android:scaleType="fitXY"
                         android:src="@mipmap/loading" />
 

@@ -60,7 +60,6 @@ public class SetInformationActivity extends AppCompatActivity {
         if (pic != null) {
             Glide.with(SetInformationActivity.this)
                     .load(pic.getFileUrl(SetInformationActivity.this))
-                    .asBitmap()
                     .placeholder(R.mipmap.face)
                     .centerCrop()
                     .into(iv_face);

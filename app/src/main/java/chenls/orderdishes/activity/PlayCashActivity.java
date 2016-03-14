@@ -25,6 +25,7 @@ import c.b.QListener;
 import chenls.orderdishes.BmobApplication;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.bean.Order;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import cn.bmob.v3.listener.SaveListener;
@@ -55,9 +56,9 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
                 String.valueOf(System.currentTimeMillis()));
         goods_num.setText(goods_message);
         iv_alipay = (ImageView) findViewById(R.id.iv_alipay);
-        iv_alipay.setOnClickListener(this);
+        findViewById(R.id.rl_alipay).setOnClickListener(this);
         iv_weixinpay = (ImageView) findViewById(R.id.iv_weixinpay);
-        iv_weixinpay.setOnClickListener(this);
+        findViewById(R.id.rl_weixinpay).setOnClickListener(this);
         Button bt_pay = (Button) findViewById(R.id.bt_pay);
         bt_pay.setOnClickListener(this);
     }
@@ -66,12 +67,12 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_alipay:
+            case R.id.rl_alipay:
                 iv_alipay.setBackgroundResource(R.mipmap.check_on);
                 iv_weixinpay.setBackgroundResource(R.mipmap.check_off);
                 isAliPay = true;
                 break;
-            case R.id.iv_weixinpay:
+            case R.id.rl_weixinpay:
                 iv_alipay.setBackgroundResource(R.mipmap.check_off);
                 iv_weixinpay.setBackgroundResource(R.mipmap.check_on);
                 isAliPay = false;
@@ -83,7 +84,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
                         bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
                 final String consigneeMessage = bundle.getString(AckOrderActivity.CONSIGNEE_MESSAGE);
                 final String consigneeMark = bundle.getString(AckOrderActivity.CONSIGNEE_MARK);
-                final Order order = new Order(false, consigneeMessage, consigneeMark, Double.parseDouble(price), dishMap);
+                final Order order = new Order((String) MyUser.getObjectByKey(PlayCashActivity.this, "username"), 1, consigneeMessage, consigneeMark, Double.parseDouble(price), dishMap);
                 order.save(PlayCashActivity.this, new SaveListener() {
                     @Override
                     public void onSuccess() {
@@ -224,7 +225,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
             public void succeed(String status) {
                 final Order order = new Order();
                 order.setObjectId(objectId);
-                order.setPay(true);
+                order.setState(2);
                 order.update(PlayCashActivity.this, objectId, new UpdateListener() {
                     @Override
                     public void onSuccess() {
