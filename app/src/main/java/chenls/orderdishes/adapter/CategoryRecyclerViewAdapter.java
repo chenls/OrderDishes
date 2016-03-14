@@ -1,5 +1,6 @@
 package chenls.orderdishes.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,8 +22,10 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
     private final CategoryFragment.OnListFragmentInteractionListener mListener;
     private int current_position = 0; //被选中的条目 默认为第0个
     private Map<Integer, String> bookNumMap;
+    private Context context;
 
-    public CategoryRecyclerViewAdapter(List<Category> categoryList, CategoryFragment.OnListFragmentInteractionListener listener) {
+    public CategoryRecyclerViewAdapter(Context context, List<Category> categoryList, CategoryFragment.OnListFragmentInteractionListener listener) {
+        this.context = context;
         this.categoryList = categoryList;
         mListener = listener;
         bookNumMap = new HashMap<>();
@@ -35,22 +38,22 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         return new ViewHolder(view);
     }
 
-    private View last_view;
+    private TextView last_category_name;
     private View last_background_left;
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         if (position == current_position) {
             //设置为选中
-            holder.mView.setBackgroundResource(R.color.colorWhite);
+            holder.category_name.setTextColor(context.getResources().getColor(R.color.colorPrimary));
             holder.background_left.setVisibility(View.VISIBLE);
         } else {
             //设置为非选中
-            holder.mView.setBackgroundResource(R.color.colorBackground);
+            holder.category_name.setTextColor(context.getResources().getColor(R.color.colorGrey));
             holder.background_left.setVisibility(View.GONE);
         }
         if (position == 0) {
-            last_view = holder.mView;
+            last_category_name = holder.category_name;
             last_background_left = holder.background_left;
         }
 
@@ -70,11 +73,12 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    last_view.setBackgroundResource(R.color.colorBackground);
+                    last_category_name.setTextColor(context.getResources().getColor(R.color.colorGrey));
+                    holder.category_name.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+                    last_category_name = holder.category_name;
+
                     last_background_left.setVisibility(View.GONE);
-                    holder.mView.setBackgroundResource(R.color.colorWhite);
                     holder.background_left.setVisibility(View.VISIBLE);
-                    last_view = holder.mView;
                     last_background_left = holder.background_left;
                     current_position = holder.getAdapterPosition();
                     //通知处理点击事件
@@ -89,12 +93,13 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         });
     }
 
-    public void changBackground(View view, View background_left) {
-        last_view.setBackgroundResource(R.color.colorBackground);
+    public void changBackground(TextView category_name, View background_left) {
+        last_category_name.setTextColor(context.getResources().getColor(R.color.colorGrey));
+        category_name.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+        last_category_name = category_name;
+
         last_background_left.setVisibility(View.GONE);
-        view.setBackgroundResource(R.color.colorWhite);
         background_left.setVisibility(View.VISIBLE);
-        last_view = view;
         last_background_left = background_left;
     }
 

@@ -29,7 +29,6 @@
                 android:layout_alignParentStart="true"
                 android:background="#95bcbcbc"
                 android:padding="5dp"
-                android:text="菜名"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#7c000000"
                 android:textSize="16sp" />
@@ -46,15 +45,14 @@
                 android:id="@+id/tv_dish_summarize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asjjasopasj军嫂评价啊搜排除军嫂赔偿金啊骄傲是破解哦怕死经常泼洒破案设计冲破啊睡觉按时破解奥爬坡就"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="14sp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/tv_comment"
@@ -63,7 +61,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="6评论42月售"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textSize="14sp"
                     tools:ignore="SmallSp" />

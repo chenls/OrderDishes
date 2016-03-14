@@ -1,6 +1,7 @@
 package chenls.orderdishes.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.activity.CommentActivity;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.fragment.DiscoverFragment;
 
@@ -39,7 +41,13 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         Dish dish = mValues.get(position);
-//        holder.iv_comment
+        holder.iv_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CommentActivity.class);
+                context.startActivity(intent);
+            }
+        });
         holder.iv_favour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

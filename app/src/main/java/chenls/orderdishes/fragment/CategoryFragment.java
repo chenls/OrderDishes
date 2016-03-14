@@ -81,7 +81,7 @@ public class CategoryFragment extends Fragment {
             }
             //如果每个item大小固定，设置这个属性可以提高性能
             recyclerView.setHasFixedSize(true);
-            myCategoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(categoryList, mListener);
+            myCategoryRecyclerViewAdapter = new CategoryRecyclerViewAdapter(getContext(),categoryList, mListener);
             recyclerView.setAdapter(myCategoryRecyclerViewAdapter);
         }
         return view;
@@ -102,7 +102,8 @@ public class CategoryFragment extends Fragment {
             public void run() {
                 ViewGroup view = (ViewGroup) recyclerView.findViewWithTag(position);
                 View background_left = CommonUtil.findViewInViewGroupById(view, R.id.background_left);
-                myCategoryRecyclerViewAdapter.changBackground(view, background_left);
+                TextView category_name = (TextView) CommonUtil.findViewInViewGroupById(view, R.id.category_name);
+                myCategoryRecyclerViewAdapter.changBackground(category_name, background_left);
             }
         }, 100);
     }

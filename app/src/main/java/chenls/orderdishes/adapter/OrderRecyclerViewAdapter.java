@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -49,14 +50,15 @@ public class OrderRecyclerViewAdapter extends
         Dish dish = null;
         for (Dish d : dishMap.values()) {
             dish = d;
-            break;
+            if (dish != null)
+                break;
         }
         Glide.with(context)
                 .load(dish.getPic().getFileUrl(context))
                 .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
-        holder.tv_dish_name.setText(dish.getName() + "等");
+        holder.tv_dish_name.setText(String.format("%s...", dish.getName()));
         holder.tv_time.setText(order.getCreatedAt());
         String[] state = context.getResources().getStringArray(R.array.state);
         holder.tv_state.setText(state[order.getState()]);
@@ -64,7 +66,19 @@ public class OrderRecyclerViewAdapter extends
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onOrderListButtonClick(order);
+                switch (order.getState()) {
+                    case 0:     //已取消
+                        Toast.makeText(context, "订单已取消", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:     //未支付
+                        mListener.onOrderListButtonClick(order);
+                        break;
+                    case 2:     //已成功
+                        Toast.makeText(context, "菜肴正在配送中，请安心等待", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:     //已完成
+                        break;
+                }
             }
         });
         holder.iv_delete.setOnClickListener(new View.OnClickListener() {
