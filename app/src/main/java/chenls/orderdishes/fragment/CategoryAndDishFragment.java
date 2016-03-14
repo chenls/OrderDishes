@@ -70,10 +70,14 @@ public class CategoryAndDishFragment extends Fragment implements
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        myRefresh(false);
+        return view;
+    }
+
+    public void myRefresh(boolean b) {
         swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
         swipeRefreshLayout.setRefreshing(true);
-        queryDish(false);
-        return view;
+        queryDish(b);
     }
 
     @Override
@@ -82,7 +86,7 @@ public class CategoryAndDishFragment extends Fragment implements
     }
 
     private void queryDish(boolean refresh) {
-        if (!CommonUtil.checkNetState(getContext())) {
+        if (!CommonUtil.checkNetState(getActivity())) {
             swipeRefreshLayout.setRefreshing(false);
             return;
         }

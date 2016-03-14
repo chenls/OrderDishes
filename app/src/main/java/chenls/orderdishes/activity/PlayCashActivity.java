@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +27,11 @@ import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Order;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.fragment.OrderFragment;
+import chenls.orderdishes.utils.CommonUtil;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class PlayCashActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final String ACTION = "com.chenls.doNotCareName";
     private String price;
     private String goods_message;
     private ProgressDialog progressDialog;
@@ -63,6 +66,9 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
     @SuppressWarnings("unchecked")
     @Override
     public void onClick(View v) {
+        if (!CommonUtil.checkNetState(PlayCashActivity.this)) {
+            return;
+        }
         switch (v.getId()) {
             case R.id.rl_alipay:
                 iv_alipay.setBackgroundResource(R.mipmap.check_on);
@@ -85,7 +91,6 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    //TODO 支付成功后返回
     // 调用支付宝支付
     void payByAli() {
         if (progressDialog == null) {
@@ -209,9 +214,19 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
                 order.update(PlayCashActivity.this, objectId, new UpdateListener() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(PlayCashActivity.this, "订单提交成功！", Toast.LENGTH_SHORT)
+                        Toast.makeText(PlayCashActivity.this, "支付成功！", Toast.LENGTH_SHORT)
                                 .show();
+                        //发送广播
+                        Intent mIntent = new Intent(ACTION);
+                        LocalBroadcastManager.getInstance(PlayCashActivity.this)
+                                .sendBroadcast(mIntent);
+
                         progressDialog.dismiss();
+                        Intent intent = new Intent(PlayCashActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
                     }
 
                     @Override

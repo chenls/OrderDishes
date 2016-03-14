@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,6 +66,9 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
         ack_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!CommonUtil.checkNetState(AckOrderActivity.this)) {
+                    return;
+                }
                 if (isOnlyPay) {
                     //无需提交订单
                     if (isOnlinePay) {
@@ -96,8 +100,17 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                             if (isOnlinePay) {
                                 onlinePay(order.getObjectId(), price);
                             } else {
+                                Toast.makeText(AckOrderActivity.this, "订单已提交，可在订单管理中查看", Toast.LENGTH_LONG).show();
+                                //发送广播
+                                Intent mIntent = new Intent(PlayCashActivity.ACTION);
+                                LocalBroadcastManager.getInstance(AckOrderActivity.this)
+                                        .sendBroadcast(mIntent);
+
+                                Intent intent = new Intent(AckOrderActivity.this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                startActivity(intent);
                                 finish();
-                                Toast.makeText(AckOrderActivity.this, "订单已提交，稍等支付", Toast.LENGTH_SHORT).show();
                             }
                         }
 

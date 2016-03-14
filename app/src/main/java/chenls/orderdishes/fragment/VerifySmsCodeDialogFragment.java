@@ -103,7 +103,7 @@ public class VerifySmsCodeDialogFragment extends DialogFragment implements View.
                     Toast.makeText(getContext(), "输入信息不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (!CommonUtil.checkNetState(getContext())) {
+                if (!CommonUtil.checkNetState(getActivity())) {
                     return;
                 }
                 register.setVisibility(View.GONE);

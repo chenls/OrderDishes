@@ -68,7 +68,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void queryDish(boolean refresh) {
-        if (!CommonUtil.checkNetState(getContext())) {
+        if (!CommonUtil.checkNetState(getActivity())) {
             swipeRefreshLayout.setRefreshing(false);
             return;
         }

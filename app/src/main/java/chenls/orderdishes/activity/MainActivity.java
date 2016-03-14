@@ -1,13 +1,17 @@
 package chenls.orderdishes.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -121,6 +124,23 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.linear_layout, discoverFragment);
         fragmentTransaction.commit();
+        //支付成功后 刷新界面
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (from instanceof OrderFragment)
+                    orderFragment.myRefresh(true);
+                else if (from instanceof CategoryAndDishFragment) {
+                    categoryAndDishFragment.myRefresh(true);
+                    //同时需要刷新订单
+                    if (orderFragment != null)
+                        orderFragment.myRefresh(true);
+                }
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter(PlayCashActivity.ACTION);
+        LocalBroadcastManager.getInstance(MainActivity.this)
+                .registerReceiver(broadcastReceiver, intentFilter);
     }
 
     private void changeInformation(Bitmap bitmap) {
@@ -209,6 +229,11 @@ public class MainActivity extends AppCompatActivity
                     orderFragment = OrderFragment.newInstance();
                 }
                 switchContent(orderFragment);
+//                //打开订单时是否需要刷新
+//                if (isNeedRefreshOrder) {
+//                    categoryAndDishFragment.myRefresh(true);
+//                    isNeedRefreshOrder = false;
+//                }
                 break;
             case R.id.nav_setting:
                 break;

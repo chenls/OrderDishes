@@ -56,20 +56,23 @@ public class OrderFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         swipeRefreshLayout = (SwipeRefreshLayout) view;
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
-        swipeRefreshLayout.setRefreshing(true);
-        queryDish(false);
+        myRefresh(false);
         return view;
     }
 
-    //TODO 提交订单后 刷新订单
+    public void myRefresh(boolean b) {
+        swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
+        swipeRefreshLayout.setRefreshing(true);
+        queryDish(b);
+    }
+
     @Override
     public void onRefresh() {
         queryDish(true);
     }
 
     private void queryDish(boolean refresh) {
-        if (!CommonUtil.checkNetState(getContext())) {
+        if (!CommonUtil.checkNetState(getActivity())) {
             swipeRefreshLayout.setRefreshing(false);
             return;
         }
@@ -137,6 +140,9 @@ public class OrderFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     public void onDeleteButtonClick(String objectId) {
+        if (!CommonUtil.checkNetState(getActivity())) {
+            return;
+        }
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setMessage("请稍等...");

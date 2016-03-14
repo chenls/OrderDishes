@@ -64,7 +64,7 @@
             android:paddingLeft="21dp"
             android:paddingRight="21dp"
             android:paddingStart="21dp"
-            android:text="@string/ack_order_activity"
+            android:text="@string/submit_order"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorWhite"
             tools:ignore="RelativeOverlap" />

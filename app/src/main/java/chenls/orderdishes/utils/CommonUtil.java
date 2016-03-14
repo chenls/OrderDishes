@@ -31,25 +31,17 @@ public class CommonUtil {
         return null;
     }
 
-
     public static boolean checkNetState(Context context) {
-        boolean netState = false;
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            @SuppressWarnings("deprecation")
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (NetworkInfo anInfo : info) {
-                    if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                        netState = true;
-                        break;
-                    }
-                }
+        if (context != null) {
+            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
+            if (mNetworkInfo != null) {
+                return mNetworkInfo.isAvailable();
             }
         }
-        if (!netState)
-            Toast.makeText(context, "网络不可用！", Toast.LENGTH_SHORT).show();
-        return netState;
+        Toast.makeText(context, "网络不可用！", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
     public static boolean isExternalStorageWritable() {
