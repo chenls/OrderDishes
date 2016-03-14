@@ -1,60 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:layout_marginTop="10dp">
 
-    <ImageView
-        android:id="@+id/iv_dish"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
         android:layout_margin="10dp"
-        android:contentDescription="@string/dish"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/loading" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_dish_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_dish"
-        android:layout_marginLeft="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/iv_dish"
-        android:layout_toRightOf="@+id/iv_dish"
-        android:text="菜名等"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_dish_name"
-        android:layout_marginLeft="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_toEndOf="@+id/iv_dish"
-        android:layout_toRightOf="@+id/iv_dish"
-        android:text="下单时间"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
 
-    <TextView
-        android:id="@+id/tv_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="未支付"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/delete"
+                android:src="@mipmap/delete" />
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/iv_dish"
-        android:layout_alignStart="@+id/iv_dish"
-        android:layout_below="@+id/textView2"
-        android:text="价格"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/iv_dish"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/dish"
+                android:scaleType="centerCrop" />
+
+
+            <TextView
+                android:id="@+id/tv_dish_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/iv_dish"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/iv_dish"
+                android:layout_toRightOf="@+id/iv_dish"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/iv_dish"
+                android:layout_marginBottom="5dp"
+                android:layout_toEndOf="@+id/iv_dish"
+                android:layout_toRightOf="@+id/iv_dish"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                tools:ignore="RelativeOverlap" />
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

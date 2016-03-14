@@ -20,23 +20,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.MyUser;
+import chenls.orderdishes.bean.Order;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.fragment.DishFragment;
-import chenls.orderdishes.fragment.CategoryAndDishFragment;
+import chenls.orderdishes.fragment.OrderFragment;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
         , DishFragment.OnListFragmentInteractionListener
         , CategoryFragment.OnListFragmentInteractionListener
-        , DiscoverFragment.OnListFragmentInteractionListener {
+        , DiscoverFragment.OnListFragmentInteractionListener
+        , OrderFragment.OnListFragmentInteractionListener {
 
     private static final int SET_INFORMATION = 1;
     public static final String PIC = "pic";
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment from;
     private DiscoverFragment discoverFragment;
     private CategoryAndDishFragment categoryAndDishFragment;
+    private OrderFragment orderFragment;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -200,6 +205,10 @@ public class MainActivity extends AppCompatActivity
                 if (actionBar != null) {
                     actionBar.setTitle(getString(R.string.order));
                 }
+                if (orderFragment == null) {
+                    orderFragment = OrderFragment.newInstance();
+                }
+                switchContent(orderFragment);
                 break;
             case R.id.nav_setting:
                 break;
@@ -258,5 +267,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDiscoverListFragmentInteraction() {
 
+    }
+
+    @Override
+    public void onOrderListButtonClick(Order order) {
+        orderFragment.onOrderListButtonClick(order);
+    }
+
+    @Override
+    public void onDeleteButtonClick(String objectId) {
+        orderFragment.onDeleteButtonClick(objectId);
     }
 }

@@ -92,4 +92,18 @@
     <string name="discover">发现</string>
     <string name="weixin">微信</string>
     <string name="pay_mark">注：收款方为第三方支付服务商：六子工作室。如有疑问，请联系：923847753@qq.com</string>
+    <string name="total_price">总金额：￥%s</string>
+    <string name="delete">删除</string>
+    <string name="delete_order">删除订单</string>
+    <string name="sure_delete">是否确认删除订单</string>
+    <string-array name="state">
+        　
+        <item>已取消</item>
+        　　
+        <item>未支付</item>
+        　　
+        <item>已支付</item>
+        　　
+        <item>上菜中</item>
+    </string-array>
 </resources>

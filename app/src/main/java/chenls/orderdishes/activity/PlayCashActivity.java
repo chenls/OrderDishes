@@ -17,18 +17,15 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.Map;
 
 import c.b.BP;
 import c.b.PListener;
 import c.b.QListener;
 import chenls.orderdishes.BmobApplication;
 import chenls.orderdishes.R;
-import chenls.orderdishes.bean.Dish;
-import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.bean.Order;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
-import cn.bmob.v3.listener.SaveListener;
+import chenls.orderdishes.fragment.OrderFragment;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class PlayCashActivity extends AppCompatActivity implements View.OnClickListener {
@@ -48,9 +45,9 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         price = bundle.getString(CategoryAndDishFragment.TOTAL_PRICE);
+        objectId = bundle.getString(OrderFragment.OBJECT_ID);
         TextView product_price = (TextView) findViewById(R.id.product_price);
-        product_price.setText(price);
-        price = price.substring(1, price.length());
+        product_price.setText(getString(R.string.rmb, price));
         TextView goods_num = (TextView) findViewById(R.id.goods_num);
         goods_message = getString(R.string.goods_num,
                 String.valueOf(System.currentTimeMillis()));
@@ -78,24 +75,6 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
                 isAliPay = false;
                 break;
             case R.id.bt_pay:
-                Intent intent = getIntent();
-                Bundle bundle = intent.getExtras();
-                final Map<Integer, Dish> dishMap = (Map<Integer, Dish>)
-                        bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
-                final String consigneeMessage = bundle.getString(AckOrderActivity.CONSIGNEE_MESSAGE);
-                final String consigneeMark = bundle.getString(AckOrderActivity.CONSIGNEE_MARK);
-                final Order order = new Order((String) MyUser.getObjectByKey(PlayCashActivity.this, "username"), 1, consigneeMessage, consigneeMark, Double.parseDouble(price), dishMap);
-                order.save(PlayCashActivity.this, new SaveListener() {
-                    @Override
-                    public void onSuccess() {
-                        objectId = order.getObjectId();
-                    }
-
-                    @Override
-                    public void onFailure(int i, String s) {
-                        Toast.makeText(PlayCashActivity.this, "提交订单失败", Toast.LENGTH_SHORT).show();
-                    }
-                });
                 //开始支付
                 if (isAliPay) {
                     payByAli();
@@ -106,6 +85,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    //TODO 支付成功后返回
     // 调用支付宝支付
     void payByAli() {
         if (progressDialog == null) {
