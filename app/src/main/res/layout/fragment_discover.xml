@@ -1,5 +1,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp">
@@ -8,174 +9,116 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout"
+        <ImageView
+            android:id="@+id/iv_dish"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            android:background="@color/colorBackground"
+            android:contentDescription="@string/dish"
+            android:scaleType="fitXY"
+            android:src="@mipmap/loading" />
 
-            <ImageView
-                android:id="@+id/iv_dish_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/iv_dish"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp">
 
             <TextView
                 android:id="@+id/tv_dish_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:background="#95bcbcbc"
-                android:padding="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#7c000000"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16sp" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayout"
-            android:orientation="vertical"
-            android:padding="5dp">
 
             <TextView
+                android:id="@+id/tv_rmb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tv_price"
+                android:layout_alignBottom="@+id/tv_price"
+                android:text="@string/rmb_sign"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorOrange"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_dish_name"
+                android:layout_toEndOf="@+id/tv_rmb"
+                android:layout_toRightOf="@+id/tv_rmb"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorOrange"
+                android:textStyle="bold" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/myRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_below="@id/tv_dish_name"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/tv_price"
+                android:layout_toRightOf="@+id/tv_price"
+                android:isIndicator="true"
+                android:rating="3.5" />
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/ratingBar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ratingBar"
+                android:layout_toRightOf="@+id/ratingBar"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/tv_sell_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/tv_comment"
+                android:layout_alignTop="@id/tv_comment"
+                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
+                android:layout_toEndOf="@id/tv_comment"
+                android:layout_toRightOf="@id/tv_comment"
+                android:gravity="bottom"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
+
+            <TextView
+
                 android:id="@+id/tv_dish_summarize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/tv_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="14sp"
-                    tools:ignore="SmallSp" />
-
-                <ImageView
-                    android:id="@+id/iv_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_toLeftOf="@+id/iv_favour"
-                    android:layout_toStartOf="@+id/iv_favour"
-                    android:src="@mipmap/comment" />
-
-                <ImageView
-                    android:id="@+id/iv_favour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:src="@mipmap/praise_not" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="0.2dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/colorLightGrey" />
-
-                <TextView
-                    android:id="@+id/tv_all_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="所有评论"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_name1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="陈六生："
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_comment1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="非常不错"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_name2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="陈六生："
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_comment2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="非常不错"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="10sp"
-                        tools:ignore="SmallSp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tv_name3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="陈六生："
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_comment3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="非常不错"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="14sp" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tv_price"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorGrey"
+                android:textSize="12sp" />
+        </RelativeLayout>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

@@ -27,12 +27,6 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class OrderFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String ONLY_PAY = "onlyPay";
