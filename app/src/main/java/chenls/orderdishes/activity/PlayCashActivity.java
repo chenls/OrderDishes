@@ -22,7 +22,7 @@ import java.io.InputStream;
 import c.b.BP;
 import c.b.PListener;
 import c.b.QListener;
-import chenls.orderdishes.BmobApplication;
+import chenls.orderdishes.MyApplication;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Order;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
@@ -44,7 +44,7 @@ public class PlayCashActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_cash);
         //初始化Bmob支付
-        BP.init(this, BmobApplication.APP_ID);
+        BP.init(this, MyApplication.APP_ID);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         price = bundle.getString(CategoryAndDishFragment.TOTAL_PRICE);

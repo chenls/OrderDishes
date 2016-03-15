@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import chenls.orderdishes.BmobApplication;
+import chenls.orderdishes.MyApplication;
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.MyUser;
 import chenls.orderdishes.utils.CommonUtil;
@@ -52,7 +52,7 @@ public class VerifySmsCodeDialogFragment extends DialogFragment implements View.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bmob.initialize(getContext(), BmobApplication.APP_ID);
+        Bmob.initialize(getContext(), MyApplication.APP_ID);
         if (getArguments() != null) {
             userName = getArguments().getString("param1");
             userPwd = getArguments().getString("param2");

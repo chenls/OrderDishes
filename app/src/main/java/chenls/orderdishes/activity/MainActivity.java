@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pgyersdk.feedback.PgyFeedbackShakeManager;
+import com.pgyersdk.views.PgyerDialog;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
@@ -302,5 +304,23 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onDeleteButtonClick(String objectId) {
         orderFragment.onDeleteButtonClick(objectId);
+    }
+
+    //蒲公英 反馈相关
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 摇一摇的灵敏度，默认为950，数值越小灵敏度越高。
+        PgyFeedbackShakeManager.setShakingThreshold(800);
+        // 以对话框的形式弹出
+        PgyFeedbackShakeManager.register(MainActivity.this);
+        //noinspection ResourceType
+        PgyerDialog.setDialogTitleBackgroundColor(getString(R.color.colorPrimary));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        PgyFeedbackShakeManager.unregister();
     }
 }

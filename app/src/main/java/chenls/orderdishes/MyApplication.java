@@ -5,10 +5,11 @@ import android.content.Context;
 
 import com.bmob.BmobConfiguration;
 import com.bmob.BmobPro;
+import com.pgyersdk.crash.PgyCrashManager;
 
 import cn.bmob.v3.Bmob;
 
-public class BmobApplication extends Application {
+public class MyApplication extends Application {
 
     public static final String APP_ID = "3f3105ded1ca7e96d3fc71a853b60c63";
 
@@ -17,6 +18,7 @@ public class BmobApplication extends Application {
         super.onCreate();
         Bmob.initialize(getApplicationContext(), APP_ID);
         initConfig(getApplicationContext());
+        PgyCrashManager.register(this);
     }
 
     /**
