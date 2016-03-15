@@ -67,23 +67,6 @@
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/tv_signboard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/iv_dish"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_toEndOf="@id/tv_dish_name"
-                        android:layout_toRightOf="@id/tv_dish_name"
-                        android:background="@color/colorOrange"
-                        android:paddingLeft="2dp"
-                        android:paddingRight="2dp"
-                        android:text="@string/signboard"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="16sp" />
-
                     <RatingBar
                         android:id="@+id/ratingBar"
                         style="@style/myRatingBar"

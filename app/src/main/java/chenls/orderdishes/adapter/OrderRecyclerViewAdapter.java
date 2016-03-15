@@ -2,6 +2,8 @@ package chenls.orderdishes.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,13 +15,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.activity.ChooseCommentDishActivity;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.Order;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.fragment.OrderFragment;
+import chenls.orderdishes.utils.serializable.MapSerializable;
 
 
 public class OrderRecyclerViewAdapter extends
@@ -70,13 +76,19 @@ public class OrderRecyclerViewAdapter extends
                     case 0:     //已取消
                         Toast.makeText(context, "订单已取消", Toast.LENGTH_SHORT).show();
                         break;
-                    case 1:     //未支付
+                    case 1:     //未支付 去支付
                         mListener.onOrderListButtonClick(order);
                         break;
-                    case 2:     //已成功
+                    case 2:     //上菜中
                         Toast.makeText(context, "菜肴正在配送中，请安心等待", Toast.LENGTH_SHORT).show();
                         break;
-                    case 3:     //已完成
+                    case 3:     //已完成 去评论
+                        Intent intent = new Intent(context, ChooseCommentDishActivity.class);
+                        Bundle bundle = new Bundle();
+                        MapSerializable map = new MapSerializable(order.getDishMap());
+                        bundle.putSerializable(CategoryAndDishFragment.DISH_BEAN_MAP, (Serializable) map.getMap());
+                        intent.putExtras(bundle);
+                        context.startActivity(intent);
                         break;
                 }
             }

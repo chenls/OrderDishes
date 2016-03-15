@@ -26,6 +26,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- bmob支付相关 开始 -->
         <activity
             android:name="c.b.a.A"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -36,6 +38,7 @@
             android:name="c.b.a.B"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
+        <!-- bmob支付相关 结束 -->
         <activity
             android:name=".activity.WelcomeActivity"
             android:launchMode="singleTop"
@@ -89,6 +92,14 @@
         <activity
             android:name=".activity.CommentActivity"
             android:label="@string/add_comment" />
+        <activity
+            android:name=".activity.ChooseCommentDishActivity"
+            android:label="@string/choose"
+            android:launchMode="singleTop">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.DishDetailActivity" />
+        </activity>
     </application>
 
 </manifest>

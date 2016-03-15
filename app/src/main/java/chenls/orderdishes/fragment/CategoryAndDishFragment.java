@@ -217,13 +217,13 @@ public class CategoryAndDishFragment extends Fragment implements
             }
         }
         if (dishMap.get(position) == null)
-            dishMap.put(position, new Dish(1, df.format(price), dish.getName(), dish.getPic()));
+            dishMap.put(position, new Dish(dish.getObjectId(), 1, df.format(price), dish.getName(), dish.getPic()));
         else {
             int number = dishMap.get(position).getNumber() + type;
             if (number == 0)
                 dishMap.remove(position);
             else
-                dishMap.put(position, new Dish(number, df.format(price), dish.getName(), dish.getPic()));
+                dishMap.put(position, new Dish(dish.getObjectId(), number, df.format(price), dish.getName(), dish.getPic()));
         }
     }
 

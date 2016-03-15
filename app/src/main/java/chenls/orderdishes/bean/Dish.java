@@ -8,7 +8,7 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class Dish extends BmobObject implements Parcelable {
     private BmobFile pic;
-    private String name, star, commentNumber, sellNumber, price,
+    private String id, name, star, commentNumber, sellNumber, price,
             summarize, allComment, category, categoryName;
     private int number;
 
@@ -17,7 +17,8 @@ public class Dish extends BmobObject implements Parcelable {
         this.name = name;
     }
 
-    public Dish(int number, String price, String name, BmobFile pic) {
+    public Dish(String id, int number, String price, String name, BmobFile pic) {
+        this.id = id;
         this.pic = pic;
         this.name = name;
         this.price = price;
@@ -34,6 +35,10 @@ public class Dish extends BmobObject implements Parcelable {
         this.sellNumber = sellNumber;
         this.summarize = summarize;
         this.categoryName = categoryName;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public BmobFile getPic() {
@@ -86,6 +91,7 @@ public class Dish extends BmobObject implements Parcelable {
 
     protected Dish(Parcel in) {
         pic = (BmobFile) in.readSerializable();
+        id = in.readString();
         name = in.readString();
         star = in.readString();
         commentNumber = in.readString();
@@ -118,6 +124,7 @@ public class Dish extends BmobObject implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeSerializable(pic);
+        dest.writeString(id);
         dest.writeString(name);
         dest.writeString(star);
         dest.writeString(commentNumber);
