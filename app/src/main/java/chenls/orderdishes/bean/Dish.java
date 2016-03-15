@@ -36,6 +36,10 @@ public class Dish extends BmobObject implements Parcelable {
         this.categoryName = categoryName;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

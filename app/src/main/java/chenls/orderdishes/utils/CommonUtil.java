@@ -40,7 +40,11 @@ public class CommonUtil {
                 return mNetworkInfo.isAvailable();
             }
         }
-        Toast.makeText(context, "网络不可用！", Toast.LENGTH_SHORT).show();
+        try {
+            Toast.makeText(context, "网络不可用！", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

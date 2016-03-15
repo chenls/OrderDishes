@@ -63,7 +63,6 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
         holder.tv_dish_name.setText(dish.getName());
-//        holder.tv_signboard.setVisibility(dish.);
         holder.tv_dish_summarize.setText(dish.getSummarize());
         holder.tv_comment.setText(context.getString(R.string.comment
                 , Integer.parseInt(dish.getCommentNumber())));
@@ -87,6 +86,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    dish.setId(dish.getObjectId());
                     mListener.onDishListFragmentClick(holder.getAdapterPosition(), dish, holder.tv_order_num.getText().toString());
                 }
             }
@@ -117,7 +117,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
         else
             holder.tv_order_num.setText(String.valueOf(Integer.parseInt(s) + 1));
         Dish dish = dishList.get(holder.getAdapterPosition());
-        mListener.onDishListButtonClick(1, dish,holder.getAdapterPosition());
+        mListener.onDishListButtonClick(1, dish, holder.getAdapterPosition());
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 
@@ -129,7 +129,7 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
             holder.tv_order_num.setVisibility(View.GONE);
         }
         Dish dish = dishList.get(holder.getAdapterPosition());
-        mListener.onDishListButtonClick(-1, dish,holder.getAdapterPosition());
+        mListener.onDishListButtonClick(-1, dish, holder.getAdapterPosition());
         saveData(holder.getAdapterPosition(), holder.tv_order_num.getText().toString());
     }
 

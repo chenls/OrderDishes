@@ -142,7 +142,7 @@ public class DishDetailActivity extends AppCompatActivity
         }
         final BmobQuery<MyComment> bmobQuery = new BmobQuery<>();
         bmobQuery.setLimit(100);
-        bmobQuery.addWhereEqualTo("dishObjectId", dish.getObjectId());
+        bmobQuery.addWhereEqualTo("dishObjectId", dish.getId());
         bmobQuery.order("-updatedAt");
         //先判断是否强制刷新
         if (refresh) {
