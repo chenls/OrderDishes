@@ -28,11 +28,15 @@ import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.bean.MyComment;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.utils.CommonUtil;
+import chenls.orderdishes.utils.MyScrollView;
 import chenls.orderdishes.utils.serializable.MapSerializable;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
-public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class DishDetailActivity extends AppCompatActivity
+        implements View.OnClickListener
+        , SwipeRefreshLayout.OnRefreshListener
+        , MyScrollView.ScrollChangedInterface {
 
     private TextView tv_order_num, tv_total_num;
     private ImageView iv_minus;
@@ -115,6 +119,16 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         TextView comment = (TextView) findViewById(R.id.comment);
         comment.setText(R.string.loading);
         queryMyComment(false);
+    }
+
+    @Override
+    public void onScrollChanged() {
+        MyScrollView view = (MyScrollView) findViewById(R.id.scrollView);
+        if (view.getScrollY() == 0) {
+            swipeRefreshLayout.setEnabled(true);
+        } else {
+            swipeRefreshLayout.setEnabled(false);
+        }
     }
 
     @Override
