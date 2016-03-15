@@ -9,7 +9,7 @@ import cn.bmob.v3.datatype.BmobFile;
 public class Dish extends BmobObject implements Parcelable {
     private BmobFile pic;
     private String id, name, star, commentNumber, sellNumber, price,
-            summarize, allComment, category, categoryName;
+            summarize, category, categoryName;
     private int number;
 
     public Dish(String category, String name) {
@@ -25,11 +25,10 @@ public class Dish extends BmobObject implements Parcelable {
         this.number = number;
     }
 
-    public Dish(String star, String commentNumber, String price, String allComment, String category, String name, String sellNumber, String summarize, String categoryName) {
+    public Dish(String star, String commentNumber, String price, String category, String name, String sellNumber, String summarize, String categoryName) {
         this.star = star;
         this.commentNumber = commentNumber;
         this.price = price;
-        this.allComment = allComment;
         this.category = category;
         this.name = name;
         this.sellNumber = sellNumber;
@@ -73,10 +72,6 @@ public class Dish extends BmobObject implements Parcelable {
         return summarize;
     }
 
-    public String getAllComment() {
-        return allComment;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -98,7 +93,6 @@ public class Dish extends BmobObject implements Parcelable {
         sellNumber = in.readString();
         price = in.readString();
         summarize = in.readString();
-        allComment = in.readString();
         category = in.readString();
         categoryName = in.readString();
         number = in.readInt();
@@ -131,7 +125,6 @@ public class Dish extends BmobObject implements Parcelable {
         dest.writeString(sellNumber);
         dest.writeString(price);
         dest.writeString(summarize);
-        dest.writeString(allComment);
         dest.writeString(category);
         dest.writeString(categoryName);
         dest.writeInt(number);

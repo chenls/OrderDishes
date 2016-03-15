@@ -69,7 +69,7 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
         holder.tv_dish_name.setText(dish.getName());
         holder.tv_dish_summarize.setText(dish.getSummarize());
         holder.tv_comment.setText(dish.getCommentNumber());
-        holder.tv_all_comment.setText(dish.getAllComment());
+//        holder.tv_all_comment.setText(dish.getAllComment());
         holder.tv_name1.setText(dish.getName());
         holder.tv_name2.setText(dish.getSummarize());
         holder.tv_name3.setText(dish.getSummarize());

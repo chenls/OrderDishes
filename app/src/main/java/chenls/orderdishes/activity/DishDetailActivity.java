@@ -2,8 +2,12 @@ package chenls.orderdishes.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +20,19 @@ import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.bean.MyComment;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
+import chenls.orderdishes.utils.CommonUtil;
 import chenls.orderdishes.utils.serializable.MapSerializable;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.listener.FindListener;
 
-public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class DishDetailActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView tv_order_num, tv_total_num;
     private ImageView iv_minus;
@@ -32,6 +41,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
     private Button bt_compute;
     private Dish dish;
     private int position;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -99,6 +109,75 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         iv_minus.setOnClickListener(this);
         dishBeanMap = (Map<Integer, Dish>)
                 bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        TextView comment = (TextView) findViewById(R.id.comment);
+        comment.setText(R.string.loading);
+        queryMyComment(false);
+    }
+
+    @Override
+    public void onRefresh() {
+        queryMyComment(true);
+    }
+
+    private void queryMyComment(boolean refresh) {
+        if (!CommonUtil.checkNetState(DishDetailActivity.this)) {
+            return;
+        }
+        final BmobQuery<MyComment> bmobQuery = new BmobQuery<>();
+        bmobQuery.setLimit(100);
+        bmobQuery.addWhereEqualTo("dishObjectId", dish.getObjectId());
+        bmobQuery.order("-updatedAt");
+        //先判断是否强制刷新
+        if (refresh) {
+            bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
+        } else {
+            //先判断是否有缓存
+            boolean isCache = bmobQuery.hasCachedResult(DishDetailActivity.this, MyComment.class);
+            if (isCache) {
+                bmobQuery.setCachePolicy(BmobQuery.CachePolicy.CACHE_ELSE_NETWORK);    // 先从缓存取数据，如果没有的话，再从网络取。
+            } else {
+                bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);    // 如果没有缓存的话，则先从网络中取
+            }
+        }
+        bmobQuery.findObjects(DishDetailActivity.this, new FindListener<MyComment>() {
+            @Override
+            public void onSuccess(List<MyComment> myCommentList) {
+                TextView comment = (TextView) findViewById(R.id.comment);
+                SpannableStringBuilder commentValue = new SpannableStringBuilder();
+                for (MyComment myComment : myCommentList) {
+                    int commentValueLength = commentValue.length();
+                    String name = myComment.getName();
+                    commentValue.append(String.format("%s：%s分  %s",
+                            name, myComment.getStart(), myComment.getComment())
+                            + "\n\n");
+                    int endLength = commentValueLength + name.length() + 1;
+                    commentValue.setSpan(new ForegroundColorSpan(
+                                    getResources().getColor(R.color.colorAccent))
+                            , commentValueLength
+                            , endLength
+                            //setSpan时需要指定的 flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括).
+                            , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    commentValue.setSpan(new ForegroundColorSpan(
+                                    getResources().getColor(R.color.colorPrimary))
+                            , endLength
+                            , endLength + 4
+                            //setSpan时需要指定的 flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括).
+                            , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+                int length = commentValue.length();
+                commentValue.delete(length - 2, length);//删除最后两个\n\n字符
+                comment.setText(commentValue);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(int code, String msg) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -153,7 +232,7 @@ public class DishDetailActivity extends AppCompatActivity implements View.OnClic
         if ("0".equals(tv_order_num_value))
             dishBeanMap.remove(position);
         else
-            dishBeanMap.put(position, new Dish(dish.getObjectId(),Integer.parseInt(tv_order_num_value),
+            dishBeanMap.put(position, new Dish(dish.getObjectId(), Integer.parseInt(tv_order_num_value),
                     dish.getPrice(), dish.getName(), dish.getPic()));
     }
 

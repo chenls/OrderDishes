@@ -98,6 +98,8 @@
     <string name="sure_delete">是否确认删除订单</string>
     <string name="submit_order">提交订单</string>
     <string name="add_comment">添加评论</string>
+    <string name="choose_dish">请选择评论的菜肴</string>
+    <string name="loading">加载中...</string>
     <string-array name="state">
         　
         <item>已取消</item>

@@ -94,7 +94,7 @@
             android:label="@string/add_comment" />
         <activity
             android:name=".activity.ChooseCommentDishActivity"
-            android:label="@string/choose"
+            android:label="@string/choose_dish"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
