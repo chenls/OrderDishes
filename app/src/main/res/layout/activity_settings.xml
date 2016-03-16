@@ -24,7 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="基本设置"
+            android:text="@string/base_settings"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
@@ -46,14 +46,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="摇一摇发送反馈"
+                    android:text="@string/shake_send_feedback"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="遇到问题？摇一摇手机就能反馈～"
+                    android:text="@string/shake_send_feedback_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -67,7 +67,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:checked="false" />
+                android:checked="false"
+                tools:ignore="RelativeOverlap" />
 
             <View
                 android:layout_width="match_parent"
@@ -96,14 +97,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="自动更新软件"
+                    android:text="@string/auto_update"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="使用WIFI时，自动下载更新包"
+                    android:text="@string/auto_update_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -117,7 +118,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:checked="false" />
+                android:checked="false"
+                tools:ignore="RelativeOverlap" />
 
             <View
                 android:layout_width="match_parent"
@@ -146,14 +148,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="退出模式设置"
+                    android:text="@string/back_mode"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="双击返回键，退出程序"
+                    android:text="@string/back_mode_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -167,7 +169,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:checked="false" />
+                android:checked="false"
+                tools:ignore="RelativeOverlap" />
 
             <View
                 android:layout_width="match_parent"
@@ -187,7 +190,7 @@
             android:layout_below="@+id/relativeLayout4"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="通知设置"
+            android:text="@string/notification_settings"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
@@ -209,14 +212,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="推送消息设置"
+                    android:text="@string/push_message"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="接受商家推送信息"
+                    android:text="@string/push_message_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -230,7 +233,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:checked="false" />
+                android:checked="false"
+                tools:ignore="RelativeOverlap" />
 
             <View
                 android:layout_width="match_parent"
@@ -250,7 +254,7 @@
             android:layout_below="@+id/relativeLayout3"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:text="账号设置"
+            android:text="@string/user_settings"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
@@ -269,19 +273,20 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="账号和密码"
+                    android:text="@string/my_user_settings"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="修改账号密码，设置收货地址"
+                    android:text="@string/my_user_settings_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textSize="13sp" />
             </LinearLayout>
