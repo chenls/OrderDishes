@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +82,11 @@ public class DishDetailActivity extends AppCompatActivity
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        tv_total_price.setText(bundle.getString(CategoryAndDishFragment.TOTAL_PRICE));
+        String p = bundle.getString(CategoryAndDishFragment.TOTAL_PRICE);
+        if (TextUtils.isEmpty(p))
+            tv_total_price.setText(getString(R.string.rmb_0));
+        else
+            tv_total_price.setText(p);
         String total_num = bundle.getString(CategoryAndDishFragment.TOTAL_NUM);
         if (!TextUtils.isEmpty(total_num) && !"0".equals(total_num)) {
             tv_total_num.setText(total_num);
@@ -113,6 +118,9 @@ public class DishDetailActivity extends AppCompatActivity
         iv_minus.setOnClickListener(this);
         dishBeanMap = (Map<Integer, Dish>)
                 bundle.getSerializable(CategoryAndDishFragment.DISH_BEAN_MAP);
+        if (dishBeanMap == null) {
+            dishBeanMap = new HashMap<>();
+        }
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);

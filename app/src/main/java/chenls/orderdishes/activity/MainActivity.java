@@ -297,8 +297,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDiscoverListFragmentInteraction() {
-
+    public void onDiscoverListItemClick(Dish dish) {
+        discoverFragment.onDiscoverListItemClick(dish);
     }
 
     @Override

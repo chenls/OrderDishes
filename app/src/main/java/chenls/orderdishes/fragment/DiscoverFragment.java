@@ -1,6 +1,7 @@
 package chenls.orderdishes.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import chenls.orderdishes.R;
+import chenls.orderdishes.activity.DishDetailActivity;
 import chenls.orderdishes.adapter.DiscoverRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
 import chenls.orderdishes.utils.CommonUtil;
@@ -58,8 +60,16 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         mListener = null;
     }
 
+    public void onDiscoverListItemClick(Dish dish) {
+        Intent intent = new Intent(getContext(), DishDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CategoryAndDishFragment.DISH_ITEM, dish);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
+    }
+
     public interface OnListFragmentInteractionListener {
-        void onDiscoverListFragmentInteraction();
+        void onDiscoverListItemClick(Dish dish);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package chenls.orderdishes.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,14 +8,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.adapter.DiscoverRecyclerViewAdapter;
 import chenls.orderdishes.bean.Dish;
+import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.utils.CommonUtil;
 import cn.bmob.v3.BmobQuery;
@@ -38,20 +43,32 @@ public class SearchActivity extends AppCompatActivity implements
             swipeRefreshLayout.setRefreshing(false);
             return;
         }
-        final BmobQuery<Dish> bmobQuery = new BmobQuery<>();
-        bmobQuery.addWhereEqualTo("name", searchData);
-        bmobQuery.setLimit(10);
-        bmobQuery.order("-createdAt");
-        bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
-        bmobQuery.findObjects(SearchActivity.this, new FindListener<Dish>() {
-
+        final BmobQuery<Dish> query1 = new BmobQuery<>();
+        query1.addWhereEndsWith("name", searchData);
+        final BmobQuery<Dish> query2 = new BmobQuery<>();
+        query2.addWhereContains("summarize", searchData);
+        final BmobQuery<Dish> query3 = new BmobQuery<>();
+        query3.addWhereContains("categoryName", searchData);
+        List<BmobQuery<Dish>> queries = new ArrayList<>();
+        queries.add(query1);
+        queries.add(query2);
+        queries.add(query3);
+        BmobQuery<Dish> or = new BmobQuery<Dish>().or(queries);
+        or.setLimit(10);
+        or.order("-createdAt");
+        or.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
+        or.findObjects(SearchActivity.this, new FindListener<Dish>() {
             @Override
             public void onSuccess(List<Dish> object) {
                 swipeRefreshLayout.setRefreshing(false);
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.list);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
                 recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(new DiscoverRecyclerViewAdapter(SearchActivity.this, object, SearchActivity.this));
+                recyclerView.setAdapter(new DiscoverRecyclerViewAdapter(SearchActivity.this, object
+                        , SearchActivity.this));
+                if (object.size() == 0) {
+                    Toast.makeText(SearchActivity.this, "抱歉，未搜索到内容", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -76,9 +93,11 @@ public class SearchActivity extends AppCompatActivity implements
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                queryDish(newText);
-                swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
-                swipeRefreshLayout.setRefreshing(true);
+                if (!TextUtils.isEmpty(newText)) {
+                    queryDish(newText);
+                    swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
+                    swipeRefreshLayout.setRefreshing(true);
+                }
                 return true;
             }
         });
@@ -86,7 +105,11 @@ public class SearchActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onDiscoverListFragmentInteraction() {
-
+    public void onDiscoverListItemClick(Dish dish) {
+        Intent intent = new Intent(SearchActivity.this, DishDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CategoryAndDishFragment.DISH_ITEM, dish);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, 1);
     }
 }

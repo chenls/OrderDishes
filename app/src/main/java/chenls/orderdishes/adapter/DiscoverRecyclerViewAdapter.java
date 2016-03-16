@@ -19,13 +19,13 @@ import chenls.orderdishes.fragment.DiscoverFragment;
 
 public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Dish> mValues;
+    private final List<Dish> dishList;
     private final DiscoverFragment.OnListFragmentInteractionListener mListener;
     private Context context;
 
-    public DiscoverRecyclerViewAdapter(Context context, List<Dish> items, DiscoverFragment.OnListFragmentInteractionListener listener) {
+    public DiscoverRecyclerViewAdapter(Context context, List<Dish> dishList, DiscoverFragment.OnListFragmentInteractionListener listener) {
         this.context = context;
-        mValues = items;
+        this.dishList = dishList;
         mListener = listener;
     }
 
@@ -38,7 +38,7 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Dish dish = mValues.get(position);
+        final Dish dish = dishList.get(position);
         Glide.with(context)
                 .load(dish.getPic().getFileUrl(context))
                 .placeholder(R.mipmap.loading)
@@ -56,7 +56,7 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
-                    mListener.onDiscoverListFragmentInteraction();
+                    mListener.onDiscoverListItemClick(dish);
                 }
             }
         });
@@ -64,7 +64,7 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return dishList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
