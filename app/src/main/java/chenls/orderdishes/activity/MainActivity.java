@@ -206,6 +206,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_notifications:
                 break;
             case R.id.action_settings:
+                Intent intent3 = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.action_about:
                 Intent intent4 = new Intent(MainActivity.this, AboutActivity.class);
@@ -245,6 +247,8 @@ public class MainActivity extends AppCompatActivity
                 switchContent(orderFragment);
                 break;
             case R.id.nav_setting:
+                Intent intent3 = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.nav_about:
                 Intent intent4 = new Intent(MainActivity.this, AboutActivity.class);

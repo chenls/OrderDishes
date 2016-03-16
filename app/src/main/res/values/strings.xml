@@ -109,13 +109,14 @@
     <string name="share">分享</string>
     <string name="share_content">用上点餐小助手，妈妈再也不担心吃饭问题了!赶紧去下载吧：https://www.pgyer.com/dish</string>
     <string-array name="state">
-        　
         <item>已取消</item>
-        　　
         <item>未支付</item>
-        　　
         <item>上菜中</item>
-        　　
         <item>已完成</item>
     </string-array>
+    <string name="title_activity_settings">设置</string>
+    <string name="title_update">自动更新</string>
+    <string name="description_update">在WIFI网络连接时，自动下载更新安装包</string>
+    <string name="default_address">外卖收货地址</string>
+    <string name="outer_address">未设置</string>
 </resources>
