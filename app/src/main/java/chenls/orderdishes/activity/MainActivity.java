@@ -208,6 +208,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.action_settings:
                 break;
             case R.id.action_about:
+                Intent intent4 = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent4);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -245,6 +247,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_setting:
                 break;
             case R.id.nav_about:
+                Intent intent4 = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent4);
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
