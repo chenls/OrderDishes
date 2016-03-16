@@ -198,9 +198,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_notifications:
+                break;
+            case R.id.action_settings:
+                break;
+            case R.id.action_about:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -231,11 +241,6 @@ public class MainActivity extends AppCompatActivity
                     orderFragment = OrderFragment.newInstance();
                 }
                 switchContent(orderFragment);
-//                //打开订单时是否需要刷新
-//                if (isNeedRefreshOrder) {
-//                    categoryAndDishFragment.myRefresh(true);
-//                    isNeedRefreshOrder = false;
-//                }
                 break;
             case R.id.nav_setting:
                 break;

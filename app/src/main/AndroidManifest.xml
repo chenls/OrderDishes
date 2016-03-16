@@ -19,10 +19,11 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
-    <!--<instrumentation-->
-    <!--android:name="android.test.InstrumentationTestRunner"-->
-    <!--android:label="test"-->
-    <!--android:targetPackage="chenls.orderdishes" />-->
+
+    <!-- <instrumentation -->
+    <!-- android:name="android.test.InstrumentationTestRunner" -->
+    <!-- android:label="test" -->
+    <!-- android:targetPackage="chenls.orderdishes" /> -->
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -30,23 +31,26 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<uses-library android:name="android.test.runner" />-->
 
-        <!--蒲公英ID-->
+        <!-- <uses-library android:name="android.test.runner" /> -->
+
+
+        <!-- 蒲公英ID -->
         <meta-data
             android:name="PGYER_APPID"
             android:value="2c5d5ca0099565ecec8359f585d43782" />
 
         <!-- bmob支付相关 开始 -->
 
-        <!--suppress AndroidDomInspection -->
+
+        <!-- suppress AndroidDomInspection -->
         <activity
             android:name="c.b.a.A"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--suppress AndroidDomInspection -->
+        <!-- suppress AndroidDomInspection -->
         <activity
             android:name="c.b.a.B"
             android:screenOrientation="portrait"
@@ -113,6 +117,13 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activity.DishDetailActivity" />
+        </activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/search">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MainActivity" />
         </activity>
     </application>
 

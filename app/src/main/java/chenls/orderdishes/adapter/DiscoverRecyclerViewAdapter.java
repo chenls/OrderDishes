@@ -22,7 +22,6 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
     private final List<Dish> mValues;
     private final DiscoverFragment.OnListFragmentInteractionListener mListener;
     private Context context;
-    private boolean isPraise;
 
     public DiscoverRecyclerViewAdapter(Context context, List<Dish> items, DiscoverFragment.OnListFragmentInteractionListener listener) {
         this.context = context;

@@ -15,6 +15,8 @@ import chenls.orderdishes.fragment.CategoryAndDishFragment;
 
 public class ChooseCommentDishActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
+
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
