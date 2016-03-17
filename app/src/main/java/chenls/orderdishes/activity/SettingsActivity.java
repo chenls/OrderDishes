@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.switchButton.SwitchButton;
+import cn.bmob.push.BmobPush;
 
 public class SettingsActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener {
 
@@ -16,19 +18,19 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this) ;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         SwitchButton update_switch_button = (SwitchButton) findViewById(R.id.update_switch_button);
         update_switch_button.setOnCheckedChangeListener(this);
-        update_switch_button.setCheckedDelayed(prefs.getBoolean("update",true));
+        update_switch_button.setCheckedDelayed(prefs.getBoolean("update", true));
         SwitchButton push_switch_button = (SwitchButton) findViewById(R.id.push_switch_button);
         push_switch_button.setOnCheckedChangeListener(this);
-        push_switch_button.setCheckedDelayed(prefs.getBoolean("push",true));
+        push_switch_button.setCheckedDelayed(prefs.getBoolean("push", true));
         SwitchButton shake_switch_button = (SwitchButton) findViewById(R.id.shake_switch_button);
         shake_switch_button.setOnCheckedChangeListener(this);
-        shake_switch_button.setCheckedDelayed(prefs.getBoolean("shake",true));
+        shake_switch_button.setCheckedDelayed(prefs.getBoolean("shake", true));
         SwitchButton back_switch_button = (SwitchButton) findViewById(R.id.back_switch_button);
         back_switch_button.setOnCheckedChangeListener(this);
-        back_switch_button.setCheckedDelayed(prefs.getBoolean("back",true));
+        back_switch_button.setCheckedDelayed(prefs.getBoolean("back", true));
     }
 
     @Override
@@ -39,6 +41,15 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
                 break;
             case R.id.push_switch_button:
                 saveData("push", isChecked);
+                if (isChecked) {
+                    // 启动推送服务
+                    BmobPush.startWork(this);
+                    Toast.makeText(SettingsActivity.this, "启动推送服务", Toast.LENGTH_SHORT).show();
+                } else {
+                    // 关闭推送服务
+                    BmobPush.stopWork();
+                    Toast.makeText(SettingsActivity.this, "关闭推送服务", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.shake_switch_button:
                 saveData("shake", isChecked);

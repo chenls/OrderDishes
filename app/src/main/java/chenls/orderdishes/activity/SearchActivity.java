@@ -55,7 +55,7 @@ public class SearchActivity extends AppCompatActivity implements
         queries.add(query3);
         BmobQuery<Dish> or = new BmobQuery<Dish>().or(queries);
         or.setLimit(10);
-        or.order("-createdAt");
+        or.order("-updatedAt");
         or.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
         or.findObjects(SearchActivity.this, new FindListener<Dish>() {
             @Override

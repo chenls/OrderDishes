@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp">
 
             <ImageView
-                android:id="@+id/iv_dish"
+                android:id="@+id/image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
@@ -56,13 +56,13 @@
 
 
             <TextView
-                android:id="@+id/tv_dish_name"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/iv_dish"
+                android:layout_alignTop="@+id/image"
                 android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/iv_dish"
-                android:layout_toRightOf="@+id/iv_dish"
+                android:layout_toEndOf="@+id/image"
+                android:layout_toRightOf="@+id/image"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16sp" />
 
@@ -70,10 +70,10 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_dish"
+                android:layout_alignBottom="@+id/image"
                 android:layout_marginBottom="5dp"
-                android:layout_toEndOf="@+id/iv_dish"
-                android:layout_toRightOf="@+id/iv_dish"
+                android:layout_toEndOf="@+id/image"
+                android:layout_toRightOf="@+id/image"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="16sp" />
 

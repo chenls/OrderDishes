@@ -76,8 +76,8 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            iv_dish = (ImageView) view.findViewById(R.id.iv_dish);
-            tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
+            iv_dish = (ImageView) view.findViewById(R.id.image);
+            tv_dish_name = (TextView) view.findViewById(R.id.tv_title);
             ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
             tv_comment = (TextView) view.findViewById(R.id.tv_comment);
             tv_sell_num = (TextView) view.findViewById(R.id.tv_sell_num);

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iv_dish"
+            android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/iv_dish"
+            android:layout_below="@id/image"
             android:layout_marginBottom="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
@@ -33,7 +33,7 @@
             android:layout_marginStart="5dp">
 
             <TextView
-                android:id="@+id/tv_dish_name"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -56,7 +56,7 @@
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_dish_name"
+                android:layout_below="@+id/tv_title"
                 android:layout_toEndOf="@+id/tv_rmb"
                 android:layout_toRightOf="@+id/tv_rmb"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -68,7 +68,7 @@
                 style="@style/myRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="15dp"
-                android:layout_below="@id/tv_dish_name"
+                android:layout_below="@id/tv_title"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"

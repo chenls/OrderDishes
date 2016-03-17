@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,11 +21,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pgyersdk.feedback.PgyFeedbackShakeManager;
@@ -204,6 +208,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
                 break;
             case R.id.action_notifications:
+                Intent intent2 = new Intent(MainActivity.this, NotifyActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.action_settings:
                 Intent intent3 = new Intent(MainActivity.this, SettingsActivity.class);
@@ -245,6 +251,10 @@ public class MainActivity extends AppCompatActivity
                     orderFragment = OrderFragment.newInstance();
                 }
                 switchContent(orderFragment);
+                break;
+            case R.id.nav_notify:
+                Intent intent2 = new Intent(MainActivity.this, NotifyActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.nav_setting:
                 Intent intent3 = new Intent(MainActivity.this, SettingsActivity.class);
@@ -323,17 +333,45 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        // 摇一摇的灵敏度，默认为950，数值越小灵敏度越高。
-        PgyFeedbackShakeManager.setShakingThreshold(800);
-        // 以对话框的形式弹出
-        PgyFeedbackShakeManager.register(MainActivity.this);
-        //noinspection ResourceType
-        PgyerDialog.setDialogTitleBackgroundColor(getString(R.color.colorPrimary));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs.getBoolean("shake", true)) {
+            // 摇一摇的灵敏度，默认为950，数值越小灵敏度越高。
+            PgyFeedbackShakeManager.setShakingThreshold(800);
+            // 以对话框的形式弹出
+            PgyFeedbackShakeManager.register(MainActivity.this);
+            //noinspection ResourceType
+            PgyerDialog.setDialogTitleBackgroundColor(getString(R.color.colorPrimary));
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         PgyFeedbackShakeManager.unregister();
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs.getBoolean("back", true)) {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    startActivity(intent);
+                    finish();
+                    System.exit(0);
+                }
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

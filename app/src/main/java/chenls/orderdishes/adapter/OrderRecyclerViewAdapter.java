@@ -129,9 +129,9 @@ public class OrderRecyclerViewAdapter extends
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            iv_dish = (ImageView) view.findViewById(R.id.iv_dish);
+            iv_dish = (ImageView) view.findViewById(R.id.image);
             iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
-            tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
+            tv_dish_name = (TextView) view.findViewById(R.id.tv_title);
             tv_time = (TextView) view.findViewById(R.id.tv_time);
             tv_state = (TextView) view.findViewById(R.id.tv_state);
             tv_price = (TextView) view.findViewById(R.id.tv_price);

@@ -169,10 +169,10 @@ public class DishRecyclerViewAdapter extends RecyclerView.Adapter<DishRecyclerVi
                 return;
             }
             mView = view;
-            iv_dish = (ImageView) view.findViewById(R.id.iv_dish);
+            iv_dish = (ImageView) view.findViewById(R.id.image);
             iv_minus = (ImageView) view.findViewById(R.id.iv_minus);
             iv_add = (ImageView) view.findViewById(R.id.iv_add);
-            tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
+            tv_dish_name = (TextView) view.findViewById(R.id.tv_title);
             tv_dish_summarize = (TextView) view.findViewById(R.id.tv_dish_summarize);
             tv_comment = (TextView) view.findViewById(R.id.tv_comment);
             tv_sell_num = (TextView) view.findViewById(R.id.tv_sell_num);

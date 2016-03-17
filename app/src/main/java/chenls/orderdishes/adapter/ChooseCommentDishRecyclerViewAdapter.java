@@ -82,8 +82,8 @@ public class ChooseCommentDishRecyclerViewAdapter extends
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            iv_dish = (ImageView) view.findViewById(R.id.iv_dish);
-            tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
+            iv_dish = (ImageView) view.findViewById(R.id.image);
+            tv_dish_name = (TextView) view.findViewById(R.id.tv_title);
             tv_price = (TextView) view.findViewById(R.id.tv_price);
         }
     }

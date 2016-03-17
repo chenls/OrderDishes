@@ -34,12 +34,12 @@ public class CommentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comment);
         Intent intent = getIntent();
         dish = intent.getParcelableExtra(ChooseCommentDishRecyclerViewAdapter.DISH);
-        ImageView iv_dish = (ImageView) findViewById(R.id.iv_dish);
+        ImageView iv_dish = (ImageView) findViewById(R.id.image);
         Glide.with(CommentActivity.this)
                 .load(dish.getPic().getFileUrl(CommentActivity.this))
                 .placeholder(R.mipmap.loading)
                 .into(iv_dish);
-        TextView tv_dish_name = (TextView) findViewById(R.id.tv_dish_name);
+        TextView tv_dish_name = (TextView) findViewById(R.id.tv_title);
         tv_dish_name.setText(dish.getName());
         TextView tv_price = (TextView) findViewById(R.id.tv_price);
         tv_price.setText(getString(R.string.rmb, dish.getPrice()));

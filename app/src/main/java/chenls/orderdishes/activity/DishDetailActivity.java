@@ -73,8 +73,8 @@ public class DishDetailActivity extends AppCompatActivity
         iv_minus = (ImageView) findViewById(R.id.iv_minus);
         ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
         tv_order_num = (TextView) findViewById(R.id.tv_order_num);
-        ImageView iv_dish = (ImageView) findViewById(R.id.iv_dish);
-        TextView tv_dish_name = (TextView) findViewById(R.id.tv_dish_name);
+        ImageView iv_dish = (ImageView) findViewById(R.id.image);
+        TextView tv_dish_name = (TextView) findViewById(R.id.tv_title);
         TextView tv_dish_summarize = (TextView) findViewById(R.id.tv_dish_summarize);
         TextView tv_comment = (TextView) findViewById(R.id.tv_comment);
         TextView tv_sell_num = (TextView) findViewById(R.id.tv_sell_num);

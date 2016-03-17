@@ -7,42 +7,41 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_margin="10dp"
-            android:contentDescription="@string/dish"
-            android:src="@mipmap/loading" />
+            android:contentDescription="@string/notification_settings"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/notify" />
 
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/image"
-            android:layout_toRightOf="@+id/image"
+            android:layout_alignLeft="@+id/tv_content"
+            android:layout_alignStart="@+id/tv_content"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/tv_date"
+            android:layout_toStartOf="@+id/tv_date"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="16sp"
-            tools:ignore="RelativeOverlap" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="70dp"
-            android:layout_marginRight="70dp"
-            android:text="@string/product_sign"
+            android:layout_below="@+id/tv_title"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/image"
+            android:layout_toRightOf="@+id/image"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
@@ -53,11 +52,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/tv_title"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="10dp"
-            android:text="@string/rmb"
+            android:layout_marginStart="20dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />

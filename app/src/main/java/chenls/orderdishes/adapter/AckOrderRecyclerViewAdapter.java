@@ -167,10 +167,10 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
                 mark = (RelativeLayout) view.findViewById(R.id.mark);
                 return;
             }
-            iv_dish = (ImageView) view.findViewById(R.id.iv_dish);
-            tv_dish_name = (TextView) view.findViewById(R.id.tv_dish_name);
-            tv_dish_num = (TextView) view.findViewById(R.id.tv_dish_num);
-            tv_dish_price = (TextView) view.findViewById(R.id.tv_dish_price);
+            iv_dish = (ImageView) view.findViewById(R.id.image);
+            tv_dish_name = (TextView) view.findViewById(R.id.tv_title);
+            tv_dish_num = (TextView) view.findViewById(R.id.tv_content);
+            tv_dish_price = (TextView) view.findViewById(R.id.tv_date);
         }
     }
 

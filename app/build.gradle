@@ -35,4 +35,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
     compile 'com.android.support:cardview-v7:23.2.1'
+    compile files('libs/Bmob_Push_V0.8beta_20160315.jar')
 }

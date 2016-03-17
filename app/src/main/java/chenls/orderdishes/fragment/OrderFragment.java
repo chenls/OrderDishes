@@ -57,15 +57,15 @@ public class OrderFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public void myRefresh(boolean b) {
         swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
         swipeRefreshLayout.setRefreshing(true);
-        queryDish(b);
+        queryOrder(b);
     }
 
     @Override
     public void onRefresh() {
-        queryDish(true);
+        queryOrder(true);
     }
 
-    private void queryDish(boolean refresh) {
+    private void queryOrder(boolean refresh) {
         if (!CommonUtil.checkNetState(getActivity())) {
             swipeRefreshLayout.setRefreshing(false);
             return;
@@ -148,7 +148,7 @@ public class OrderFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         order.delete(getContext(), objectId, new DeleteListener() {
             @Override
             public void onSuccess() {
-                queryDish(true);
+                queryOrder(true);
             }
 
             @Override

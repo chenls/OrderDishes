@@ -85,7 +85,7 @@ public class DiscoverFragment extends Fragment implements SwipeRefreshLayout.OnR
         final BmobQuery<Dish> bmobQuery = new BmobQuery<>();
         bmobQuery.addWhereEqualTo("category", "1");
         bmobQuery.setLimit(10);
-        bmobQuery.order("-createdAt");
+        bmobQuery.order("-updatedAt");
         //先判断是否强制刷新
         if (refresh) {
             bmobQuery.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);        // 强制在从网络中获取
