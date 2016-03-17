@@ -41,35 +41,34 @@
         <!-- 蒲公英ID -->
         <meta-data
             android:name="PGYER_APPID"
-            android:value="2c5d5ca0099565ecec8359f585d43782" />
+            android:value="dc0870aa6556c960f8da9304523961e5" />
 
         <!-- bmob支付相关 开始 -->
-
-
-        <!--suppress AndroidDomInspection-->
+        <!-- suppress AndroidDomInspection -->
         <activity
             android:name="c.b.a.A"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!--suppress AndroidDomInspection-->
+        <!-- suppress AndroidDomInspection -->
         <activity
             android:name="c.b.a.B"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
-
         <!-- bmob支付相关 结束 -->
         <activity
-            android:name=".activity.WelcomeActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".activity.FirstScreenActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTop"

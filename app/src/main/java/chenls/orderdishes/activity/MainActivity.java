@@ -31,6 +31,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.pgyersdk.feedback.PgyFeedbackShakeManager;
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 import com.pgyersdk.views.PgyerDialog;
 
 import chenls.orderdishes.R;
@@ -42,6 +45,7 @@ import chenls.orderdishes.fragment.CategoryFragment;
 import chenls.orderdishes.fragment.DiscoverFragment;
 import chenls.orderdishes.fragment.DishFragment;
 import chenls.orderdishes.fragment.OrderFragment;
+import chenls.orderdishes.utils.CommonUtil;
 import cn.bmob.v3.datatype.BmobFile;
 
 public class MainActivity extends AppCompatActivity
@@ -147,6 +151,49 @@ public class MainActivity extends AppCompatActivity
         IntentFilter intentFilter = new IntentFilter(PlayCashActivity.ACTION);
         LocalBroadcastManager.getInstance(MainActivity.this)
                 .registerReceiver(broadcastReceiver, intentFilter);
+        //蒲公英自动更新
+        PgyUpdateManager.register(MainActivity.this,
+                new UpdateManagerListener() {
+                    @Override
+                    public void onUpdateAvailable(final String result) {
+                        // 将新版本信息封装到AppBean中
+                        final AppBean appBean = getAppBeanFromString(result);
+                        //如果WIFI可用且用户设置了自动下载  不弹对话框，直接下载
+                        if (CommonUtil.isWifiAvailable(MainActivity.this)) {
+                            SharedPreferences prefs = PreferenceManager
+                                    .getDefaultSharedPreferences(MainActivity.this);
+                            if (prefs.getBoolean("update", true)) {
+                                Toast.makeText(MainActivity.this, "检测到WIFI可用，" +
+                                        "\n开始自动下载更新安装包", Toast.LENGTH_LONG).show();
+                                startDownloadTask(MainActivity.this, appBean.getDownloadURL());
+                            }
+                            return;
+                        }
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("更新应用")
+                                .setMessage(appBean.getReleaseNote())
+                                .setPositiveButton(
+                                        "确定"
+                                        , new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startDownloadTask(MainActivity.this,
+                                                        appBean.getDownloadURL());
+                                            }
+                                        })
+                                .setNegativeButton(
+                                        "取消",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                            }
+                                        }).show();
+                    }
+
+                    @Override
+                    public void onNoUpdateAvailable() {
+                    }
+                });
     }
 
     private void changeInformation(Bitmap bitmap) {

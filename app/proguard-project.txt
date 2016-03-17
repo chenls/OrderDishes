@@ -12,5 +12,3 @@
 -keep class chenls.orderdishes.bean.Dish{*;}
 -keep class chenls.orderdishes.bean.MyComment{*;}
 -keep class chenls.orderdishes.bean.Order{*;}
-
-

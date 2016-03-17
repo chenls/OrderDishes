@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import chenls.orderdishes.R;
 import chenls.orderdishes.switchButton.SwitchButton;
@@ -44,11 +43,9 @@ public class SettingsActivity extends AppCompatActivity implements CompoundButto
                 if (isChecked) {
                     // 启动推送服务
                     BmobPush.startWork(this);
-                    Toast.makeText(SettingsActivity.this, "启动推送服务", Toast.LENGTH_SHORT).show();
                 } else {
                     // 关闭推送服务
                     BmobPush.stopWork();
-                    Toast.makeText(SettingsActivity.this, "关闭推送服务", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.shake_switch_button:
