@@ -260,9 +260,10 @@
             android:textSize="14sp" />
 
         <RelativeLayout
-            android:id="@+id/relativeLayout5"
+            android:id="@+id/account"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:onClick="account"
             android:layout_below="@+id/textView2"
             android:background="@drawable/button_background_grey"
             android:clickable="true">
