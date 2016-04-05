@@ -253,9 +253,10 @@ public class DishDetailActivity extends AppCompatActivity
         String tv_order_num_value = tv_order_num.getText().toString();
         if ("0".equals(tv_order_num_value))
             dishBeanMap.remove(position);
-        else
-            dishBeanMap.put(position, new Dish(dish.getObjectId(), Integer.parseInt(tv_order_num_value),
+        else {
+            dishBeanMap.put(position, new Dish(dish.getId(), Integer.parseInt(tv_order_num_value),
                     dish.getPrice(), dish.getName(), dish.getPic()));
+        }
     }
 
     @Override

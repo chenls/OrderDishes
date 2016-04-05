@@ -56,6 +56,7 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
             @Override
             public void onClick(View v) {
                 if (null != mListener) {
+                    dish.setId(dish.getObjectId());
                     mListener.onDiscoverListItemClick(dish);
                 }
             }
