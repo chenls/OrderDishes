@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import chenls.orderdishes.R;
 
@@ -17,13 +20,18 @@ public class FirstScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_screen);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        Animation animation = AnimationUtils.loadAnimation(
+                FirstScreenActivity.this, R.anim.animation);
+        imageView.startAnimation(animation);
+
         new Handler() {
             public void handleMessage(Message msg) {
                 startActivity(new Intent(FirstScreenActivity.this,
                         WelcomeActivity.class));
                 finish();
             }
-        }.sendEmptyMessageDelayed(0, 1500);
+        }.sendEmptyMessageDelayed(0, 1000);
     }
 
     @Override
