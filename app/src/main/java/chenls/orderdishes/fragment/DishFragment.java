@@ -34,7 +34,7 @@ public class DishFragment extends Fragment {
     private int position;
     private DishRecyclerViewAdapter dishRecyclerViewAdapter;
     private List<Dish> dishList;
-    private String[] positionArray;
+    private int[] int_positionArray;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -62,7 +62,12 @@ public class DishFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
             dishList = (List<Dish>) getArguments().getSerializable(DISH_LIST);
-            positionArray = getArguments().getStringArray(POSITION_ARRAY);
+            String[] positionArray = getArguments().getStringArray(POSITION_ARRAY);
+            assert positionArray != null;
+            int_positionArray = new int[positionArray.length];
+            for (int i = 0; i < positionArray.length; i++) {
+                int_positionArray[i] = Integer.parseInt(positionArray[i]);
+            }
         }
     }
 
@@ -105,14 +110,14 @@ public class DishFragment extends Fragment {
         int firstItem = linearLayoutManager.findFirstVisibleItemPosition();
         //上拉
         if (dy > 0) {
-            int index = Arrays.binarySearch(positionArray, firstItem + "");
+            int index = Arrays.binarySearch(int_positionArray, firstItem);
             if (index >= 0) {
                 mListener.onDishListScroll(index + 1);
             }
         }
         //下拉
         else {
-            int index = Arrays.binarySearch(positionArray, firstItem + 1 + "");
+            int index = Arrays.binarySearch(int_positionArray, firstItem + 1);
             if (index >= 0) {
                 mListener.onDishListScroll(index);
             }
