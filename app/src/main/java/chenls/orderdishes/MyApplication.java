@@ -15,7 +15,7 @@ import cn.bmob.v3.BmobInstallation;
 
 public class MyApplication extends Application {
 
-    public static final String APP_ID = "3f3105ded1ca7e96d3fc71a853b60c63";
+    public static final String APP_ID = "f008a5fd6a125fa1fdc75a526e582c7e";
 
     @Override
     public void onCreate() {
