@@ -132,4 +132,6 @@
     <string name="user_settings">账号设置</string>
     <string name="my_user_settings">账号信息</string>
     <string name="my_user_settings_content">修改账号信息，设置收货地址</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="app_html">https://github.com/chenls/OrderDishes</string>
 </resources>

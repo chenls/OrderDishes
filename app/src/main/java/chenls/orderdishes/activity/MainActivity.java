@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     private DiscoverFragment discoverFragment;
     private CategoryAndDishFragment categoryAndDishFragment;
     private OrderFragment orderFragment;
+    private FloatingActionButton fab;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -194,6 +197,31 @@ public class MainActivity extends AppCompatActivity
                     public void onNoUpdateAvailable() {
                     }
                 });
+        //fab
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        assert fab != null;
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFabDialog();
+            }
+        });
+    }
+
+    private void showFabDialog() {
+        new AlertDialog.Builder(MainActivity.this).setTitle("点赞")
+                .setMessage("去项目地址给作者个Star，鼓励下作者。")
+                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = Uri.parse(getString(R.string.app_html));   //指定网址
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);           //指定Action
+                        intent.setData(uri);                            //设置Uri
+                        MainActivity.this.startActivity(intent);        //启动Activity
+                    }
+                })
+                .show();
     }
 
     private void changeInformation(Bitmap bitmap) {
@@ -280,6 +308,7 @@ public class MainActivity extends AppCompatActivity
                     actionBar.setTitle(getString(R.string.discover));
                 }
                 switchContent(discoverFragment);
+                fab.setVisibility(View.VISIBLE);
                 break;
             case R.id.nav_dish:
                 if (actionBar != null) {
@@ -289,6 +318,7 @@ public class MainActivity extends AppCompatActivity
                     categoryAndDishFragment = CategoryAndDishFragment.newInstance();
                 }
                 switchContent(categoryAndDishFragment);
+                fab.setVisibility(View.GONE);
                 break;
             case R.id.nav_order:
                 if (actionBar != null) {
@@ -298,6 +328,7 @@ public class MainActivity extends AppCompatActivity
                     orderFragment = OrderFragment.newInstance();
                 }
                 switchContent(orderFragment);
+                fab.setVisibility(View.GONE);
                 break;
             case R.id.nav_notify:
                 Intent intent2 = new Intent(MainActivity.this, NotifyActivity.class);
