@@ -99,7 +99,7 @@
     <string name="submit_order">提交订单</string>
     <string name="add_comment">添加评论</string>
     <string name="choose_dish">请选择评论的菜肴</string>
-    <string name="loading">加载中…</string>
+    <string name="loading">暂无评论</string>
     <string name="dish_summarize">菜肴简介：%s</string>
     <string name="search">搜索</string>
     <string name="version">当前版本号：%s</string>
