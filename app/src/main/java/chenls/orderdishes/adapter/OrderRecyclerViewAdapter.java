@@ -61,7 +61,6 @@ public class OrderRecyclerViewAdapter extends
         }
         Glide.with(context)
                 .load(dish.getPic().getFileUrl(context))
-                .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
         holder.tv_dish_name.setText(String.format("%s...", dish.getName()));

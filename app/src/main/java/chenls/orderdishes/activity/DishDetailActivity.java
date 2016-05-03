@@ -111,7 +111,6 @@ public class DishDetailActivity extends AppCompatActivity
         ratingBar.setRating(Integer.valueOf(dish.getStar()));
         Glide.with(DishDetailActivity.this)
                 .load(dish.getPic().getFileUrl(DishDetailActivity.this))
-                .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(iv_dish);
         iv_add.setOnClickListener(this);

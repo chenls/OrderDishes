@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity implements
             return;
         }
         final BmobQuery<Dish> query1 = new BmobQuery<>();
-        query1.addWhereEndsWith("name", searchData);
+        query1.addWhereContains("name", searchData);
         final BmobQuery<Dish> query2 = new BmobQuery<>();
         query2.addWhereContains("summarize", searchData);
         final BmobQuery<Dish> query3 = new BmobQuery<>();
@@ -95,7 +95,6 @@ public class SearchActivity extends AppCompatActivity implements
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText)) {
                     queryDish(newText);
-                    swipeRefreshLayout.setProgressViewOffset(false, 0, 40);
                     swipeRefreshLayout.setRefreshing(true);
                 }
                 return true;

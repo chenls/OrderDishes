@@ -129,7 +129,6 @@ public class AckOrderRecyclerViewAdapter extends RecyclerView.Adapter<AckOrderRe
         holder.iv_dish.setImageResource(R.mipmap.loading);
         Glide.with(context)
                 .load(holder.dish.getPic().getFileUrl(context))
-                .crossFade()
                 .placeholder(R.mipmap.loading)
                 .into(holder.iv_dish);
         holder.tv_dish_name.setText(holder.dish.getName());

@@ -1,3 +1,9 @@
+-dontwarn android.support.**   # 如果引用了v4或者v7包
+-keep class android.support.** {*;} #对于v4或者v7中的类不进行代码混淆
+-optimizationpasses 5          # 指定代码的压缩级别
+-dontusemixedcaseclassnames    # 是否使用大小写混合
+-dontpreverify                 # 混淆时是否做预校验
+-verbose                       # 混淆时是否记录日志
 -ignorewarnings
 -keep class c.b.** { *; }
 -keep class com.pgyersdk.** { *; }

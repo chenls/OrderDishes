@@ -16,11 +16,12 @@
             android:id="@+id/image"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:scaleType="centerCrop"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_margin="5dp"
-            android:contentDescription="@string/dish" />
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/dish"
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/tv_title"

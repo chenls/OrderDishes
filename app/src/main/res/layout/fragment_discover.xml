@@ -17,10 +17,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:adjustViewBounds="true"
-            android:background="@color/colorBackground"
-            android:contentDescription="@string/dish"
-            android:scaleType="fitXY"
-            android:src="@mipmap/loading" />
+            android:scaleType="fitCenter"
+            tools:ignore="ContentDescription" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -114,6 +112,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tv_price"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"

@@ -84,7 +84,6 @@ public class DiscoverRecyclerViewAdapter extends RecyclerView.Adapter<DiscoverRe
             tv_sell_num = (TextView) view.findViewById(R.id.tv_sell_num);
             tv_price = (TextView) view.findViewById(R.id.tv_price);
             tv_dish_summarize = (TextView) view.findViewById(R.id.tv_dish_summarize);
-//            tv_comment = (TextView) view.findViewById(R.id.tv_comment);
         }
     }
 }

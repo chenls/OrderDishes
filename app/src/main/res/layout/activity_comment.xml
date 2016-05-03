@@ -18,9 +18,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
+        android:adjustViewBounds="true"
         android:contentDescription="@string/dish"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+        android:scaleType="fitCenter" />
 
 
     <TextView
@@ -28,8 +28,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/image"
-        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/image"
         android:layout_toRightOf="@+id/image"
@@ -41,12 +41,12 @@
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="噶阿萨"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="16sp"
         android:layout_alignBottom="@+id/image"
         android:layout_alignLeft="@+id/tv_title"
-        android:layout_alignStart="@+id/tv_title" />
+        android:layout_alignStart="@+id/tv_title"
+        android:text="噶阿萨"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="16sp" />
 
     <View
         android:id="@+id/view2"
@@ -75,8 +75,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="评分："
-            android:textSize="16sp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="16sp" />
 
         <RatingBar
             android:id="@+id/ratingBar"

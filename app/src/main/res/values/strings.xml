@@ -103,7 +103,7 @@
     <string name="dish_summarize">菜肴简介：%s</string>
     <string name="search">搜索</string>
     <string name="version">当前版本号：%s</string>
-    <string name="get_version_fail">成功获取失败</string>
+    <string name="get_version_fail">获取失败</string>
     <string name="catchword">用上点餐小助手\n妈妈再也不担心吃饭问题了</string>
     <string name="developer">开发者\n重庆邮电大学\n923847753@qq.com</string>
     <string name="share">分享</string>
