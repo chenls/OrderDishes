@@ -27,6 +27,10 @@ import chenls.orderdishes.bean.Order;
 import chenls.orderdishes.fragment.CategoryAndDishFragment;
 import chenls.orderdishes.fragment.OrderFragment;
 import chenls.orderdishes.utils.CommonUtil;
+import cn.bmob.push.BmobPush;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.BmobPushManager;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.SaveListener;
 
 public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyclerViewAdapter.OnClickListenerInterface {
@@ -96,6 +100,7 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                     order.save(AckOrderActivity.this, new SaveListener() {
                         @Override
                         public void onSuccess() {
+                            pushToAndroid("您有新的订单！");
                             progressDialog.dismiss();
                             if (isOnlinePay) {
                                 onlinePay(order.getObjectId(), price);
@@ -122,6 +127,26 @@ public class AckOrderActivity extends AppCompatActivity implements AckOrderRecyc
                     });
 
                 }
+            }
+
+            /**
+             * 给android平台终端推送
+             *
+             * @param message
+             */
+            private void pushToAndroid(String message) {
+                //开启debug服务后，可知晓push服务是否正常启动和运行
+                BmobPush.setDebugMode(true);
+                //开启推送服务
+                BmobPush.startWork(AckOrderActivity.this);
+                // 使用推送服务时的初始化操作
+                BmobInstallation.getCurrentInstallation(AckOrderActivity.this).save();
+
+                BmobPushManager<BmobInstallation> bmobPush = new BmobPushManager<>(AckOrderActivity.this);
+                BmobQuery<BmobInstallation> query = BmobInstallation.getQuery();
+                query.addWhereEqualTo("deviceType", "android");
+                bmobPush.setQuery(query);
+                bmobPush.pushMessage(message);
             }
 
             private void onlinePay(String objectId, String price) {
